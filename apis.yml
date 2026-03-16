@@ -1,0 +1,44 @@
+aid: finos
+name: FINOS
+description: >-
+  The Fintech Open Source Foundation (FINOS) is a Linux Foundation project dedicated to open source innovation in the financial services industry. It fosters collaboration between banks, fintech companies, and technology firms on projects like FDC3, Legend, and Morphir for financial technology interoperability and standards.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Fintech
+  - Financial Services
+  - Open Source
+  - Linux Foundation
+created: '2026-03-16'
+modified: '2026-03-16'
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/finos/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: finos:finos-api
+    name: FINOS API
+    description: >-
+      Programmatic access to FINOS financial services APIs, FDC3 interoperability tools, and fintech project resources.
+    humanURL: https://www.finos.org/hosted-projects
+    tags:
+  - Fintech
+  - Financial Services
+  - Open Source
+  - Linux Foundation
+    properties:
+      - type: Documentation
+        url: https://www.finos.org/hosted-projects
+common:
+  - type: Documentation
+    name: FINOS Documentation
+    description: Official documentation for FINOS.
+    url: https://www.finos.org/hosted-projects
+  - type: GitHubOrg
+    name: FINOS GitHub
+    description: Source code and repositories for FINOS.
+    url: https://github.com/finos
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
