@@ -7,10 +7,10 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Fintech
   - Financial Services
-  - Open Source
+  - Fintech
   - Linux Foundation
+  - Open Source
 created: '2026-03-16'
 modified: '2026-03-16'
 url: >-
@@ -23,10 +23,10 @@ apis:
       Programmatic access to FINOS financial services APIs, FDC3 interoperability tools, and fintech project resources.
     humanURL: https://www.finos.org/hosted-projects
     tags:
-      - Fintech
       - Financial Services
-      - Open Source
+      - Fintech
       - Linux Foundation
+      - Open Source
     properties:
       - type: Documentation
         url: https://www.finos.org/hosted-projects
