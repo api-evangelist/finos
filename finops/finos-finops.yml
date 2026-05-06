@@ -8,10 +8,11 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: FINOS
 providerId: finos
-publisherName: FINOS
-serviceCategory: API
+publisherName: Fintech Open Source Foundation (FINOS) — a Linux Foundation project
+serviceCategory: Open Source Foundation / Standards Body
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - Financial Services
   - Fintech
@@ -20,149 +21,102 @@ tags:
   - FinOps
   - Cost Management
   - FOCUS
-description: FinOps framework definition for the FINOS API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
+description: 'FOCUS-aligned FinOps for FINOS: the standards (FDC3, CDM, CCC, Morphir, Symphony API Spec)
+  are open source and free at the API/spec layer; FINOS itself is funded through corporate membership
+  fees ($200K Platinum / $50K Gold / $10K-$30K Silver / Free Associate) plus Linux Foundation membership.
+  FinOps for a FINOS consumer therefore tracks (a) implementation cost of adopting the standards and
+  (b) optional membership spend if the organization wants governance influence; there is no per-call
+  API meter.'
+sources:
+  - https://www.finos.org/membership
+  - https://www.finos.org/projects
 principles:
   - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
+    description: Track FINOS membership invoice (annual) and Linux Foundation corporate membership invoice;
+      track engineering effort spent adopting / contributing to FINOS standards (FDC3, CDM, CCC, Morphir).
   - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
+    description: Allocate membership cost to corporate-strategy / open-source-program-office budget; allocate
+      adoption engineering time to the consuming product line (e.g. trading desktop adopting FDC3).
   - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
+    description: Combine FINOS Silver/Gold tiers with Linux Foundation membership to maximize governance
+      voice for the spend; contribute upstream to standards your firm depends on (reduces in-house maintenance
+      burden); reuse existing FINOS reference implementations rather than building proprietary equivalents.
   - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
+    description: Open-source program office / corporate strategy owns membership tier; engineering leads
+      on each implementing product own adoption and contribution decisions; annual review of membership
+      ROI.
 domains:
   - name: Understand Usage and Cost
     capabilities:
-      - Data Ingestion
       - Allocation
       - Reporting and Analytics
-      - Anomaly Management
   - name: Quantify Business Value
     capabilities:
       - Planning and Estimating
-      - Forecasting
       - Budgeting
       - Benchmarking
-      - Unit Economics
   - name: Optimize Usage and Cost
     capabilities:
       - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
       - Licensing and SaaS
   - name: Manage the FinOps Practice
     capabilities:
       - FinOps Practice Operations
       - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
+  pricingCategory: Free Open Source + Optional Annual Membership
+  billingFrequency: Annual (membership only)
   billingCurrency: USD
   chargeCategories:
-    - Usage
     - Purchase
-    - Tax
-    - Credit
-    - Adjustment
-  chargeFrequency: Recurring
 focusColumns:
   ServiceName: FINOS
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Open Source Foundation / Standards Body
   ProviderName: FINOS
-  PublisherName: FINOS
-  InvoiceIssuerName: FINOS
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Fintech Open Source Foundation (FINOS)
+  InvoiceIssuerName: The Linux Foundation
+  PricingCategory: Free Open Source + Membership
+  PricingUnit: membership-year
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
+  - name: membership_tier
+    description: FINOS membership tier (Platinum / Gold / Silver / Associate).
+    unit: membership-year
+    aggregation: max
     dimensions:
-      - api
-      - endpoint
       - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - company_size
+  - name: contribution_hours
+    description: Engineering / committer hours contributed upstream to FINOS projects.
+    unit: hour
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
+      - project
+      - team
 apis:
   - name: FDC3
-    baseURL: ''
-    tags:
-      - Desktop Interoperability
-      - FDC3
-      - Financial Services
-      - Open Standard
     serviceName: FDC3
-    serviceCategory: API
+    serviceCategory: Standard
   - name: Common Domain Model
-    baseURL: ''
-    tags:
-      - Common Domain Model
-      - Financial Products
-      - Open Standard
-      - Trade Lifecycle
     serviceName: Common Domain Model
-    serviceCategory: API
+    serviceCategory: Standard
   - name: Common Cloud Controls
-    baseURL: ''
-    tags:
-      - Cloud
-      - Compliance
-      - Financial Services
-      - Open Standard
     serviceName: Common Cloud Controls
-    serviceCategory: API
+    serviceCategory: Standard
   - name: Morphir
-    baseURL: ''
-    tags:
-      - Business Modeling
-      - Domain Modeling
-      - Morphir
-      - Open Source
     serviceName: Morphir
-    serviceCategory: API
+    serviceCategory: Standard
   - name: Symphony API Spec
-    baseURL: ''
-    tags:
-      - Authentication
-      - Messaging
-      - OpenAPI
-      - Symphony
     serviceName: Symphony API Spec
-    serviceCategory: API
+    serviceCategory: Specification
 unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+  - name: Cost per Implementing Product
+    metric: (membership_fee + adoption_engineering_cost) / implementing_products
+    target: organization-dependent
+  - name: Contribution / Membership ROI
+    metric: contribution_hours / membership_fee
+    target: maximize meaningful contribution
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

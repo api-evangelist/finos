@@ -4,105 +4,45 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: FINOS
 providerId: finos
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: true
 tags:
   - Financial Services
   - Fintech
   - Linux Foundation
   - Open Source
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the FINOS API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+description: FINOS publishes open standards and OpenAPI specifications (FDC3, CDM, CCC, Morphir, Symphony
+  API Spec) but does not operate a hosted API service for the standards themselves. There are no FINOS-imposed
+  rate limits — only those of any reference server an implementer chooses to host. The Symphony API Spec
+  describes the Symphony platform's APIs (Pod, Agent, Authenticator); rate limits there are governed
+  by Symphony's own deployment, not FINOS.
+notes: FINOS does not host the APIs whose specifications it stewards; rate limits depend on the implementer
+  / vendor (e.g. Symphony Communication Services for the Symphony API Spec).
+sources:
+  - https://www.finos.org/projects
+  - https://github.com/finos/symphony-api-spec
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - FDC3
-      - Common Domain Model
-      - Common Cloud Controls
-      - Morphir
-      - Symphony API Spec
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - FDC3
-      - Common Domain Model
-      - Common Cloud Controls
-      - Morphir
-      - Symphony API Spec
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - FDC3
-      - Common Domain Model
-      - Common Cloud Controls
-      - Morphir
-      - Symphony API Spec
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - FDC3
-      - Common Domain Model
-      - Common Cloud Controls
-      - Morphir
-      - Symphony API Spec
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - FDC3
-      - Common Domain Model
-      - Common Cloud Controls
-      - Morphir
-      - Symphony API Spec
+  - name: FDC3 Desktop Agent
+    scope: implementer
+    metric: varies
+    limit: governed by the desktop agent vendor (no FINOS-imposed limit)
+  - name: Symphony Pod / Agent / Authenticator API
+    scope: deployment
+    metric: varies
+    limit: governed by Symphony Communication Services for the customer's pod (no FINOS-imposed limit)
+    notes: Refer to Symphony's own platform documentation for current per-pod rate ceilings.
+  - name: CDM / CCC / Morphir
+    scope: implementer
+    metric: varies
+    limit: standards / libraries — no hosted API surface; no rate limit
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Standards-only stewardship
+    description: FINOS stewards specifications, not hosted services. Rate limits live with the implementer
+      / vendor that operates the API endpoint.
+  - name: GitHub-hosted artifacts
+    description: Specs and reference implementations live on github.com/finos under permissive open-source
+      licenses; consumers should clone / fork rather than depend on a FINOS-hosted endpoint.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
