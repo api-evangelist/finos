@@ -1,0 +1,97 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Agent API — Share
+  description: 'Agent API — Share. 1 operations. Lead operation: PROVISIONAL -  Share a piece of content into Symphony. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Share
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-agent-share
+    baseUri: ''
+    description: Agent API — Share business capability. Self-contained, no shared references.
+    resources:
+    - name: v3-stream-sid-share
+      path: /v3/stream/{sid}/share
+      operations:
+      - name: post
+        method: POST
+        description: PROVISIONAL -  Share a piece of content into Symphony
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sid
+          in: path
+          type: string
+          description: Stream ID
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-agent-share-rest
+    port: 8080
+    description: REST adapter for Agent API — Share. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v3/stream/{sid}/share
+      name: v3-stream-sid-share
+      description: REST surface for v3-stream-sid-share.
+      operations:
+      - method: POST
+        name: post
+        description: PROVISIONAL -  Share a piece of content into Symphony
+        call: symphony-agent-share.post
+        with:
+          sid: rest.sid
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-agent-share-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Agent API — Share. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: provisional-share-piece-content-symphony
+      description: PROVISIONAL -  Share a piece of content into Symphony
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-agent-share.post
+      with:
+        sid: tools.sid
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

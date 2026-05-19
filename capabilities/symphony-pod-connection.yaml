@@ -1,0 +1,332 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Connection
+  description: 'Pod API — Connection. 6 operations. Lead operation: Accept the connection request for the requesting user.
+    Self-contained Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Connection
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-connection
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Connection business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-connection-accept
+      path: /v1/connection/accept
+      operations:
+      - name: post
+        method: POST
+        description: Accept the connection request for the requesting user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: connectionRequest
+          in: body
+          type: string
+          required: true
+    - name: v1-connection-create
+      path: /v1/connection/create
+      operations:
+      - name: post
+        method: POST
+        description: Sends an invitation to connect with another user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: connectionRequest
+          in: body
+          type: string
+          required: true
+    - name: v1-connection-list
+      path: /v1/connection/list
+      operations:
+      - name: get
+        method: GET
+        description: List of requesting user's connection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: status
+          in: query
+          type: string
+          description: Filter the connection list based on the connection status.
+        - name: userIds
+          in: query
+          type: string
+          description: The userIds parameter should be specified as a comma delimited list of user ids and can be used to
+            restrict the results of a specific connection.
+    - name: v1-connection-reject
+      path: /v1/connection/reject
+      operations:
+      - name: post
+        method: POST
+        description: Reject the connection request for the requesting user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: connectionRequest
+          in: body
+          type: string
+          required: true
+    - name: v1-connection-user-uid-remove
+      path: /v1/connection/user/{uid}/remove
+      operations:
+      - name: post
+        method: POST
+        description: Removes a connection with a user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-connection-user-userId-info
+      path: /v1/connection/user/{userId}/info
+      operations:
+      - name: get
+        method: GET
+        description: The status of the connection invitation to another user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: userId
+          in: path
+          type: string
+          description: user Id
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-connection-rest
+    port: 8080
+    description: REST adapter for Pod API — Connection. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v1/connection/accept
+      name: v1-connection-accept
+      description: REST surface for v1-connection-accept.
+      operations:
+      - method: POST
+        name: post
+        description: Accept the connection request for the requesting user
+        call: symphony-pod-connection.post
+        with:
+          sessionToken: rest.sessionToken
+          connectionRequest: rest.connectionRequest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connection/create
+      name: v1-connection-create
+      description: REST surface for v1-connection-create.
+      operations:
+      - method: POST
+        name: post
+        description: Sends an invitation to connect with another user
+        call: symphony-pod-connection.post
+        with:
+          sessionToken: rest.sessionToken
+          connectionRequest: rest.connectionRequest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connection/list
+      name: v1-connection-list
+      description: REST surface for v1-connection-list.
+      operations:
+      - method: GET
+        name: get
+        description: List of requesting user's connection
+        call: symphony-pod-connection.get
+        with:
+          sessionToken: rest.sessionToken
+          status: rest.status
+          userIds: rest.userIds
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connection/reject
+      name: v1-connection-reject
+      description: REST surface for v1-connection-reject.
+      operations:
+      - method: POST
+        name: post
+        description: Reject the connection request for the requesting user.
+        call: symphony-pod-connection.post
+        with:
+          sessionToken: rest.sessionToken
+          connectionRequest: rest.connectionRequest
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connection/user/{uid}/remove
+      name: v1-connection-user-uid-remove
+      description: REST surface for v1-connection-user-uid-remove.
+      operations:
+      - method: POST
+        name: post
+        description: Removes a connection with a user.
+        call: symphony-pod-connection.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/connection/user/{userid}/info
+      name: v1-connection-user-userid-info
+      description: REST surface for v1-connection-user-userId-info.
+      operations:
+      - method: GET
+        name: get
+        description: The status of the connection invitation to another user.
+        call: symphony-pod-connection.get
+        with:
+          sessionToken: rest.sessionToken
+          userId: rest.userId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-connection-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Connection. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: accept-connection-request-requesting-user
+      description: Accept the connection request for the requesting user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-connection.post
+      with:
+        sessionToken: tools.sessionToken
+        connectionRequest: tools.connectionRequest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: sends-invitation-connect-another-user
+      description: Sends an invitation to connect with another user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-connection.post
+      with:
+        sessionToken: tools.sessionToken
+        connectionRequest: tools.connectionRequest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-requesting-user-s-connection
+      description: List of requesting user's connection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-connection.get
+      with:
+        sessionToken: tools.sessionToken
+        status: tools.status
+        userIds: tools.userIds
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reject-connection-request-requesting-user
+      description: Reject the connection request for the requesting user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-connection.post
+      with:
+        sessionToken: tools.sessionToken
+        connectionRequest: tools.connectionRequest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removes-connection-user
+      description: Removes a connection with a user.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-connection.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: status-connection-invitation-another-user
+      description: The status of the connection invitation to another user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-connection.get
+      with:
+        sessionToken: tools.sessionToken
+        userId: tools.userId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,84 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Message
+  description: 'Pod API — Message. 1 operations. Lead operation: Get the read status of a particular message.. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Message
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-message
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Message business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-message-mid-status
+      path: /v1/message/{mid}/status
+      operations:
+      - name: get
+        method: GET
+        description: Get the read status of a particular message.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: mid
+          in: path
+          type: string
+          description: Message ID
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-message-rest
+    port: 8080
+    description: REST adapter for Pod API — Message. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v1/message/{mid}/status
+      name: v1-message-mid-status
+      description: REST surface for v1-message-mid-status.
+      operations:
+      - method: GET
+        name: get
+        description: Get the read status of a particular message.
+        call: symphony-pod-message.get
+        with:
+          mid: rest.mid
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-message-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Message. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-read-status-particular-message
+      description: Get the read status of a particular message.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-message.get
+      with:
+        mid: tools.mid
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

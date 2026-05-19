@@ -1,0 +1,254 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Agent API — Datafeed
+  description: 'Agent API — Datafeed. 4 operations. Lead operation: Returns the list of active datafeeds of the user.. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Datafeed
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-agent-datafeed
+    baseUri: ''
+    description: Agent API — Datafeed business capability. Self-contained, no shared references.
+    resources:
+    - name: v5-datafeeds
+      path: /v5/datafeeds
+      operations:
+      - name: listdatafeed
+        method: GET
+        description: Returns the list of active datafeeds of the user.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+        - name: tag
+          in: query
+          type: string
+          description: A unique identifier to ensure uniqueness of the datafeed. Used to restrict search.
+      - name: createdatafeed
+        method: POST
+        description: Create a new real time feed of messages and events.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v5-datafeeds-datafeedId
+      path: /v5/datafeeds/{datafeedId}
+      operations:
+      - name: deletedatafeed
+        method: DELETE
+        description: Delete the specified real time message / event stream ("datafeed").
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: datafeedId
+          in: path
+          type: string
+          description: ID of the datafeed
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+    - name: v5-datafeeds-datafeedId-read
+      path: /v5/datafeeds/{datafeedId}/read
+      operations:
+      - name: readdatafeed
+        method: POST
+        description: Read the specified real time message / event stream ("datafeed").
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: datafeedId
+          in: path
+          type: string
+          description: ID of the datafeed
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+  exposes:
+  - type: rest
+    namespace: symphony-agent-datafeed-rest
+    port: 8080
+    description: REST adapter for Agent API — Datafeed. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v5/datafeeds
+      name: v5-datafeeds
+      description: REST surface for v5-datafeeds.
+      operations:
+      - method: GET
+        name: listdatafeed
+        description: Returns the list of active datafeeds of the user.
+        call: symphony-agent-datafeed.listdatafeed
+        with:
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+          tag: rest.tag
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdatafeed
+        description: Create a new real time feed of messages and events.
+        call: symphony-agent-datafeed.createdatafeed
+        with:
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v5/datafeeds/{datafeedid}
+      name: v5-datafeeds-datafeedid
+      description: REST surface for v5-datafeeds-datafeedId.
+      operations:
+      - method: DELETE
+        name: deletedatafeed
+        description: Delete the specified real time message / event stream ("datafeed").
+        call: symphony-agent-datafeed.deletedatafeed
+        with:
+          datafeedId: rest.datafeedId
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v5/datafeeds/{datafeedid}/read
+      name: v5-datafeeds-datafeedid-read
+      description: REST surface for v5-datafeeds-datafeedId-read.
+      operations:
+      - method: POST
+        name: readdatafeed
+        description: Read the specified real time message / event stream ("datafeed").
+        call: symphony-agent-datafeed.readdatafeed
+        with:
+          datafeedId: rest.datafeedId
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-agent-datafeed-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Agent API — Datafeed. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: returns-list-active-datafeeds-user
+      description: Returns the list of active datafeeds of the user.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-agent-datafeed.listdatafeed
+      with:
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+        tag: tools.tag
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-real-time-feed
+      description: Create a new real time feed of messages and events.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-agent-datafeed.createdatafeed
+      with:
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-specified-real-time-message
+      description: Delete the specified real time message / event stream ("datafeed").
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: symphony-agent-datafeed.deletedatafeed
+      with:
+        datafeedId: tools.datafeedId
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: read-specified-real-time-message
+      description: Read the specified real time message / event stream ("datafeed").
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-agent-datafeed.readdatafeed
+      with:
+        datafeedId: tools.datafeedId
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

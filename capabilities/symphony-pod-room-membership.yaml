@@ -1,0 +1,470 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Room Membership
+  description: 'Pod API — Room Membership. 8 operations. Lead operation: Add a member to an existing room.. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Room Membership
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-room-membership
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Room Membership business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-admin-room-id-membership-add
+      path: /v1/admin/room/{id}/membership/add
+      operations:
+      - name: post
+        method: POST
+        description: Add a member to an existing room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-admin-room-id-membership-list
+      path: /v1/admin/room/{id}/membership/list
+      operations:
+      - name: get
+        method: GET
+        description: Lists current and previous members of an existing room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: includePastMembers
+          in: query
+          type: boolean
+          description: If true, the membership list will include past members of the stream. If false, the listing will only
+            incude current members. Default false.
+    - name: v1-admin-room-id-membership-remove
+      path: /v1/admin/room/{id}/membership/remove
+      operations:
+      - name: post
+        method: POST
+        description: Remove a member from a room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-room-id-membership-add
+      path: /v1/room/{id}/membership/add
+      operations:
+      - name: post
+        method: POST
+        description: Adds new member to an existing room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-room-id-membership-demoteOwner
+      path: /v1/room/{id}/membership/demoteOwner
+      operations:
+      - name: post
+        method: POST
+        description: Demotes room owner.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-room-id-membership-promoteOwner
+      path: /v1/room/{id}/membership/promoteOwner
+      operations:
+      - name: post
+        method: POST
+        description: Promotes user to owner.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-room-id-membership-remove
+      path: /v1/room/{id}/membership/remove
+      operations:
+      - name: post
+        method: POST
+        description: Removes member from an existing room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v2-room-id-membership-list
+      path: /v2/room/{id}/membership/list
+      operations:
+      - name: get
+        method: GET
+        description: Lists current members of an existing room.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-room-membership-rest
+    port: 8080
+    description: REST adapter for Pod API — Room Membership. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/admin/room/{id}/membership/add
+      name: v1-admin-room-id-membership-add
+      description: REST surface for v1-admin-room-id-membership-add.
+      operations:
+      - method: POST
+        name: post
+        description: Add a member to an existing room.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/room/{id}/membership/list
+      name: v1-admin-room-id-membership-list
+      description: REST surface for v1-admin-room-id-membership-list.
+      operations:
+      - method: GET
+        name: get
+        description: Lists current and previous members of an existing room.
+        call: symphony-pod-room-membership.get
+        with:
+          id: rest.id
+          sessionToken: rest.sessionToken
+          includePastMembers: rest.includePastMembers
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/room/{id}/membership/remove
+      name: v1-admin-room-id-membership-remove
+      description: REST surface for v1-admin-room-id-membership-remove.
+      operations:
+      - method: POST
+        name: post
+        description: Remove a member from a room.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/room/{id}/membership/add
+      name: v1-room-id-membership-add
+      description: REST surface for v1-room-id-membership-add.
+      operations:
+      - method: POST
+        name: post
+        description: Adds new member to an existing room.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/room/{id}/membership/demoteowner
+      name: v1-room-id-membership-demoteowner
+      description: REST surface for v1-room-id-membership-demoteOwner.
+      operations:
+      - method: POST
+        name: post
+        description: Demotes room owner.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/room/{id}/membership/promoteowner
+      name: v1-room-id-membership-promoteowner
+      description: REST surface for v1-room-id-membership-promoteOwner.
+      operations:
+      - method: POST
+        name: post
+        description: Promotes user to owner.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/room/{id}/membership/remove
+      name: v1-room-id-membership-remove
+      description: REST surface for v1-room-id-membership-remove.
+      operations:
+      - method: POST
+        name: post
+        description: Removes member from an existing room.
+        call: symphony-pod-room-membership.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/room/{id}/membership/list
+      name: v2-room-id-membership-list
+      description: REST surface for v2-room-id-membership-list.
+      operations:
+      - method: GET
+        name: get
+        description: Lists current members of an existing room.
+        call: symphony-pod-room-membership.get
+        with:
+          id: rest.id
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-room-membership-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Room Membership. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: add-member-existing-room
+      description: Add a member to an existing room.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lists-current-and-previous-members
+      description: Lists current and previous members of an existing room.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-room-membership.get
+      with:
+        id: tools.id
+        sessionToken: tools.sessionToken
+        includePastMembers: tools.includePastMembers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-member-room
+      description: Remove a member from a room.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: adds-new-member-existing-room
+      description: Adds new member to an existing room.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: demotes-room-owner
+      description: Demotes room owner.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: promotes-user-owner
+      description: Promotes user to owner.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: removes-member-existing-room
+      description: Removes member from an existing room.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-room-membership.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: lists-current-members-existing-room
+      description: Lists current members of an existing room.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-room-membership.get
+      with:
+        id: tools.id
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

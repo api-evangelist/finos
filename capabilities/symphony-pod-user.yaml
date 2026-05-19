@@ -1,0 +1,1399 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — User
+  description: 'Pod API — User. 26 operations. Lead operation: Get a list of all roles available in the company (pod). Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - User
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-user
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — User business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-admin-system-roles-list
+      path: /v1/admin/system/roles/list
+      operations:
+      - name: get
+        method: GET
+        description: Get a list of all roles available in the company (pod)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-admin-user-find
+      path: /v1/admin/user/find
+      operations:
+      - name: post
+        method: POST
+        description: Find a user based on attributes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Number of users to skip. Default is 0. Must be a integer equals or bigger than 0.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000.
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-avatar
+      path: /v1/admin/user/{uid}/avatar
+      operations:
+      - name: get
+        method: GET
+        description: Get the URL of the avatar of a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-admin-user-uid-avatar-update
+      path: /v1/admin/user/{uid}/avatar/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the avatar of a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-delegates
+      path: /v1/admin/user/{uid}/delegates
+      operations:
+      - name: get
+        method: GET
+        description: Get the delegates assigned to a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-admin-user-uid-delegates-update
+      path: /v1/admin/user/{uid}/delegates/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the delegates assigned to a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-disclaimer
+      path: /v1/admin/user/{uid}/disclaimer
+      operations:
+      - name: get
+        method: GET
+        description: Get the disclaimer assigned to a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+      - name: delete
+        method: DELETE
+        description: Unassign a disclaimer from a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-admin-user-uid-disclaimer-update
+      path: /v1/admin/user/{uid}/disclaimer/update
+      operations:
+      - name: post
+        method: POST
+        description: Assign a disclaimer to a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-features
+      path: /v1/admin/user/{uid}/features
+      operations:
+      - name: get
+        method: GET
+        description: Get the list of Symphony feature entitlements enabled for a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-admin-user-uid-features-update
+      path: /v1/admin/user/{uid}/features/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the list of Symphony feature entitlements for a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-roles-add
+      path: /v1/admin/user/{uid}/roles/add
+      operations:
+      - name: post
+        method: POST
+        description: Add a role to a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-roles-remove
+      path: /v1/admin/user/{uid}/roles/remove
+      operations:
+      - name: post
+        method: POST
+        description: Remove a role from a user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-uid-status
+      path: /v1/admin/user/{uid}/status
+      operations:
+      - name: get
+        method: GET
+        description: Get the status, active or inactive, for a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v1-admin-user-uid-status-update
+      path: /v1/admin/user/{uid}/status/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the status of a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-user-userId-suspension-update
+      path: /v1/admin/user/{userId}/suspension/update
+      operations:
+      - name: put
+        method: PUT
+        description: Update the status of suspension of a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token
+          required: true
+        - name: userId
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v1-user-manifest-own
+      path: /v1/user/manifest/own
+      operations:
+      - name: post
+        method: POST
+        description: Update own service account manifest
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: manifest
+          in: body
+          type: string
+          description: Service Account Manifest to put in user account
+          required: true
+      - name: get
+        method: GET
+        description: Get own service account manifest
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-user-uid-follow
+      path: /v1/user/{uid}/follow
+      operations:
+      - name: post
+        method: POST
+        description: Make a list of users start following a specific user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer of the user to be followed
+          required: true
+        - name: uidList
+          in: body
+          type: string
+          description: List of (integer) User IDs of the followers
+          required: true
+    - name: v1-user-uid-followers
+      path: /v1/user/{uid}/followers
+      operations:
+      - name: get
+        method: GET
+        description: Returns the list of followers for a specific user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer of the user we want to get the followers list
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: This is the maximum number of objects that may be returned.
+        - name: before
+          in: query
+          type: string
+          description: Returns results from an opaque “before” cursor value as presented via a response cursor.
+        - name: after
+          in: query
+          type: string
+          description: Returns results from an opaque “after” cursor value as presented via a response cursor.
+    - name: v1-user-uid-following
+      path: /v1/user/{uid}/following
+      operations:
+      - name: get
+        method: GET
+        description: Returns the list of users that a specific user is following
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer of the user we want to get the following list
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: This is the maximum number of objects that may be returned.
+        - name: before
+          in: query
+          type: string
+          description: Returns results from an opaque “before” cursor value as presented via a response cursor.
+        - name: after
+          in: query
+          type: string
+          description: Returns results from an opaque “after” cursor value as presented via a response cursor.
+    - name: v1-user-uid-unfollow
+      path: /v1/user/{uid}/unfollow
+      operations:
+      - name: post
+        method: POST
+        description: Make a list of users unfollowing a specific user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer of the user to be unfollowed
+          required: true
+        - name: uidList
+          in: body
+          type: string
+          description: List of (integer) User IDs of the followers
+          required: true
+    - name: v2-admin-user-create
+      path: /v2/admin/user/create
+      operations:
+      - name: post
+        method: POST
+        description: Create a new V2 User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+    - name: v2-admin-user-list
+      path: /v2/admin/user/list
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve a list of all users in the company (pod)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session Authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Number of users to skip. Default is 0. Must be a integer equals or bigger than 0.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000.
+    - name: v2-admin-user-uid
+      path: /v2/admin/user/{uid}
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve V2 User details for a particular user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+    - name: v2-admin-user-uid-update
+      path: /v2/admin/user/{uid}/update
+      operations:
+      - name: post
+        method: POST
+        description: Update an existing V2 User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-user-rest
+    port: 8080
+    description: REST adapter for Pod API — User. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/admin/system/roles/list
+      name: v1-admin-system-roles-list
+      description: REST surface for v1-admin-system-roles-list.
+      operations:
+      - method: GET
+        name: get
+        description: Get a list of all roles available in the company (pod)
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/find
+      name: v1-admin-user-find
+      description: REST surface for v1-admin-user-find.
+      operations:
+      - method: POST
+        name: post
+        description: Find a user based on attributes
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/avatar
+      name: v1-admin-user-uid-avatar
+      description: REST surface for v1-admin-user-uid-avatar.
+      operations:
+      - method: GET
+        name: get
+        description: Get the URL of the avatar of a particular user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/avatar/update
+      name: v1-admin-user-uid-avatar-update
+      description: REST surface for v1-admin-user-uid-avatar-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the avatar of a particular user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/delegates
+      name: v1-admin-user-uid-delegates
+      description: REST surface for v1-admin-user-uid-delegates.
+      operations:
+      - method: GET
+        name: get
+        description: Get the delegates assigned to a user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/delegates/update
+      name: v1-admin-user-uid-delegates-update
+      description: REST surface for v1-admin-user-uid-delegates-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the delegates assigned to a user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/disclaimer
+      name: v1-admin-user-uid-disclaimer
+      description: REST surface for v1-admin-user-uid-disclaimer.
+      operations:
+      - method: GET
+        name: get
+        description: Get the disclaimer assigned to a user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete
+        description: Unassign a disclaimer from a user
+        call: symphony-pod-user.delete
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/disclaimer/update
+      name: v1-admin-user-uid-disclaimer-update
+      description: REST surface for v1-admin-user-uid-disclaimer-update.
+      operations:
+      - method: POST
+        name: post
+        description: Assign a disclaimer to a user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/features
+      name: v1-admin-user-uid-features
+      description: REST surface for v1-admin-user-uid-features.
+      operations:
+      - method: GET
+        name: get
+        description: Get the list of Symphony feature entitlements enabled for a particular user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/features/update
+      name: v1-admin-user-uid-features-update
+      description: REST surface for v1-admin-user-uid-features-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the list of Symphony feature entitlements for a particular user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/roles/add
+      name: v1-admin-user-uid-roles-add
+      description: REST surface for v1-admin-user-uid-roles-add.
+      operations:
+      - method: POST
+        name: post
+        description: Add a role to a user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/roles/remove
+      name: v1-admin-user-uid-roles-remove
+      description: REST surface for v1-admin-user-uid-roles-remove.
+      operations:
+      - method: POST
+        name: post
+        description: Remove a role from a user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/status
+      name: v1-admin-user-uid-status
+      description: REST surface for v1-admin-user-uid-status.
+      operations:
+      - method: GET
+        name: get
+        description: Get the status, active or inactive, for a particular user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/status/update
+      name: v1-admin-user-uid-status-update
+      description: REST surface for v1-admin-user-uid-status-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the status of a particular user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{userid}/suspension/update
+      name: v1-admin-user-userid-suspension-update
+      description: REST surface for v1-admin-user-userId-suspension-update.
+      operations:
+      - method: PUT
+        name: put
+        description: Update the status of suspension of a particular user
+        call: symphony-pod-user.put
+        with:
+          sessionToken: rest.sessionToken
+          userId: rest.userId
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/user/manifest/own
+      name: v1-user-manifest-own
+      description: REST surface for v1-user-manifest-own.
+      operations:
+      - method: POST
+        name: post
+        description: Update own service account manifest
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          manifest: rest.manifest
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: get
+        description: Get own service account manifest
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/user/{uid}/follow
+      name: v1-user-uid-follow
+      description: REST surface for v1-user-uid-follow.
+      operations:
+      - method: POST
+        name: post
+        description: Make a list of users start following a specific user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          uidList: rest.uidList
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/user/{uid}/followers
+      name: v1-user-uid-followers
+      description: REST surface for v1-user-uid-followers.
+      operations:
+      - method: GET
+        name: get
+        description: Returns the list of followers for a specific user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          limit: rest.limit
+          before: rest.before
+          after: rest.after
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/user/{uid}/following
+      name: v1-user-uid-following
+      description: REST surface for v1-user-uid-following.
+      operations:
+      - method: GET
+        name: get
+        description: Returns the list of users that a specific user is following
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          limit: rest.limit
+          before: rest.before
+          after: rest.after
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/user/{uid}/unfollow
+      name: v1-user-uid-unfollow
+      description: REST surface for v1-user-uid-unfollow.
+      operations:
+      - method: POST
+        name: post
+        description: Make a list of users unfollowing a specific user
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          uidList: rest.uidList
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/admin/user/create
+      name: v2-admin-user-create
+      description: REST surface for v2-admin-user-create.
+      operations:
+      - method: POST
+        name: post
+        description: Create a new V2 User
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/admin/user/list
+      name: v2-admin-user-list
+      description: REST surface for v2-admin-user-list.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve a list of all users in the company (pod)
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/admin/user/{uid}
+      name: v2-admin-user-uid
+      description: REST surface for v2-admin-user-uid.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve V2 User details for a particular user
+        call: symphony-pod-user.get
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/admin/user/{uid}/update
+      name: v2-admin-user-uid-update
+      description: REST surface for v2-admin-user-uid-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update an existing V2 User
+        call: symphony-pod-user.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          payload: rest.payload
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-user-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — User. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-list-all-roles-available
+      description: Get a list of all roles available in the company (pod)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: find-user-based-attributes
+      description: Find a user based on attributes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-url-avatar-particular-user
+      description: Get the URL of the avatar of a particular user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-avatar-particular-user
+      description: Update the avatar of a particular user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-delegates-assigned-user
+      description: Get the delegates assigned to a user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-delegates-assigned-user
+      description: Update the delegates assigned to a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-disclaimer-assigned-user
+      description: Get the disclaimer assigned to a user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: unassign-disclaimer-user
+      description: Unassign a disclaimer from a user
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: symphony-pod-user.delete
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: assign-disclaimer-user
+      description: Assign a disclaimer to a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-symphony-feature-entitlements
+      description: Get the list of Symphony feature entitlements enabled for a particular user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-list-symphony-feature-entitlements
+      description: Update the list of Symphony feature entitlements for a particular user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-role-user
+      description: Add a role to a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-role-user
+      description: Remove a role from a user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-status-active-inactive-particular
+      description: Get the status, active or inactive, for a particular user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-status-particular-user
+      description: Update the status of a particular user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-status-suspension-particular-user
+      description: Update the status of suspension of a particular user
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.put
+      with:
+        sessionToken: tools.sessionToken
+        userId: tools.userId
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-own-service-account-manifest
+      description: Update own service account manifest
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        manifest: tools.manifest
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-own-service-account-manifest
+      description: Get own service account manifest
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: make-list-users-start-following
+      description: Make a list of users start following a specific user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        uidList: tools.uidList
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-list-followers-specific-user
+      description: Returns the list of followers for a specific user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        limit: tools.limit
+        before: tools.before
+        after: tools.after
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: returns-list-users-that-specific
+      description: Returns the list of users that a specific user is following
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        limit: tools.limit
+        before: tools.before
+        after: tools.after
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: make-list-users-unfollowing-specific
+      description: Make a list of users unfollowing a specific user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        uidList: tools.uidList
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-v2-user
+      description: Create a new V2 User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-list-all-users-company
+      description: Retrieve a list of all users in the company (pod)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-v2-user-details-particular
+      description: Retrieve V2 User details for a particular user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-user.get
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-existing-v2-user
+      description: Update an existing V2 User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-user.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        payload: tools.payload
+      outputParameters:
+      - type: object
+        mapping: $.

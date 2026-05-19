@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Authenticator API — CertificatePod
+  description: 'Authenticator API — CertificatePod. 1 operations. Lead operation: Retrieve the certificate that can be use
+    to validate the JWT token obtain
+
+    through the extension application authentication flow.. Self-contained Naftiko capability covering one Finos business
+    surface.'
+  tags:
+  - Finos
+  - CertificatePod
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-authenticator-certificatepod
+    baseUri: ''
+    description: Authenticator API — CertificatePod business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-app-pod-certificate
+      path: /v1/app/pod/certificate
+      operations:
+      - name: get
+        method: GET
+        description: Retrieve the certificate that can be use to validate the JWT token obtain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: symphony-authenticator-certificatepod-rest
+    port: 8080
+    description: REST adapter for Authenticator API — CertificatePod. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/v1/app/pod/certificate
+      name: v1-app-pod-certificate
+      description: REST surface for v1-app-pod-certificate.
+      operations:
+      - method: GET
+        name: get
+        description: Retrieve the certificate that can be use to validate the JWT token obtain
+        call: symphony-authenticator-certificatepod.get
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-authenticator-certificatepod-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Authenticator API — CertificatePod. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: retrieve-certificate-that-can-be
+      description: Retrieve the certificate that can be use to validate the JWT token obtain
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-authenticator-certificatepod.get
+      outputParameters:
+      - type: object
+        mapping: $.

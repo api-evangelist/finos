@@ -1,0 +1,453 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Security
+  description: 'Pod API — Security. 8 operations. Lead operation: Delete a company certificate. Self-contained Naftiko capability
+    covering one Finos business surface.'
+  tags:
+  - Finos
+  - Security
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-security
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Security business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-companycert-delete
+      path: /v1/companycert/delete
+      operations:
+      - name: post
+        method: POST
+        description: Delete a company certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: fingerPrint
+          in: body
+          type: string
+          required: true
+    - name: v1-companycert-list
+      path: /v1/companycert/list
+      operations:
+      - name: get
+        method: GET
+        description: List all trusted certs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Pagination start
+        - name: limit
+          in: query
+          type: integer
+          description: Row limit
+    - name: v1-companycert-podmanaged-list
+      path: /v1/companycert/podmanaged/list
+      operations:
+      - name: get
+        method: GET
+        description: List all trusted certs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Pagination start
+        - name: limit
+          in: query
+          type: integer
+          description: Row limit
+    - name: v1-companycert-type-list
+      path: /v1/companycert/type/list
+      operations:
+      - name: post
+        method: POST
+        description: List all certs of the given types
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: typeIdList
+          in: body
+          type: string
+          description: Certificate type list
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Pagination start
+        - name: limit
+          in: query
+          type: integer
+          description: Row limit
+    - name: v1-companycert-fingerPrint-get
+      path: /v1/companycert/{fingerPrint}/get
+      operations:
+      - name: get
+        method: GET
+        description: Get the details of a company certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fingerPrint
+          in: path
+          type: string
+          description: Certificate fingerPrint (ID)
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-companycert-fingerPrint-issuedBy
+      path: /v1/companycert/{fingerPrint}/issuedBy
+      operations:
+      - name: get
+        method: GET
+        description: Return a list of all certificates which were verified to the cert whose
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fingerPrint
+          in: path
+          type: string
+          description: Certificate fingerPrint (ID)
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-companycert-fingerPrint-update
+      path: /v1/companycert/{fingerPrint}/update
+      operations:
+      - name: post
+        method: POST
+        description: Update a company certificate
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fingerPrint
+          in: path
+          type: string
+          description: Certificate fingerPrint (ID)
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: certAttributes
+          in: body
+          type: string
+          required: true
+    - name: v2-companycert-create
+      path: /v2/companycert/create
+      operations:
+      - name: post
+        method: POST
+        description: Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: cert
+          in: body
+          type: string
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-security-rest
+    port: 8080
+    description: REST adapter for Pod API — Security. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v1/companycert/delete
+      name: v1-companycert-delete
+      description: REST surface for v1-companycert-delete.
+      operations:
+      - method: POST
+        name: post
+        description: Delete a company certificate
+        call: symphony-pod-security.post
+        with:
+          sessionToken: rest.sessionToken
+          fingerPrint: rest.fingerPrint
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/list
+      name: v1-companycert-list
+      description: REST surface for v1-companycert-list.
+      operations:
+      - method: GET
+        name: get
+        description: List all trusted certs
+        call: symphony-pod-security.get
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/podmanaged/list
+      name: v1-companycert-podmanaged-list
+      description: REST surface for v1-companycert-podmanaged-list.
+      operations:
+      - method: GET
+        name: get
+        description: List all trusted certs
+        call: symphony-pod-security.get
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/type/list
+      name: v1-companycert-type-list
+      description: REST surface for v1-companycert-type-list.
+      operations:
+      - method: POST
+        name: post
+        description: List all certs of the given types
+        call: symphony-pod-security.post
+        with:
+          typeIdList: rest.typeIdList
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/{fingerprint}/get
+      name: v1-companycert-fingerprint-get
+      description: REST surface for v1-companycert-fingerPrint-get.
+      operations:
+      - method: GET
+        name: get
+        description: Get the details of a company certificate
+        call: symphony-pod-security.get
+        with:
+          fingerPrint: rest.fingerPrint
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/{fingerprint}/issuedby
+      name: v1-companycert-fingerprint-issuedby
+      description: REST surface for v1-companycert-fingerPrint-issuedBy.
+      operations:
+      - method: GET
+        name: get
+        description: Return a list of all certificates which were verified to the cert whose
+        call: symphony-pod-security.get
+        with:
+          fingerPrint: rest.fingerPrint
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/companycert/{fingerprint}/update
+      name: v1-companycert-fingerprint-update
+      description: REST surface for v1-companycert-fingerPrint-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update a company certificate
+        call: symphony-pod-security.post
+        with:
+          fingerPrint: rest.fingerPrint
+          sessionToken: rest.sessionToken
+          certAttributes: rest.certAttributes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/companycert/create
+      name: v2-companycert-create
+      description: REST surface for v2-companycert-create.
+      operations:
+      - method: POST
+        name: post
+        description: Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.
+        call: symphony-pod-security.post
+        with:
+          sessionToken: rest.sessionToken
+          cert: rest.cert
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-security-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Security. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: delete-company-certificate
+      description: Delete a company certificate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-security.post
+      with:
+        sessionToken: tools.sessionToken
+        fingerPrint: tools.fingerPrint
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-trusted-certs
+      description: List all trusted certs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-security.get
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-trusted-certs-2
+      description: List all trusted certs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-security.get
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-all-certs-given-types
+      description: List all certs of the given types
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-security.post
+      with:
+        typeIdList: tools.typeIdList
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-company-certificate
+      description: Get the details of a company certificate
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-security.get
+      with:
+        fingerPrint: tools.fingerPrint
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: return-list-all-certificates-which
+      description: Return a list of all certificates which were verified to the cert whose
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-security.get
+      with:
+        fingerPrint: tools.fingerPrint
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-company-certificate
+      description: Update a company certificate
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-security.post
+      with:
+        fingerPrint: tools.fingerPrint
+        sessionToken: tools.sessionToken
+        certAttributes: tools.certAttributes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-company-trusted-untrusted-certificate
+      description: Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-security.post
+      with:
+        sessionToken: tools.sessionToken
+        cert: tools.cert
+      outputParameters:
+      - type: object
+        mapping: $.

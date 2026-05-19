@@ -1,0 +1,940 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Streams
+  description: 'Pod API — Streams. 16 operations. Lead operation: Create a new single or multi party instant message conversation.
+    Self-contained Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Streams
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-streams
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Streams business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-admin-im-create
+      path: /v1/admin/im/create
+      operations:
+      - name: post
+        method: POST
+        description: Create a new single or multi party instant message conversation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uidList
+          in: body
+          type: string
+          description: List of (integer) User IDs of participants
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-admin-room-id-setActive
+      path: /v1/admin/room/{id}/setActive
+      operations:
+      - name: post
+        method: POST
+        description: Deactivate or reactivate a chatroom via AC Portal.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: active
+          in: query
+          type: boolean
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-admin-stream-id-membership-list
+      path: /v1/admin/stream/{id}/membership/list
+      operations:
+      - name: get
+        method: GET
+        description: List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: stream Id
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Number of items to skip. Default is 0.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of items to return. Default is 100 and not to exceed 1000.
+    - name: v1-admin-user-uid-streams-list
+      path: /v1/admin/user/{uid}/streams/list
+      operations:
+      - name: post
+        method: POST
+        description: Retrieve a list of all streams of which this user is a member,
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: uid
+          in: path
+          type: integer
+          description: User ID as a decimal integer
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: No. of results to skip.
+        - name: limit
+          in: query
+          type: integer
+          description: Max no. of results to return. If no value is provided, 50 is the default.
+        - name: filter
+          in: body
+          type: string
+          description: Stream filtering criteria.
+    - name: v1-im-create
+      path: /v1/im/create
+      operations:
+      - name: post
+        method: POST
+        description: Create a new single or multi party instant message conversation between the caller and specified users.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: uidList
+          in: body
+          type: string
+          description: List of (integer) User IDs of participants
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-im-id-info
+      path: /v1/im/{id}/info
+      operations:
+      - name: get
+        method: GET
+        description: Get information about a partcular IM.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: IM streamId
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-im-id-update
+      path: /v1/im/{id}/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the attributes of an existing IM.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: IM streamID
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-room-id-setActive
+      path: /v1/room/{id}/setActive
+      operations:
+      - name: post
+        method: POST
+        description: Deactivate or reactivate a chatroom. At creation, a new chatroom is active.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: active
+          in: query
+          type: boolean
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-streams-list
+      path: /v1/streams/list
+      operations:
+      - name: post
+        method: POST
+        description: Retrieve a list of all streams of which the requesting user is a member,
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: No. of results to skip.
+        - name: limit
+          in: query
+          type: integer
+          description: Max no. of results to return. If no value is provided, 50 is the default.
+        - name: filter
+          in: body
+          type: string
+          description: Stream filtering criteria.
+    - name: v1-streams-sid-attachments
+      path: /v1/streams/{sid}/attachments
+      operations:
+      - name: get
+        method: GET
+        description: Get attachments in a particular stream.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sid
+          in: path
+          type: string
+          description: Stream Id
+          required: true
+        - name: since
+          in: query
+          type: integer
+          description: Timestamp of first required attachment.
+        - name: to
+          in: query
+          type: integer
+          description: Timestamp of last required attachment.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of attachments to return. Default is 50. Must be a positive integer and must not exceed
+            100.
+        - name: sortDir
+          in: query
+          type: string
+          description: 'Attachment date sort direction : ASC or DESC (default to ASC)'
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v2-admin-streams-list
+      path: /v2/admin/streams/list
+      operations:
+      - name: post
+        method: POST
+        description: Retrieve all the streams across the enterprise where the membership of the stream has been modified between
+          a given time range
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Number of items to skip. Default is 0.
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of items to return. Default is 50.  This value cannot exceed 100.
+        - name: filter
+          in: body
+          type: string
+          description: Stream filtering criteria.
+    - name: v2-streams-sid-info
+      path: /v2/streams/{sid}/info
+      operations:
+      - name: get
+        method: GET
+        description: Get information about a partcular stream.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sid
+          in: path
+          type: string
+          description: Stream Id
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v3-room-create
+      path: /v3/room/create
+      operations:
+      - name: post
+        method: POST
+        description: Create a new chatroom.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v3-room-search
+      path: /v3/room/search
+      operations:
+      - name: post
+        method: POST
+        description: Search rooms according to the specified criteria.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: No. of results to skip.
+        - name: limit
+          in: query
+          type: integer
+          description: Max no. of results to return. If no value is provided, 50 is the default. Must be a positive
+        - name: includeNonDiscoverable
+          in: query
+          type: boolean
+          description: Whether the non discoverable rooms should be returned. false by default. Parameter introduced in sbe-25.5.0
+        - name: query
+          in: body
+          type: string
+          description: The search query object.
+          required: true
+    - name: v3-room-id-info
+      path: /v3/room/{id}/info
+      operations:
+      - name: get
+        method: GET
+        description: Get information about a partcular chatroom.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v3-room-id-update
+      path: /v3/room/{id}/update
+      operations:
+      - name: post
+        method: POST
+        description: Update the attributes of an existing chatroom.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: Room streamId
+          required: true
+        - name: payload
+          in: body
+          type: string
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-streams-rest
+    port: 8080
+    description: REST adapter for Pod API — Streams. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v1/admin/im/create
+      name: v1-admin-im-create
+      description: REST surface for v1-admin-im-create.
+      operations:
+      - method: POST
+        name: post
+        description: Create a new single or multi party instant message conversation
+        call: symphony-pod-streams.post
+        with:
+          uidList: rest.uidList
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/room/{id}/setactive
+      name: v1-admin-room-id-setactive
+      description: REST surface for v1-admin-room-id-setActive.
+      operations:
+      - method: POST
+        name: post
+        description: Deactivate or reactivate a chatroom via AC Portal.
+        call: symphony-pod-streams.post
+        with:
+          id: rest.id
+          active: rest.active
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/stream/{id}/membership/list
+      name: v1-admin-stream-id-membership-list
+      description: REST surface for v1-admin-stream-id-membership-list.
+      operations:
+      - method: GET
+        name: get
+        description: List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM
+        call: symphony-pod-streams.get
+        with:
+          id: rest.id
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/user/{uid}/streams/list
+      name: v1-admin-user-uid-streams-list
+      description: REST surface for v1-admin-user-uid-streams-list.
+      operations:
+      - method: POST
+        name: post
+        description: Retrieve a list of all streams of which this user is a member,
+        call: symphony-pod-streams.post
+        with:
+          sessionToken: rest.sessionToken
+          uid: rest.uid
+          skip: rest.skip
+          limit: rest.limit
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/im/create
+      name: v1-im-create
+      description: REST surface for v1-im-create.
+      operations:
+      - method: POST
+        name: post
+        description: Create a new single or multi party instant message conversation between the caller and specified users.
+        call: symphony-pod-streams.post
+        with:
+          uidList: rest.uidList
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/im/{id}/info
+      name: v1-im-id-info
+      description: REST surface for v1-im-id-info.
+      operations:
+      - method: GET
+        name: get
+        description: Get information about a partcular IM.
+        call: symphony-pod-streams.get
+        with:
+          id: rest.id
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/im/{id}/update
+      name: v1-im-id-update
+      description: REST surface for v1-im-id-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the attributes of an existing IM.
+        call: symphony-pod-streams.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/room/{id}/setactive
+      name: v1-room-id-setactive
+      description: REST surface for v1-room-id-setActive.
+      operations:
+      - method: POST
+        name: post
+        description: Deactivate or reactivate a chatroom. At creation, a new chatroom is active.
+        call: symphony-pod-streams.post
+        with:
+          id: rest.id
+          active: rest.active
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/streams/list
+      name: v1-streams-list
+      description: REST surface for v1-streams-list.
+      operations:
+      - method: POST
+        name: post
+        description: Retrieve a list of all streams of which the requesting user is a member,
+        call: symphony-pod-streams.post
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/streams/{sid}/attachments
+      name: v1-streams-sid-attachments
+      description: REST surface for v1-streams-sid-attachments.
+      operations:
+      - method: GET
+        name: get
+        description: Get attachments in a particular stream.
+        call: symphony-pod-streams.get
+        with:
+          sid: rest.sid
+          since: rest.since
+          to: rest.to
+          limit: rest.limit
+          sortDir: rest.sortDir
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/admin/streams/list
+      name: v2-admin-streams-list
+      description: REST surface for v2-admin-streams-list.
+      operations:
+      - method: POST
+        name: post
+        description: Retrieve all the streams across the enterprise where the membership of the stream has been modified between
+          a given time range
+        call: symphony-pod-streams.post
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+          filter: rest.filter
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/streams/{sid}/info
+      name: v2-streams-sid-info
+      description: REST surface for v2-streams-sid-info.
+      operations:
+      - method: GET
+        name: get
+        description: Get information about a partcular stream.
+        call: symphony-pod-streams.get
+        with:
+          sid: rest.sid
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v3/room/create
+      name: v3-room-create
+      description: REST surface for v3-room-create.
+      operations:
+      - method: POST
+        name: post
+        description: Create a new chatroom.
+        call: symphony-pod-streams.post
+        with:
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v3/room/search
+      name: v3-room-search
+      description: REST surface for v3-room-search.
+      operations:
+      - method: POST
+        name: post
+        description: Search rooms according to the specified criteria.
+        call: symphony-pod-streams.post
+        with:
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+          includeNonDiscoverable: rest.includeNonDiscoverable
+          query: rest.query
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v3/room/{id}/info
+      name: v3-room-id-info
+      description: REST surface for v3-room-id-info.
+      operations:
+      - method: GET
+        name: get
+        description: Get information about a partcular chatroom.
+        call: symphony-pod-streams.get
+        with:
+          id: rest.id
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v3/room/{id}/update
+      name: v3-room-id-update
+      description: REST surface for v3-room-id-update.
+      operations:
+      - method: POST
+        name: post
+        description: Update the attributes of an existing chatroom.
+        call: symphony-pod-streams.post
+        with:
+          id: rest.id
+          payload: rest.payload
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-streams-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Streams. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-new-single-multi-party
+      description: Create a new single or multi party instant message conversation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        uidList: tools.uidList
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deactivate-reactivate-chatroom-ac-portal
+      description: Deactivate or reactivate a chatroom via AC Portal.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        id: tools.id
+        active: tools.active
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-current-members-existing-stream
+      description: List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-streams.get
+      with:
+        id: tools.id
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-list-all-streams-which
+      description: Retrieve a list of all streams of which this user is a member,
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        sessionToken: tools.sessionToken
+        uid: tools.uid
+        skip: tools.skip
+        limit: tools.limit
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-single-multi-party-2
+      description: Create a new single or multi party instant message conversation between the caller and specified users.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        uidList: tools.uidList
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-information-about-partcular-im
+      description: Get information about a partcular IM.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-streams.get
+      with:
+        id: tools.id
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-attributes-existing-im
+      description: Update the attributes of an existing IM.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: deactivate-reactivate-chatroom-creation-new
+      description: Deactivate or reactivate a chatroom. At creation, a new chatroom is active.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        id: tools.id
+        active: tools.active
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-list-all-streams-which-2
+      description: Retrieve a list of all streams of which the requesting user is a member,
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-attachments-particular-stream
+      description: Get attachments in a particular stream.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-streams.get
+      with:
+        sid: tools.sid
+        since: tools.since
+        to: tools.to
+        limit: tools.limit
+        sortDir: tools.sortDir
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-all-streams-across-enterprise
+      description: Retrieve all the streams across the enterprise where the membership of the stream has been modified between
+        a given time range
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+        filter: tools.filter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-information-about-partcular-stream
+      description: Get information about a partcular stream.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-streams.get
+      with:
+        sid: tools.sid
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-chatroom
+      description: Create a new chatroom.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: search-rooms-according-specified-criteria
+      description: Search rooms according to the specified criteria.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+        includeNonDiscoverable: tools.includeNonDiscoverable
+        query: tools.query
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-information-about-partcular-chatroom
+      description: Get information about a partcular chatroom.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-streams.get
+      with:
+        id: tools.id
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-attributes-existing-chatroom
+      description: Update the attributes of an existing chatroom.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-streams.post
+      with:
+        id: tools.id
+        payload: tools.payload
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

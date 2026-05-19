@@ -1,0 +1,290 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — InfoBarriers
+  description: 'Pod API — InfoBarriers. 5 operations. Lead operation: Get a list of all Information Barrier Groups. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - InfoBarriers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-infobarriers
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — InfoBarriers business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-admin-group-list
+      path: /v1/admin/group/list
+      operations:
+      - name: get
+        method: GET
+        description: Get a list of all Information Barrier Groups
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+    - name: v1-admin-group-gid-membership-add
+      path: /v1/admin/group/{gid}/membership/add
+      operations:
+      - name: post
+        method: POST
+        description: Add members to an Information Barrier group.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gid
+          in: path
+          type: string
+          description: URL-Safe encoded Group ID
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: users
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-group-gid-membership-list
+      path: /v1/admin/group/{gid}/membership/list
+      operations:
+      - name: get
+        method: GET
+        description: Get the list of userids in this Information Barrier Group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gid
+          in: path
+          type: string
+          description: URL-Safe encoded Group ID
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: skip
+          in: query
+          type: integer
+          description: Number of records to skip. Must be a positive integer.
+        - name: limit
+          in: query
+          type: integer
+          description: Max number of records to return. Default is 10000. Must be a positive integer and must not exceed 10000.
+    - name: v1-admin-group-gid-membership-remove
+      path: /v1/admin/group/{gid}/membership/remove
+      operations:
+      - name: post
+        method: POST
+        description: Remove members from an Information Barrier group
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: gid
+          in: path
+          type: string
+          description: URL-Safe encoded Group ID
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: users
+          in: body
+          type: string
+          required: true
+    - name: v1-admin-policy-list
+      path: /v1/admin/policy/list
+      operations:
+      - name: get
+        method: GET
+        description: Get all Information Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-infobarriers-rest
+    port: 8080
+    description: REST adapter for Pod API — InfoBarriers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/admin/group/list
+      name: v1-admin-group-list
+      description: REST surface for v1-admin-group-list.
+      operations:
+      - method: GET
+        name: get
+        description: Get a list of all Information Barrier Groups
+        call: symphony-pod-infobarriers.get
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/group/{gid}/membership/add
+      name: v1-admin-group-gid-membership-add
+      description: REST surface for v1-admin-group-gid-membership-add.
+      operations:
+      - method: POST
+        name: post
+        description: Add members to an Information Barrier group.
+        call: symphony-pod-infobarriers.post
+        with:
+          gid: rest.gid
+          sessionToken: rest.sessionToken
+          users: rest.users
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/group/{gid}/membership/list
+      name: v1-admin-group-gid-membership-list
+      description: REST surface for v1-admin-group-gid-membership-list.
+      operations:
+      - method: GET
+        name: get
+        description: Get the list of userids in this Information Barrier Group
+        call: symphony-pod-infobarriers.get
+        with:
+          gid: rest.gid
+          sessionToken: rest.sessionToken
+          skip: rest.skip
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/group/{gid}/membership/remove
+      name: v1-admin-group-gid-membership-remove
+      description: REST surface for v1-admin-group-gid-membership-remove.
+      operations:
+      - method: POST
+        name: post
+        description: Remove members from an Information Barrier group
+        call: symphony-pod-infobarriers.post
+        with:
+          gid: rest.gid
+          sessionToken: rest.sessionToken
+          users: rest.users
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/policy/list
+      name: v1-admin-policy-list
+      description: REST surface for v1-admin-policy-list.
+      operations:
+      - method: GET
+        name: get
+        description: Get all Information Policies
+        call: symphony-pod-infobarriers.get
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-infobarriers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — InfoBarriers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-list-all-information-barrier
+      description: Get a list of all Information Barrier Groups
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-infobarriers.get
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-members-information-barrier-group
+      description: Add members to an Information Barrier group.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-infobarriers.post
+      with:
+        gid: tools.gid
+        sessionToken: tools.sessionToken
+        users: tools.users
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-list-userids-this-information
+      description: Get the list of userids in this Information Barrier Group
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-infobarriers.get
+      with:
+        gid: tools.gid
+        sessionToken: tools.sessionToken
+        skip: tools.skip
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-members-information-barrier-group
+      description: Remove members from an Information Barrier group
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-pod-infobarriers.post
+      with:
+        gid: tools.gid
+        sessionToken: tools.sessionToken
+        users: tools.users
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-information-policies
+      description: Get all Information Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-infobarriers.get
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

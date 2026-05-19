@@ -1,0 +1,109 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Authenticator API — CertificateAuthentication
+  description: 'Authenticator API — CertificateAuthentication. 2 operations. Lead operation: Authenticate.. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - CertificateAuthentication
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-authenticator-certificateauthentication
+    baseUri: ''
+    description: Authenticator API — CertificateAuthentication business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-authenticate
+      path: /v1/authenticate
+      operations:
+      - name: post
+        method: POST
+        description: Authenticate.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: v1-logout
+      path: /v1/logout
+      operations:
+      - name: post
+        method: POST
+        description: Logout.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: the session token to logout.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-authenticator-certificateauthentication-rest
+    port: 8080
+    description: REST adapter for Authenticator API — CertificateAuthentication. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/v1/authenticate
+      name: v1-authenticate
+      description: REST surface for v1-authenticate.
+      operations:
+      - method: POST
+        name: post
+        description: Authenticate.
+        call: symphony-authenticator-certificateauthentication.post
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/logout
+      name: v1-logout
+      description: REST surface for v1-logout.
+      operations:
+      - method: POST
+        name: post
+        description: Logout.
+        call: symphony-authenticator-certificateauthentication.post
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-authenticator-certificateauthentication-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Authenticator API — CertificateAuthentication. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: authenticate
+      description: Authenticate.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-authenticator-certificateauthentication.post
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: logout
+      description: Logout.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: symphony-authenticator-certificateauthentication.post
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

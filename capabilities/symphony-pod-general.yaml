@@ -1,0 +1,347 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API
+  description: 'Pod API. 6 operations. Lead operation: Allows iteration of all file extensions supported for upload. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-general
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API business capability. Self-contained, no shared references.
+    resources:
+    - name: file_ext-v1-allowed_extensions
+      path: /file_ext/v1/allowed_extensions
+      operations:
+      - name: listallowedfileextensions
+        method: GET
+        description: Allows iteration of all file extensions supported for upload
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+          description: This is the maximum number of objects that may be returned. A query may return
+        - name: before
+          in: query
+          type: string
+          description: Returns results from an opaque "before" cursor value as presented via a response cursor
+        - name: after
+          in: query
+          type: string
+          description: Returns results from an opaque "after" cursor value as presented via a response cursor
+    - name: file_ext-v1-allowed_extensions-extension
+      path: /file_ext/v1/allowed_extensions/{extension}
+      operations:
+      - name: putallowedfileextension
+        method: PUT
+        description: Allows replacement or creation of a specific file extension supported for upload
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: extension
+          in: path
+          type: string
+          required: true
+        - name: V3FileExtension
+          in: body
+          type: string
+          required: true
+      - name: deleteallowedfileextension
+        method: DELETE
+        description: Allows deletion of a specific file extension supported for upload
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: extension
+          in: path
+          type: string
+          required: true
+    - name: v1-admin-messages
+      path: /v1/admin/messages
+      operations:
+      - name: post
+        method: POST
+        description: Fetch message details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token
+          required: true
+        - name: messageIds
+          in: body
+          type: string
+          description: the ids of the messages to be fetched
+          required: true
+    - name: v1-admin-messages-messageId-metadata-relationships
+      path: /v1/admin/messages/{messageId}/metadata/relationships
+      operations:
+      - name: get
+        method: GET
+        description: Get the message metadata relationship
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: User-Agent
+          in: header
+          type: string
+          description: Request user agent.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: Valid id of a SOCIALMESSAGE
+          required: true
+    - name: v1-admin-messages-messageId-receipts
+      path: /v1/admin/messages/{messageId}/receipts
+      operations:
+      - name: get
+        method: GET
+        description: Fetch receipts details from a specific message.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: messageId
+          in: path
+          type: string
+          description: The message ID
+          required: true
+        - name: before
+          in: query
+          type: string
+          description: Returns results from an opaque “before” cursor value as presented via a response cursor.
+        - name: after
+          in: query
+          type: string
+          description: Returns results from an opaque “after” cursor value as presented via a response cursor.
+  exposes:
+  - type: rest
+    namespace: symphony-pod-general-rest
+    port: 8080
+    description: REST adapter for Pod API. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/file-ext/v1/allowed-extensions
+      name: file-ext-v1-allowed-extensions
+      description: REST surface for file_ext-v1-allowed_extensions.
+      operations:
+      - method: GET
+        name: listallowedfileextensions
+        description: Allows iteration of all file extensions supported for upload
+        call: symphony-pod-general.listallowedfileextensions
+        with:
+          limit: rest.limit
+          before: rest.before
+          after: rest.after
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/file-ext/v1/allowed-extensions/{extension}
+      name: file-ext-v1-allowed-extensions-extension
+      description: REST surface for file_ext-v1-allowed_extensions-extension.
+      operations:
+      - method: PUT
+        name: putallowedfileextension
+        description: Allows replacement or creation of a specific file extension supported for upload
+        call: symphony-pod-general.putallowedfileextension
+        with:
+          sessionToken: rest.sessionToken
+          extension: rest.extension
+          V3FileExtension: rest.V3FileExtension
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteallowedfileextension
+        description: Allows deletion of a specific file extension supported for upload
+        call: symphony-pod-general.deleteallowedfileextension
+        with:
+          sessionToken: rest.sessionToken
+          extension: rest.extension
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/messages
+      name: v1-admin-messages
+      description: REST surface for v1-admin-messages.
+      operations:
+      - method: POST
+        name: post
+        description: Fetch message details
+        call: symphony-pod-general.post
+        with:
+          sessionToken: rest.sessionToken
+          messageIds: rest.messageIds
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/messages/{messageid}/metadata/relationships
+      name: v1-admin-messages-messageid-metadata-relationships
+      description: REST surface for v1-admin-messages-messageId-metadata-relationships.
+      operations:
+      - method: GET
+        name: get
+        description: Get the message metadata relationship
+        call: symphony-pod-general.get
+        with:
+          sessionToken: rest.sessionToken
+          User-Agent: rest.User-Agent
+          messageId: rest.messageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/admin/messages/{messageid}/receipts
+      name: v1-admin-messages-messageid-receipts
+      description: REST surface for v1-admin-messages-messageId-receipts.
+      operations:
+      - method: GET
+        name: get
+        description: Fetch receipts details from a specific message.
+        call: symphony-pod-general.get
+        with:
+          sessionToken: rest.sessionToken
+          messageId: rest.messageId
+          before: rest.before
+          after: rest.after
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-general-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API. One tool per consumed operation, routed inline through this capability's consumes
+      block.
+    tools:
+    - name: allows-iteration-all-file-extensions
+      description: Allows iteration of all file extensions supported for upload
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-general.listallowedfileextensions
+      with:
+        limit: tools.limit
+        before: tools.before
+        after: tools.after
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: allows-replacement-creation-specific-file
+      description: Allows replacement or creation of a specific file extension supported for upload
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: symphony-pod-general.putallowedfileextension
+      with:
+        sessionToken: tools.sessionToken
+        extension: tools.extension
+        V3FileExtension: tools.V3FileExtension
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: allows-deletion-specific-file-extension
+      description: Allows deletion of a specific file extension supported for upload
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: symphony-pod-general.deleteallowedfileextension
+      with:
+        sessionToken: tools.sessionToken
+        extension: tools.extension
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fetch-message-details
+      description: Fetch message details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: symphony-pod-general.post
+      with:
+        sessionToken: tools.sessionToken
+        messageIds: tools.messageIds
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-message-metadata-relationship
+      description: Get the message metadata relationship
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-general.get
+      with:
+        sessionToken: tools.sessionToken
+        User-Agent: tools.User-Agent
+        messageId: tools.messageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: fetch-receipts-details-specific-message
+      description: Fetch receipts details from a specific message.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-general.get
+      with:
+        sessionToken: tools.sessionToken
+        messageId: tools.messageId
+        before: tools.before
+        after: tools.after
+      outputParameters:
+      - type: object
+        mapping: $.

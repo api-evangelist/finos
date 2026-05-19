@@ -1,0 +1,77 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Pod API — Session
+  description: 'Pod API — Session. 1 operations. Lead operation: Get information about the current user''s session.. Self-contained
+    Naftiko capability covering one Finos business surface.'
+  tags:
+  - Finos
+  - Session
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-pod-session
+    baseUri: https://yourpodURL.symphony.com/pod
+    description: Pod API — Session business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-sessioninfo
+      path: /v2/sessioninfo
+      operations:
+      - name: get
+        method: GET
+        description: Get information about the current user's session.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+  exposes:
+  - type: rest
+    namespace: symphony-pod-session-rest
+    port: 8080
+    description: REST adapter for Pod API — Session. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v2/sessioninfo
+      name: v2-sessioninfo
+      description: REST surface for v2-sessioninfo.
+      operations:
+      - method: GET
+        name: get
+        description: Get information about the current user's session.
+        call: symphony-pod-session.get
+        with:
+          sessionToken: rest.sessionToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-pod-session-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Pod API — Session. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-information-about-current-user-s
+      description: Get information about the current user's session.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-pod-session.get
+      with:
+        sessionToken: tools.sessionToken
+      outputParameters:
+      - type: object
+        mapping: $.

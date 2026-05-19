@@ -1,0 +1,104 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Agent API — Attachments
+  description: 'Agent API — Attachments. 1 operations. Lead operation: Download an attachment.. Self-contained Naftiko capability
+    covering one Finos business surface.'
+  tags:
+  - Finos
+  - Attachments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINOS_API_KEY: FINOS_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: symphony-agent-attachments
+    baseUri: ''
+    description: Agent API — Attachments business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-stream-sid-attachment
+      path: /v1/stream/{sid}/attachment
+      operations:
+      - name: get
+        method: GET
+        description: Download an attachment.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: sid
+          in: path
+          type: string
+          description: Stream ID
+          required: true
+        - name: fileId
+          in: query
+          type: string
+          description: The attachment ID (Base64-encoded)
+          required: true
+        - name: messageId
+          in: query
+          type: string
+          description: The ID of the message containing the attachment
+          required: true
+        - name: sessionToken
+          in: header
+          type: string
+          description: Session authentication token.
+          required: true
+        - name: keyManagerToken
+          in: header
+          type: string
+          description: Key Manager authentication token.
+  exposes:
+  - type: rest
+    namespace: symphony-agent-attachments-rest
+    port: 8080
+    description: REST adapter for Agent API — Attachments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v1/stream/{sid}/attachment
+      name: v1-stream-sid-attachment
+      description: REST surface for v1-stream-sid-attachment.
+      operations:
+      - method: GET
+        name: get
+        description: Download an attachment.
+        call: symphony-agent-attachments.get
+        with:
+          sid: rest.sid
+          fileId: rest.fileId
+          messageId: rest.messageId
+          sessionToken: rest.sessionToken
+          keyManagerToken: rest.keyManagerToken
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: symphony-agent-attachments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Agent API — Attachments. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: download-attachment
+      description: Download an attachment.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: symphony-agent-attachments.get
+      with:
+        sid: tools.sid
+        fileId: tools.fileId
+        messageId: tools.messageId
+        sessionToken: tools.sessionToken
+        keyManagerToken: tools.keyManagerToken
+      outputParameters:
+      - type: object
+        mapping: $.
