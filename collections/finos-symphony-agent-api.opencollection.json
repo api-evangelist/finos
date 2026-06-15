@@ -1,0 +1,2082 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Checks health status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/health"
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nReturns the connectivity status of your Agent server. If your Agent server is started and running, the status value will be `UP`\n"
+        },
+        {
+          "info": {
+            "name": "Checks health status of services and users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/health/extended"
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nReturns the connectivity status of the Agent services (**pod**, **key manager** and **datafeed**) as well as users\nconnectivity (**agentservice** and **ceservice**).\n\nThe global status will be set to `DOWN` if at least one of the sub-status is also `DOWN`.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import messages from other systems into Symphony.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/message/import",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a message to be imported into the system.\nAllows you to override the timestamp and author of the message with your desired values.\nThe requesting user must have the Content Management role.\nThe user that the message is intended to have come from must also be present in the conversation.\nThe intended message timestamp must be a valid time from the past. It cannot be a future timestamp.\nOptionally the original message ID can be specified to identify the imported message for the purpose of re"
+        },
+        {
+          "info": {
+            "name": "Post a message to multiple existing streams.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/message/blast",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "sids",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Post a new message to the given list of streams. The stream can be a chatroom,\nan IM or a multiparty IM.\n\nYou may include an attachment on the message.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nIf the message is i"
+        },
+        {
+          "info": {
+            "name": "Get a message by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/message/:id",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Message ID as a URL-safe string"
+              }
+            ]
+          },
+          "docs": "Get a message by ID"
+        },
+        {
+          "info": {
+            "name": "Search messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/message/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The search query. See above for the query syntax."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Describes where content should be searched for that query.\nIt can exclusively apply to Symphony content or to one Connector.\n"
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Messages sort direction : ASC or DESC (default to DESC)\n"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Target search tier : hot, warm or all (default to hot)\n"
+              }
+            ]
+          },
+          "docs": "Search messages according to the specified criteria. The \"query\" parameter takes a search query defined as\n\"field:value\" pairs combined by the operator \"AND\" (e.g. \"text:foo AND autor:bar\"). Supported fields are\n (case-insensitive): \"text\", \"author\", \"hashtag\", \"cashtag\", \"mention\", \"signal\", \"fromDate\", \"toDate\",\n \"streamId\", \"streamType\".\n \"text\" search requires a \"streamId\" to be specified.\n \"streamType\" accepts one of the following values: \"chat\" (IMs and MIMs), \"im\", \"mim\", \"chatroom\", \"pos"
+        },
+        {
+          "info": {
+            "name": "Search messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/message/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Describes where content should be searched for that query.\nIt can exclusively apply to Symphony content or to one Connector.\n"
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Messages sort direction : ASC or DESC (default to DESC)\n"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Target search tier : hot, warm or all (default to hot)\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search messages according to the specified criteria."
+        },
+        {
+          "info": {
+            "name": "Get messages from an existing stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of first required message.\n\nThis is a long integer value representing milliseconds since\nJan 1 1970\n"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of last required message.\n\nThis is a long integer value representing milliseconds since\nJan 1 1970\n"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of messages to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of messages to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "A caller can fetch all unseen messages by passing the timestamp of\nthe last message seen as the since parameter and the number of messages\nwith the same timestamp value already seen as the skip parameter. This\nmeans that every message will be seen exactly once even in the case that\nan additional message is processed with the same timestamp as the last\nmessage returned by the previous call, and the case where there are\nmore than maxMessages with the same timestamp value.\n\nThis method is intended "
+        },
+        {
+          "info": {
+            "name": "Post a message to one existing stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Post a new message to the given stream. The stream can be a chatroom,,an IM or a multiparty IM.\n\nYou may include an attachment on the message.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nIf the message is in Message"
+        },
+        {
+          "info": {
+            "name": "Update an existing message.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message/:mid/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              },
+              {
+                "name": "mid",
+                "value": "",
+                "type": "path",
+                "description": "ID of the message to be updated"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "silent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update an existing message. The existing message must be a valid social message, that has not been deleted.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nRegarding authentication, you must either use the sessionToken "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Attachments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download an attachment.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/stream/:sid/attachment",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "query",
+                "description": "The attachment ID (Base64-encoded)"
+              },
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the message containing the attachment"
+              }
+            ]
+          },
+          "docs": "Downloads the attachment body by the attachment ID, stream ID, and message ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Share",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "PROVISIONAL -  Share a piece of content into Symphony",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/stream/:sid/share",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given a 3rd party content (eg. news article), it can share to the given stream.\nThe stream can be a chatroom, an IM or a multiparty IM.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Util",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Test endpoint, returns input.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/util/echo",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test endpoint, returns input."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Signals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List signals for the requesting user. This includes signals that the user has created and public signals\nto which they subscribed.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of signals to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of signals to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "List signals for the requesting user. This includes signals that the user has created and public signals\nto which they subscribed.\n"
+        },
+        {
+          "info": {
+            "name": "Get details of the requested signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/get",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the signal to display."
+              }
+            ]
+          },
+          "docs": "Get details of the requested signal."
+        },
+        {
+          "info": {
+            "name": "Create a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a signal."
+        },
+        {
+          "info": {
+            "name": "Update a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a signal."
+        },
+        {
+          "info": {
+            "name": "Delete a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ]
+          },
+          "docs": "Delete a signal."
+        },
+        {
+          "info": {
+            "name": "Subscribe to a Signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/subscribe",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              },
+              {
+                "name": "pushed",
+                "value": "",
+                "type": "query",
+                "description": "Prevent the user to unsubscribe (only for bulk subscription)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a Signal."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe to a Signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/unsubscribe",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unsubscribe to a Signal."
+        },
+        {
+          "info": {
+            "name": "Get the subscribers of a signal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/subscribers",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of subscribers to return. If no value is provided, 100 is the default."
+              }
+            ]
+          },
+          "docs": "Get the subscribers of a signal"
+        },
+        {
+          "info": {
+            "name": "Get information about the Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/info"
+          },
+          "docs": "Get information about the Agent"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DLP Policies and Dictionary Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify which page to return (default is 0)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify the number of result to return per page, default is 50. Maximum is 50.\n"
+              }
+            ]
+          },
+          "docs": "Get all policies"
+        },
+        {
+          "info": {
+            "name": "Creates a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new policy with dictionary references.\n\nAt the time of policy creation, the caller should only provide - contentTypes, name, scopes and type. The rest of the information is populated automatically.\n\nNote - You need to enable the policy after creation to start enforcing the policy.\n"
+        },
+        {
+          "info": {
+            "name": "Get a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies/:policyId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              },
+              {
+                "name": "policyVersion",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter, if set to be valid policy version number,  will return policy with specified policyVersion. \nOtherwise, return the latest policy.\n"
+              }
+            ]
+          },
+          "docs": "Get a policy"
+        },
+        {
+          "info": {
+            "name": "Updates a policy. Cannot be used for creation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies/:policyId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the policy (name, type, contentTypes, scopes) and also the dictionaries for a policy.\nWarning: If you send empty list of dictionaries during the update operation, then all the\ndictionaries for this policy are deleted and policy is automatically disabled.\nNote: The policy should already exist.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies/:policyId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              }
+            ]
+          },
+          "docs": "Delete a policy.\nNote: Only disabled policy can be deleted\n"
+        },
+        {
+          "info": {
+            "name": "Enables a policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies/:policyId/enable",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Enables a policy."
+        },
+        {
+          "info": {
+            "name": "Disables a policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/policies/:policyId/disable",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Disables a policy."
+        },
+        {
+          "info": {
+            "name": "Get all dictionary metadatas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify which page to return (default is 0)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify the number of result to return per page, default is 50. Maximum is 50.\n"
+              }
+            ]
+          },
+          "docs": "Get all dictionary metadatas with the latest version. Each dictionary object will only contain meta data of the content.\n"
+        },
+        {
+          "info": {
+            "name": "Create a dictionary",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a dictionary with basic metadata and no content. Only \"name\" and \"type\" field is used to create a new dictionary entry.\n"
+        },
+        {
+          "info": {
+            "name": "Get dictionary metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries/:dictId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dictId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier"
+              },
+              {
+                "name": "dictVersion",
+                "value": "",
+                "type": "query",
+                "description": "If set to be valid dictionary version number, will return dictionary metadata with specified version. \nOtherwise, return the latest dictionary metadata.\n"
+              }
+            ]
+          },
+          "docs": "Get basic information for a dictionary."
+        },
+        {
+          "info": {
+            "name": "Updates a dictionary",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries/:dictId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dictId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the dictionary's basic metadata without content.\nThis API cannot be used for creating a new dictionary.\nIn case of update only \"name\" can be changed.\nNote: All related policies will also have versions updated.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a dictionary",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries/:dictId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dictId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier"
+              }
+            ]
+          },
+          "docs": "Deletes a dictionary.\nNote: All related policies will be affected.\n"
+        },
+        {
+          "info": {
+            "name": "Downloads Base 64 encoded dictionary content.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries/:dictId/data/download",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dictId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier"
+              },
+              {
+                "name": "dictVersion",
+                "value": "",
+                "type": "query",
+                "description": "If set to be valid dictionary version number, will return dictionary with specified version. \nOtherwise, return the latest dictionary.\n"
+              }
+            ]
+          },
+          "docs": "Downloads Base 64 encoded dictionary content."
+        },
+        {
+          "info": {
+            "name": "Override dictionary content with provided content.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/dictionaries/:dictId/data/upload",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "dictId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Override dictionary content with provided content."
+        },
+        {
+          "info": {
+            "name": "Get all policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify which page to return (default is 0)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter to specify the number of result to return per page, default is 50. Maximum is 50.\n"
+              }
+            ]
+          },
+          "docs": "Get all policies"
+        },
+        {
+          "info": {
+            "name": "Creates a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new policy with dictionary references.\nAt the time of policy creation, the caller should only provide - contentTypes, name, scopes and type.\nThe rest of the information is populated automatically.\nNote - You need to enable the policy after creation to start enforcing the policy.\n"
+        },
+        {
+          "info": {
+            "name": "Get a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies/:policyId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              },
+              {
+                "name": "policyVersion",
+                "value": "",
+                "type": "query",
+                "description": "Optional parameter, if set to be valid policy version number,  will return policy with specified policyVersion. \nOtherwise, return the latest policy.\n"
+              }
+            ]
+          },
+          "docs": "Get a policy"
+        },
+        {
+          "info": {
+            "name": "Updates a policy. Cannot be used for creation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies/:policyId/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the policy (name, type, contentTypes, scopes) and also the dictionaries for a policy.\nWarning: If you send empty list of dictionaries during the update operation, then all the\ndictionaries for this policy are deleted and policy is automatically disabled.\nNote: The policy should already exist.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies/:policyId/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path",
+                "description": "Unique dictionary identifier."
+              }
+            ]
+          },
+          "docs": "Delete a policy.\nNote: Only disabled policy can be deleted\n"
+        },
+        {
+          "info": {
+            "name": "Enables a policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies/:policyId/enable",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Enables a policy."
+        },
+        {
+          "info": {
+            "name": "Disables a policy.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/policies/:policyId/disable",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Disables a policy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Violations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on messages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/violations/message",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Get violations as a result of policy enforcement on messages."
+        },
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on streams.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/violations/stream",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Get violations as a result of policy enforcement on streams."
+        },
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on signals.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/dlp/violations/signal",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Get violations as a result of policy enforcement on signals."
+        },
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on messages.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/violations/message",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves DLP v3 message related violations for a given time range"
+        },
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on streams.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/violations/stream",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves DLP v3 signal related violations for a given time range"
+        },
+        {
+          "info": {
+            "name": "Get violations as a result of policy enforcement on signals.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/violations/signal",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Offset of the next chunk of violations. Value is null for the first request."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "Retrieves DLP v3 signal related violations for a given time range"
+        },
+        {
+          "info": {
+            "name": "Get attachments that were sent as part of messages that were flagged by the DLP System.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/dlp/violation/attachment",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "query",
+                "description": "ID of attachment that will be downloaded."
+              },
+              {
+                "name": "violationId",
+                "value": "",
+                "type": "query",
+                "description": "ID of violation that corresponds to the flagged message that contains the attachment"
+              }
+            ]
+          },
+          "docs": "Retrieves attachments from related message violations as a base64 encoded String."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AuditTrail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of  actions performed by a privileged account acting as privileged user given a period of time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/audittrail/privilegeduser",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp in unix timestamp in millseconds."
+              },
+              {
+                "name": "endTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp in unix timestamp in millseconds. If not specified, it assumes to be current time."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Return results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Return results from an opaque “after” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of violations to return. If no value is provided, 50 is the default.\nSome maximums for limit may be enforced for performance reasons.\nThe maximum supported value is 500.\n"
+              },
+              {
+                "name": "initiatorId",
+                "value": "",
+                "type": "query",
+                "description": "If present, only the initiator with this initiator <user id> will be returned."
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "If present, only the audit trail initiated by s user with privileged role acting as\nprivileged user will be returned.\nPrivileged eliglible roles:\nUser Provisioning (USER_PROVISIONING),\nContent Management (CONTENT_MANAGEMENT),\nExpression Filter Policy Management (EF_POLICY_MANAGEMENT),\nSCO (SUPER_COMPLIANCE_OFFICER),\nCO (COMPLIANCE_OFFICER),\nSuper admin (SUPER_ADMINISTRATOR),\nAdmin (ADMINISTRATOR),\nL1 (L1_SUPPORT),\nL2 (L2_SUPPORT),\nScope Manager (SCOPE_MANAGEMENT)\n"
+              }
+            ]
+          },
+          "docs": "Get a list of actions performed by a privileged account acting as privileged user given a period of time."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Datafeed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the list of active datafeeds of the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier to ensure uniqueness of the datafeed. Used to restrict search."
+              }
+            ]
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the [Real Time Events](./docs/real-time-events.md) list.\nIn most cases, only one active datafeed per user is required at a time.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new real time feed of messages and events.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nReturns the ID of the newly created datafeed.\nThis ID should then be used as input to the Read Datafeed endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Delete the specified real time message / event stream (\"datafeed\").",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds/:datafeedId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "datafeedId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the datafeed"
+              }
+            ]
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nDelete the specified datafeed.\n"
+        },
+        {
+          "info": {
+            "name": "Read the specified real time message / event stream (\"datafeed\").",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds/:datafeedId/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "datafeedId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the datafeed"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nRead the specified datafeed.\n\nThe ackId sent as parameter can be empty for the first call. In the response an ackId will be sent back and it can be used for\nthe next call: in this way you acknowledge that you have received the events that came with "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Datahose",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates and Reads a real time feed of messages and events of your pod (Datahose)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/events/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 22.5.1 and above._\n\nThis API provides a real time feed of all the messages and events in the pod, \neven from conversations where the calling service account is not a member. The types of events surfaced \ncan be found in the Real Time Events list.\nIn case you retrieving SOCIALMESSAGE events, the credentials of the ceservice \naccount must be properly configured in the Agent.\n\nThe types of events returned can be found in the Real Time\nEvents list (see definition on top of the fi"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

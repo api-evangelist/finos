@@ -1,0 +1,2997 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Pod API",
+    "version": "20.17.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Security",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all trusted certs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/companycert/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all trusted certs"
+        },
+        {
+          "info": {
+            "name": "Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/companycert/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates."
+        },
+        {
+          "info": {
+            "name": "Delete a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/companycert/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Delete a company certificate"
+        },
+        {
+          "info": {
+            "name": "Get the details of a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/companycert/:fingerPrint/get",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Get the details of a company certificate"
+        },
+        {
+          "info": {
+            "name": "Update a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/companycert/:fingerPrint/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Update a company certificate"
+        },
+        {
+          "info": {
+            "name": "Return a list of all certificates which were verified to the cert whose\nfingerprint is passed.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/companycert/:fingerPrint/issuedBy",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Return a list of all certificates which were verified to the cert whose\nfingerprint is passed.\n"
+        },
+        {
+          "info": {
+            "name": "List all trusted certs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/companycert/podmanaged/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all trusted certs"
+        },
+        {
+          "info": {
+            "name": "List all certs of the given types",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/companycert/type/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all certs of the given types"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pod",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the pod certificate that can be use to validate signed JWT tokens generated from the pod\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/podcert"
+          },
+          "docs": "Retrieve the pod certificate that can be use to validate signed JWT tokens generated from the pod\n"
+        },
+        {
+          "info": {
+            "name": "Get supported attachment types for the pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/files/allowedTypes",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get supported attachment types for the pod"
+        },
+        {
+          "info": {
+            "name": "Lists available languages for the pod.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/languages"
+          },
+          "docs": "Lists available languages for the pod."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Connection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of requesting user's connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/connection/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter the connection list based on the connection status.\nThe connection status can only be pending_incoming, pending_outgoing, accepted, rejected, or all (all of the above)\n"
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The userIds parameter should be specified as a comma delimited list of user ids and can be used to restrict the results of a specific connection.\nNote that this is particularly important if the caller intends to retrieve results for implicit connection (user within the same pod).\nImplicit connections will not be included in the response if userId is not provided.\n"
+              }
+            ]
+          },
+          "docs": "This retrieves all connections of the requesting user. (i.e. both connections in which the requesting user is the sender and those\nin which the requesting user is the inivtee) By default, if you haven't specified the connection status to filter on, this call will only\nreturn results for both \"pending_incoming\" and \"pending_outgoing\". You can optionally filter by userIds to further restrict the results of\na specific connection status. If the users are in the same private pod, the users have an im"
+        },
+        {
+          "info": {
+            "name": "Sends an invitation to connect with another user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/connection/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sends an invitation to connect with another user"
+        },
+        {
+          "info": {
+            "name": "Accept the connection request for the requesting user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/connection/accept",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Accept the connection request for the requesting user"
+        },
+        {
+          "info": {
+            "name": "Reject the connection request for the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/connection/reject",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Reject the connection between the requesting user and request sender. If both users are in the same private pod,\nan error will be returned because both users have an implicit connection which cannot be rejected.\n"
+        },
+        {
+          "info": {
+            "name": "The status of the connection invitation to another user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/connection/user/:userId/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "user Id"
+              }
+            ]
+          },
+          "docs": "The status of the connection invitation to another user."
+        },
+        {
+          "info": {
+            "name": "Removes a connection with a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/connection/user/:uid/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Removes a connection with a user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Streams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new single or multi party instant message conversation between the caller and specified users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/im/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "At least one user ID must be provided or\nan error response will be sent.\n\nThe caller is implicitly included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n\nThis method was incorrectly specified to take a query parameter in\nversion 1.0 of this specification but now expects"
+        },
+        {
+          "info": {
+            "name": "Update the attributes of an existing IM.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/im/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "IM streamID"
+              }
+            ]
+          },
+          "docs": "Update the attributes of an existing IM."
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular IM.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/im/:id/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "IM streamId"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular IM."
+        },
+        {
+          "info": {
+            "name": "Create a new chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/room/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new chatroom.\n\nIf no  attributes are specified, the room is created as a private chatroom.\n"
+        },
+        {
+          "info": {
+            "name": "Search rooms according to the specified criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/room/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default. Must be a positive\ninteger and must not exceed 100\n"
+              },
+              {
+                "name": "includeNonDiscoverable",
+                "value": "",
+                "type": "query",
+                "description": "Whether the non discoverable rooms should be returned. false by default. Parameter introduced in sbe-25.5.0"
+              }
+            ]
+          },
+          "docs": "Search rooms according to the specified criteria."
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/room/:id/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular chatroom."
+        },
+        {
+          "info": {
+            "name": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/room/:id/setActive",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active."
+        },
+        {
+          "info": {
+            "name": "Update the attributes of an existing chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/room/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Update the attributes of an existing chatroom."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n"
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/streams/:sid/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream Id"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular stream."
+        },
+        {
+          "info": {
+            "name": "Get attachments in a particular stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/streams/:sid/attachments",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream Id"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of first required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of last required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of attachments to return. Default is 50. Must be a positive integer and must not exceed 100."
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Attachment date sort direction : ASC or DESC (default to ASC)\n"
+              }
+            ]
+          },
+          "docs": "Get attachments in a particular stream."
+        },
+        {
+          "info": {
+            "name": "Create a new single or multi party instant message conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/im/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "At least two user IDs must be provided or\nan error response will be sent.\n\nThe caller is not included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n"
+        },
+        {
+          "info": {
+            "name": "Deactivate or reactivate a chatroom via AC Portal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/room/:id/setActive",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deactivate or reactivate a chatroom via AC Portal."
+        },
+        {
+          "info": {
+            "name": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/admin/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 50.  This value cannot exceed 100.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n"
+        },
+        {
+          "info": {
+            "name": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/stream/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "stream Id"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 100 and not to exceed 1000."
+              }
+            ]
+          },
+          "docs": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Presence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/presence/feed/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new stream capturing presence status changes (\"presence feed\").\nWhen read from, the feed will return the current presence status of company (pod) users\nif it has changed since the last read.\n\nReturns the ID of the presence feed to be used in subsequent read operations.\n"
+        },
+        {
+          "info": {
+            "name": "Read a presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/presence/feed/:feedId/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Presence feed ID."
+              }
+            ]
+          },
+          "docs": "Returns the current presence status of company (pod) users\nif it has changed since the last read. Returns up to 500 records at a time.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/presence/feed/:feedId/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Presence feed ID."
+              }
+            ]
+          },
+          "docs": "Returns the ID of the deleted feed.\n"
+        },
+        {
+          "info": {
+            "name": "Register interest in a user's presence status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/presence/register",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Register interest in a user's presence status"
+        },
+        {
+          "info": {
+            "name": "Get presence information about the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get presence information about the requesting user."
+        },
+        {
+          "info": {
+            "name": "Set the presence of the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "soft",
+                "value": "",
+                "type": "query",
+                "description": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n"
+              }
+            ]
+          },
+          "docs": "Set the presence of the requesting user."
+        },
+        {
+          "info": {
+            "name": "Get presence information about a particular user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/user/:uid/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true, a local query will be performed and the presence will be\nset to OFFLINE for users who are not local to the calling user's\npod. If false or absent, then the presence of all local users and\nthe presence of all external users to whom the calling user is\nconnected will be queried.\n\nFor external users, a \"presence interest\" should be registered through\n/v1/user/presence/register before querying for presence.\n"
+              }
+            ]
+          },
+          "docs": "Get presence information about a particular user."
+        },
+        {
+          "info": {
+            "name": "Get presence information about all company (pod) users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/users/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "lastUserId",
+                "value": "",
+                "type": "query",
+                "description": "Last user ID retrieved. Used for paging; if provided, results will skip users with IDs less than this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. If no value is provided, 1000 is the default. The maximum supported value is 5000."
+              }
+            ]
+          },
+          "docs": "The returned data is taken from the in-memory cache for performance\nreasons which means inactive users may be omitted from the response.\n\nAll non-inactive users WILL be returned and some inactive users MAY\nbe included. Any omitted user IS inactive.\n\nReturned records are sorted by user ID, ascending.\n\nThis method is expensive. It pulls ALL records from the cache, sorts them and then only uses a subset.\nFor large numbers of users, this can be very inefficient both due to sorting\nand due to the cac"
+        },
+        {
+          "info": {
+            "name": "Set presence information for a particular user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v3/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "soft",
+                "value": "",
+                "type": "query",
+                "description": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n"
+              }
+            ]
+          },
+          "docs": "Set presence information for a particular user."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Room Membership",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Adds new member to an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/room/:id/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Adds new member to an existing room."
+        },
+        {
+          "info": {
+            "name": "Removes member from an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/room/:id/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Removes member from an existing room."
+        },
+        {
+          "info": {
+            "name": "Promotes user to owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/room/:id/membership/promoteOwner",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Promotes user to owner."
+        },
+        {
+          "info": {
+            "name": "Demotes room owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/room/:id/membership/demoteOwner",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Demotes room owner."
+        },
+        {
+          "info": {
+            "name": "Lists current members of an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/room/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Lists current members of an existing room."
+        },
+        {
+          "info": {
+            "name": "Lists current and previous members of an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/room/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "includePastMembers",
+                "value": "",
+                "type": "query",
+                "description": "If true, the membership list will include past members of the stream. If false, the listing will only incude current members. Default false."
+              }
+            ]
+          },
+          "docs": "Lists current and previous members of an existing room."
+        },
+        {
+          "info": {
+            "name": "Add a member to an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/room/:id/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Add a member to an existing room."
+        },
+        {
+          "info": {
+            "name": "Remove a member from a room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/room/:id/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Remove a member from a room."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information about the current user's session.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/sessioninfo",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get information about the current user's session."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/user",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User ID as a decimal integer"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "login user name"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\nNote: for username search, the local flag must be true\n"
+              }
+            ]
+          },
+          "docs": "Get user information"
+        },
+        {
+          "info": {
+            "name": "Search users by emails or ids.\nOnly one of the search lists should be informed at a time.\nSearch lists may containt up to 100 elements.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v3/users",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User IDs as a list of decimal integers separated by comma"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "List of email addresses separated by comma"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "List of username separated by comma"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\n"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "If not set all user status will be returned,\nif true all active users will be returned,\nif false all inactive users will be returned\n"
+              }
+            ]
+          },
+          "docs": "Search users by emails or ids.\nOnly one of the search lists should be informed at a time.\nSearch lists may containt up to 100 elements.\n"
+        },
+        {
+          "info": {
+            "name": "Ends the session identified by {sid} for the user with the identifier {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/users/:uid/sessions/:sid/logout",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user who owns the session to be terminated."
+              },
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the session to be terminated."
+              }
+            ]
+          },
+          "docs": "Ends the session identified by {sid} for the user with the identifier {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Ends all sessions for the user identified by {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/users/:uid/sessions/logout",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user whose sessions are to be terminated."
+              }
+            ]
+          },
+          "docs": "Ends all sessions for the user identified by {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Lists all sessions for the user identified by {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/users/:uid/sessions",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user whose sessions are to be listed."
+              }
+            ]
+          },
+          "docs": "Lists all sessions for the user identified by {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Search for users by name or email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "number of records to skip"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\n"
+              }
+            ]
+          },
+          "docs": "Search for users by name or email address"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AppEntitlement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of application entitlements for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the list of application entitlements for the company"
+        },
+        {
+          "info": {
+            "name": "Update the application entitlements for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update the application entitlements for the company"
+        },
+        {
+          "info": {
+            "name": "Get the list of application entitlements for this user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Get the list of application entitlements for this user"
+        },
+        {
+          "info": {
+            "name": "Update the application entitlements for this user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update the application entitlements for this user"
+        },
+        {
+          "info": {
+            "name": "Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Disclaimer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a disclaimer by disclaimer id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/disclaimer/:did",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "did",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the entity"
+              }
+            ]
+          },
+          "docs": "Get a disclaimer by disclaimer id"
+        },
+        {
+          "info": {
+            "name": "List all disclaimers for the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/disclaimer/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List all disclaimers for the company (pod)"
+        },
+        {
+          "info": {
+            "name": "List all users assigned to this disclaimer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/disclaimer/:did/users",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "did",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the entity"
+              }
+            ]
+          },
+          "docs": "List all users assigned to this disclaimer"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "InfoBarriers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all Information Barrier Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/group/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all Information Barrier Groups"
+        },
+        {
+          "info": {
+            "name": "Get the list of userids in this Information Barrier Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/group/:gid/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip. Must be a positive integer."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Default is 10000. Must be a positive integer and must not exceed 10000."
+              }
+            ]
+          },
+          "docs": "Get the list of userids in this Information Barrier Group"
+        },
+        {
+          "info": {
+            "name": "Add members to an Information Barrier group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/group/:gid/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              }
+            ]
+          },
+          "docs": "Add members to an Information Barrier group."
+        },
+        {
+          "info": {
+            "name": "Remove members from an Information Barrier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/group/:gid/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              }
+            ]
+          },
+          "docs": "Remove members from an Information Barrier group"
+        },
+        {
+          "info": {
+            "name": "Get all Information Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/policy/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all Information Policies"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "MessageSuppression",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Suppress a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/messagesuppression/:id/suppress",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Message ID"
+              }
+            ]
+          },
+          "docs": "Suppress a message"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of all users in the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/admin/user/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of users to skip. Default is 0. Must be a integer equals or bigger than 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all users in the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Find a user based on attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/find",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of users to skip. Default is 0. Must be a integer equals or bigger than 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000."
+              }
+            ]
+          },
+          "docs": "Find a user based on attributes"
+        },
+        {
+          "info": {
+            "name": "Add a role to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/roles/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Add a role to a user"
+        },
+        {
+          "info": {
+            "name": "Remove a role from a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/roles/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Remove a role from a user"
+        },
+        {
+          "info": {
+            "name": "Get the URL of the avatar of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/avatar",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the URL of the avatar of a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the avatar of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/avatar/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the avatar of a particular user"
+        },
+        {
+          "info": {
+            "name": "Get the disclaimer assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/disclaimer",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the disclaimer assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Unassign a disclaimer from a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/disclaimer",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Unassign a disclaimer from a user"
+        },
+        {
+          "info": {
+            "name": "Assign a disclaimer to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/disclaimer/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Assign a disclaimer to a user"
+        },
+        {
+          "info": {
+            "name": "Get the delegates assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/delegates",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the delegates assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Update the delegates assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/delegates/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the delegates assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Get the list of Symphony feature entitlements enabled for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/features",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the list of Symphony feature entitlements enabled for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the list of Symphony feature entitlements for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/features/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the list of Symphony feature entitlements for a particular user"
+        },
+        {
+          "info": {
+            "name": "Make a list of users start following a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/:uid/follow",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user to be followed"
+              }
+            ]
+          },
+          "docs": "Make a list of users start following a specific user"
+        },
+        {
+          "info": {
+            "name": "Make a list of users unfollowing a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/:uid/unfollow",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user to be unfollowed"
+              }
+            ]
+          },
+          "docs": "Make a list of users unfollowing a specific user"
+        },
+        {
+          "info": {
+            "name": "Returns the list of followers for a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/user/:uid/followers",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user we want to get the followers list"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Returns the list of followers for a specific user"
+        },
+        {
+          "info": {
+            "name": "Returns the list of users that a specific user is following",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/user/:uid/following",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user we want to get the following list"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Returns the list of users that a specific user is following"
+        },
+        {
+          "info": {
+            "name": "Get own service account manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/user/manifest/own",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get own service account manifest"
+        },
+        {
+          "info": {
+            "name": "Update own service account manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/user/manifest/own",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update own service account manifest"
+        },
+        {
+          "info": {
+            "name": "Get the status, active or inactive, for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/status",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the status, active or inactive, for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the status of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/user/:uid/status/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the status of a particular user"
+        },
+        {
+          "info": {
+            "name": "Get a list of all roles available in the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/system/roles/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all roles available in the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Create a new V2 User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/admin/user/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new V2 User"
+        },
+        {
+          "info": {
+            "name": "Update an existing V2 User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/admin/user/:uid/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update an existing V2 User"
+        },
+        {
+          "info": {
+            "name": "Retrieve V2 User details for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/admin/user/:uid",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Retrieve V2 User details for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the status of suspension of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/admin/user/:userId/suspension/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update the status of suspension of a particular user"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the full set of Symphony features available for this pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/system/features/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the full set of Symphony features available for this pod"
+        },
+        {
+          "info": {
+            "name": "Get a list of all URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/system/protocols/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Get a list of URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/system/protocols",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 100 and not to exceed 1000."
+              }
+            ]
+          },
+          "docs": "Get a list of URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Add an entry to URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/system/protocols",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Add an entry to URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Remove an entry from URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/admin/system/protocols/:scheme",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scheme",
+                "value": "",
+                "type": "path",
+                "description": "the scheme to remove from the protocols list"
+              }
+            ]
+          },
+          "docs": "Remove an entry from URI protocols supported by the company (pod)"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Message",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the read status of a particular message.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/message/:mid/status",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "mid",
+                "value": "",
+                "type": "path",
+                "description": "Message ID"
+              }
+            ]
+          },
+          "docs": "Get the read status of a particular message."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a new app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/app/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a new app"
+        },
+        {
+          "info": {
+            "name": "Updates a app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/app/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Id of the app"
+              }
+            ]
+          },
+          "docs": "Updates a app"
+        },
+        {
+          "info": {
+            "name": "Deletes a app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/app/:id/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the app"
+              }
+            ]
+          },
+          "docs": "Deletes a app"
+        },
+        {
+          "info": {
+            "name": "Gets a app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/app/:id/get",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "the id of the app to get"
+              }
+            ]
+          },
+          "docs": "Gets a app"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch message details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/admin/messages",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Fetch message details"
+        },
+        {
+          "info": {
+            "name": "Allows iteration of all file extensions supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/file_ext/v1/allowed_extensions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned. A query may return\nfewer than the value of limit due to filtering or service-side maximums. Do not\ndepend on the number of results being fewer than the limit value to indicate your\nquery reached the end of the list of data, use the absence of next instead as\ndescribed below. For example, if you set limit to 10 and 9 results are returned,\nthere may be more data available, but one item was removed due to privacy filtering.\nSome maximums for limit may be enforced for performance reasons. In all cases, the\nAPI returns the correct pagination links.\n"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque \"before\" cursor value as presented via a response cursor\n"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque \"after\" cursor value as presented via a response cursor\n"
+              }
+            ]
+          },
+          "docs": "Provides a RESTful API to iterate all file extensions configured by the tenant admin\nthat are allowed for the upload.  Pagination of this list is managed through a\ncombination of the optional request parameters and service-side managed maximums.\n\nPagination of the results is provided through the before or after input paramters\nand presented through the opaque cursor values provided as output from a previous\nresponse.  Only one of before or after or neither may be provided.\n\nDO NOT store cursors."
+        },
+        {
+          "info": {
+            "name": "Allows replacement or creation of a specific file extension supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/file_ext/v1/allowed_extensions/:extension",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "extension",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Provides a method to create or replace a specific file extension configured for upload\nsupport via an admin. The API treats the file extension in the path case-insensitively\nby converting it to lowecase.\n"
+        },
+        {
+          "info": {
+            "name": "Allows deletion of a specific file extension supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/file_ext/v1/allowed_extensions/:extension",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "extension",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Provides a method to delete a specific file extension configured for upload\nsupport via an admin. The file extension identifying the resource is treated\ncase-insensitively by the API.\n"
+        },
+        {
+          "info": {
+            "name": "Fetch receipts details from a specific message.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/messages/:messageId/receipts",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The message ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Fetch receipts details from a specific message."
+        },
+        {
+          "info": {
+            "name": "Get the message metadata relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/admin/messages/:messageId/metadata/relationships",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Valid id of a SOCIALMESSAGE"
+              }
+            ]
+          },
+          "docs": "Get the message metadata relationship"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
