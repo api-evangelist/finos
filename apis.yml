@@ -111,6 +111,8 @@ apis:
       - type: OpenAPI
         url: openapi/finos-symphony-authenticator-api-openapi.yml
 common:
+  - type: DomainSecurity
+    url: security/finos-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/finosfoundation
   - type: Website
@@ -123,6 +125,8 @@ common:
     url: https://landscape.finos.org/
   - type: Community
     url: https://www.finos.org/community
+  - url: https://www.finos.org/blog/rss.xml
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
