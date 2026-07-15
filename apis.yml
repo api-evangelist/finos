@@ -111,6 +111,8 @@ apis:
       - type: OpenAPI
         url: openapi/finos-symphony-authenticator-api-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/finos-agentic-access.yml
   - type: DomainSecurity
     url: security/finos-domain-security.yml
   - type: LinkedIn
