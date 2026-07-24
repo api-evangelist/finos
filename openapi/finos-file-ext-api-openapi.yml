@@ -1,0 +1,329 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin File Ext API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: File Ext
+paths:
+  /file_ext/v1/allowed_extensions:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Allows iteration of all file extensions supported for upload
+      description: 'Provides a RESTful API to iterate all file extensions configured by the tenant admin
+
+        that are allowed for the upload.  Pagination of this list is managed through a
+
+        combination of the optional request parameters and service-side managed maximums.
+
+
+        Pagination of the results is provided through the before or after input paramters
+
+        and presented through the opaque cursor values provided as output from a previous
+
+        response.  Only one of before or after or neither may be provided.
+
+
+        DO NOT store cursors. Cursors can quickly become invalid if items are added or deleted.
+
+        Use them only during a short-period of time that you are traversing the list.
+
+        '
+      operationId: listAllowedFileExtensions
+      parameters:
+      - name: limit
+        type: integer
+        required: false
+        in: query
+        description: 'This is the maximum number of objects that may be returned. A query may return
+
+          fewer than the value of limit due to filtering or service-side maximums. Do not
+
+          depend on the number of results being fewer than the limit value to indicate your
+
+          query reached the end of the list of data, use the absence of next instead as
+
+          described below. For example, if you set limit to 10 and 9 results are returned,
+
+          there may be more data available, but one item was removed due to privacy filtering.
+
+          Some maximums for limit may be enforced for performance reasons. In all cases, the
+
+          API returns the correct pagination links.
+
+          '
+      - name: before
+        type: string
+        required: false
+        in: query
+        description: 'Returns results from an opaque "before" cursor value as presented via a response cursor
+
+          '
+      - name: after
+        type: string
+        required: false
+        in: query
+        description: 'Returns results from an opaque "after" cursor value as presented via a response cursor
+
+          '
+      responses:
+        '200':
+          description: 'Requested sequence of file extensions object records with the page size
+
+            limited by the optional limit paramter or the service-specific maximum
+
+            limit offered.
+
+            '
+          schema:
+            $ref: '#/definitions/FileExtensionsResponse'
+        '400':
+          description: 'Invalid arguments were passed by the client
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: 'Authentication was not provided
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: 'Authorization is not provided to this request
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: 'Unexpected service error - a retry may work
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        '503':
+          description: 'Temporarily unable to handle request - could be due to service overload or maintenance
+
+            '
+        '504':
+          description: 'Timeout waiting on response at gateway
+
+            '
+      tags:
+      - File Ext
+  /file_ext/v1/allowed_extensions/{extension}:
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Allows replacement or creation of a specific file extension supported for upload
+      description: 'Provides a method to create or replace a specific file extension configured for upload
+
+        support via an admin. The API treats the file extension in the path case-insensitively
+
+        by converting it to lowecase.
+
+        '
+      operationId: putAllowedFileExtension
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: extension
+        in: path
+        required: true
+        type: string
+      - in: body
+        name: V3FileExtension
+        required: true
+        schema:
+          $ref: '#/definitions/FileExtension'
+      responses:
+        200:
+          description: 200 response
+          schema:
+            $ref: '#/definitions/FileExtension'
+        400:
+          description: 'Invalid arguments were passed by the client: the file extension object specified
+
+            the source as ''system'' yet the file extension is not known to the system (API cannot
+
+            create system file extensions, only customer-defined file extensions), the extension
+
+            in the path doesn''t match the extension in the body, the length of the file extension
+
+            exceeded the maximum length (64 characters)
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: 'Authorization is not provided to this request
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: 'Unexpected service error - a retry may work
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+      tags:
+      - File Ext
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      summary: Allows deletion of a specific file extension supported for upload
+      description: 'Provides a method to delete a specific file extension configured for upload
+
+        support via an admin. The file extension identifying the resource is treated
+
+        case-insensitively by the API.
+
+        '
+      operationId: deleteAllowedFileExtension
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: extension
+        in: path
+        required: true
+        type: string
+      responses:
+        204:
+          description: 204 response
+        400:
+          description: 'Invalid arguments were passed by the client
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: 'Authorization is not provided to this request
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: 'Unexpected service error - a retry may work
+
+            '
+          schema:
+            $ref: '#/definitions/Error'
+      tags:
+      - File Ext
+definitions:
+  FileExtensionsResponse:
+    type: object
+    required:
+    - data
+    - paging
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/FileExtension'
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  FileExtension:
+    type: object
+    required:
+    - extension
+    properties:
+      extension:
+        type: string
+        description: 'The file extension that this specific record is for.  This is a unique ID
+
+          that allows this record to be referenced in the URI.
+
+          '
+        example: .txt
+      scope_internal:
+        type: boolean
+        description: 'File extension allowed for internal scope
+
+          '
+      scope_external:
+        type: boolean
+        description: 'File extension allowed for external scope
+
+          '
+      scope_xpod:
+        type: boolean
+        description: 'File extension allowed to be received from another POD
+
+          '
+        x-since: 24.2
+      source:
+        type: string
+        description: 'File extension with metadata understood by the system or file extension created by a customer
+
+          '
+        enum:
+        - SYSTEM
+        - CUSTOMER

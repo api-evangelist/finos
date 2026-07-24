@@ -1,0 +1,555 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin InfoBarriers API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: InfoBarriers
+paths:
+  /v1/admin/group/list:
+    get:
+      summary: Get a list of all Information Barrier Groups
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - InfoBarriers
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/GroupList'
+          examples:
+            application/json:
+            - id: 571db1f2e4b027c4f055a594
+              name: Group 1
+              active: true
+              memberCount: 1
+              policies:
+              - 571db2e4e4b012df6341f393
+              createdDate: 1461563890135
+              modifiedDate: 1461563926812
+            - id: 571db20ae4b012df6341f391
+              name: Group 2
+              active: true
+              memberCount: 1
+              policies:
+              - 571db2e4e4b012df6341f393
+              createdDate: 1461563914581
+              modifiedDate: 1461564112286
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/group/{gid}/membership/list:
+    get:
+      summary: Get the list of userids in this Information Barrier Group
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: gid
+        description: URL-Safe encoded Group ID
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: Number of records to skip. Must be a positive integer.
+        in: query
+        type: integer
+        required: false
+        x-since: 20.15
+      - name: limit
+        description: Max number of records to return. Default is 10000. Must be a positive integer and must not exceed 10000.
+        in: query
+        type: integer
+        required: false
+        x-since: 20.15
+      tags:
+      - InfoBarriers
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/IntegerList'
+          examples:
+            application/json:
+            - 7215545078541
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Group cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Group cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/group/{gid}/membership/add:
+    post:
+      summary: Add members to an Information Barrier group.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: gid
+        description: URL-Safe encoded Group ID
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: users
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/IntegerList'
+      tags:
+      - InfoBarriers
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/BulkActionResult'
+          examples:
+            application/json:
+              overallResult: SUCCESS
+              results:
+              - ''
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/group/{gid}/membership/remove:
+    post:
+      summary: Remove members from an Information Barrier group
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: gid
+        description: URL-Safe encoded Group ID
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: users
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/IntegerList'
+      tags:
+      - InfoBarriers
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/BulkActionResult'
+          examples:
+            application/json:
+              overallResult: SUCCESS
+              results:
+              - ''
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/policy/list:
+    get:
+      summary: Get all Information Policies
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - InfoBarriers
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PolicyList'
+          examples:
+            application/json:
+            - id: 56e9df05e4b00737e3d3b82d
+              policyType: BLOCK
+              active: true
+              groups:
+              - 56e9def8e4b0b406041812e6
+              - 56e9deffe4b0b406041812e7
+              createdDate: 1458167557358
+              modifiedDate: 1458330606752
+            - id: 571cd64de4b042aaf06d2d8b
+              policyType: BLOCK
+              active: true
+              groups:
+              - 571cd646e4b042aaf06d2d84
+              - 571cd64ce4b042aaf06d2d8a
+              createdDate: 1461507661146
+              modifiedDate: 1461507661146
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  PolicyList:
+    type: array
+    items:
+      $ref: '#/definitions/Policy'
+    example:
+    - id: 56e9df05e4b00737e3d3b82d
+      policyType: BLOCK
+      active: true
+      groups:
+      - 56e9def8e4b0b406041812e6
+      - 56e9deffe4b0b406041812e7
+      createdDate: 1458167557358
+      modifiedDate: 1458330606752
+    - id: 571cd64de4b042aaf06d2d8b
+      policyType: BLOCK
+      active: true
+      groups:
+      - 571cd646e4b042aaf06d2d84
+      - 571cd64ce4b042aaf06d2d8a
+      createdDate: 1461507661146
+      modifiedDate: 1461507661146
+  GroupList:
+    type: array
+    items:
+      $ref: '#/definitions/Group'
+    example:
+    - id: 571db1f2e4b027c4f055a594
+      name: Group 1
+      active: true
+      memberCount: 1
+      policies:
+      - 571db2e4e4b012df6341f393
+      createdDate: 1461563890135
+      modifiedDate: 1461563926812
+    - id: 571db20ae4b012df6341f391
+      name: Group 2
+      active: true
+      memberCount: 1
+      policies:
+      - 571db2e4e4b012df6341f393
+      createdDate: 1461563914581
+      modifiedDate: 1461564112286
+  IntegerList:
+    type: array
+    items:
+      type: integer
+      format: int64
+    example:
+    - 1461508270000
+    - 7215545057281
+  Group:
+    description: Information Barrier Group record.
+    type: object
+    properties:
+      id:
+        type: string
+        example: 571db1f2e4b027c4f055a594
+      name:
+        type: string
+        example: Group 1
+      active:
+        type: boolean
+        example: true
+      memberCount:
+        type: integer
+        format: int32
+        example: 1
+      policies:
+        type: array
+        items:
+          type: string
+        example:
+        - 571db2e4e4b012df6341f393
+      createdDate:
+        type: integer
+        format: int64
+        example: 1461563890135
+      modifiedDate:
+        type: integer
+        format: int64
+        example: 1461563926812
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  BulkActionResult:
+    description: 'The results of list based bulk action. The list contains the result messages
+
+      in the same order as submitted. The message will be an empty string if the action
+
+      was successful for item in that index.
+
+      '
+    properties:
+      overallResult:
+        type: string
+        enum:
+        - SUCCESS
+        - FAIL
+        example: SUCCESS
+      results:
+        type: array
+        items:
+          type: string
+        example:
+        - ''
+  Policy:
+    description: Information Barrier Policy record.
+    type: object
+    properties:
+      id:
+        type: string
+        example: 56e9df05e4b00737e3d3b82d
+      policyType:
+        type: string
+        enum:
+        - BLOCK
+        - ALLOW
+        example: BLOCK
+      active:
+        type: boolean
+        example: true
+      memberCount:
+        type: integer
+        format: int32
+        example: 3
+      groups:
+        type: array
+        items:
+          type: string
+        example:
+        - 56e9deffe4b0b406041812e6
+        - 56e9deffe4b0b406041812e7
+      createdDate:
+        type: integer
+        format: int64
+        example: 1458167557358
+      modifiedDate:
+        type: integer
+        format: int64
+        example: 1458330606752

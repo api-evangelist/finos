@@ -1,0 +1,825 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Users API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Users
+paths:
+  /v2/user:
+    get:
+      summary: Get user information
+      produces:
+      - application/json
+      parameters:
+      - name: uid
+        description: User ID as a decimal integer
+        in: query
+        required: false
+        type: integer
+        format: int64
+      - name: email
+        description: Email address
+        in: query
+        required: false
+        type: string
+        format: email
+      - name: username
+        description: login user name
+        in: query
+        required: false
+        type: string
+      - name: local
+        description: 'If true then a local DB search will be performed and only local pod users will be
+
+          returned. If absent or false then a directory search will be performed and users
+
+          from other pods who are visible to the calling user will also be returned.
+
+          Note: for username search, the local flag must be true
+
+          '
+        in: query
+        required: false
+        type: boolean
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserV2'
+        '204':
+          description: No user found.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v3/users:
+    get:
+      summary: 'Search users by emails or ids.
+
+        Only one of the search lists should be informed at a time.
+
+        Search lists may containt up to 100 elements.
+
+        '
+      produces:
+      - application/json
+      parameters:
+      - name: uid
+        description: User IDs as a list of decimal integers separated by comma
+        in: query
+        required: false
+        type: string
+      - name: email
+        description: List of email addresses separated by comma
+        in: query
+        required: false
+        type: string
+      - name: username
+        description: List of username separated by comma
+        in: query
+        required: false
+        type: string
+      - name: local
+        description: 'If true then a local DB search will be performed and only local pod users will be
+
+          returned. If absent or false then a directory search will be performed and users
+
+          from other pods who are visible to the calling user will also be returned.
+
+          '
+        in: query
+        required: false
+        type: boolean
+      - name: active
+        description: 'If not set all user status will be returned,
+
+          if true all active users will be returned,
+
+          if false all inactive users will be returned
+
+          '
+        in: query
+        required: false
+        type: boolean
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V2UserList'
+          examples:
+            application/json:
+              users:
+              - id: 15942919536460
+                emailAddress: technicalwriter@symphony.com
+                firstName: Technical
+                lastName: Writer
+                displayName: Technical Writer
+                title: Technical Writer
+                company: Symphony
+                department: Marketing // if internal user
+                username: tw
+                accountType: NORMAL
+                location: France // if internal user
+                avatars:
+                - size: original
+                  url: ../avatars/static/150/default.png
+                - size: small
+                  url: ../avatars/static/50/default.png
+              - id: 15942919536461
+                emailAddress: serviceaccount@symphony.com
+                firstName: null
+                lastName: null
+                displayName: Service Account
+                title: null
+                company: pod232
+                department: Marketing // if internal user
+                username: SA
+                location: France // if internal user
+                accountType: SYSTEM
+                avatars:
+                - size: original
+                  url: ../avatars/static/150/default.png
+                - size: small
+                  url: ../avatars/static/50/default.png
+              errors:
+              - error: invalid.format
+                email: notavalidemail
+              - error: invalid.format
+                id: 654321
+        '204':
+          description: No user found.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/users/{uid}/sessions/{sid}/logout:
+    post:
+      summary: 'Ends the session identified by {sid} for the user with the identifier {uid}.
+
+        '
+      produces:
+      - application/json
+      parameters:
+      - name: uid
+        description: The identifier of the user who owns the session to be terminated.
+        in: path
+        required: true
+        type: string
+      - name: sid
+        description: The identifier of the session to be terminated.
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        '400':
+          description: Client error.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: 'Unauthorized: Session tokens invalid.'
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+  /v1/users/{uid}/sessions/logout:
+    post:
+      summary: 'Ends all sessions for the user identified by {uid}.
+
+        '
+      produces:
+      - application/json
+      parameters:
+      - name: uid
+        description: The identifier of the user whose sessions are to be terminated.
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        '400':
+          description: Client error.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: 'Unauthorized: Session tokens invalid.'
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+  /v1/users/{uid}/sessions:
+    get:
+      summary: 'Lists all sessions for the user identified by {uid}.
+
+        '
+      produces:
+      - application/json
+      parameters:
+      - name: uid
+        description: The identifier of the user whose sessions are to be listed.
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V1UserSessions'
+        '204':
+          description: No user found.
+        '400':
+          description: Client error.
+          schema:
+            $ref: '#/definitions/Error'
+        '401':
+          description: 'Unauthorized: Session tokens invalid.'
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+  /v1/user/search:
+    post:
+      summary: Search for users by name or email address
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: skip
+        description: number of records to skip
+        in: query
+        type: integer
+      - name: limit
+        description: Max number of records to return. If no value is provided, 50 is the default.
+        in: query
+        type: integer
+      - name: local
+        description: 'If true then a local DB search will be performed and only local pod users will be
+
+          returned. If absent or false then a directory search will be performed and users
+
+          from other pods who are visible to the calling user will also be returned.
+
+          '
+        in: query
+        required: false
+        type: boolean
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: searchRequest
+        description: search criteria
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserSearchQuery'
+      tags:
+      - Users
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserSearchResults'
+          examples:
+            application/json:
+              count: 1
+              skip: 0
+              limit: 1
+              searchQuery:
+                query: jane
+                filters:
+                  title: Sales Manager
+                  company: Symphony
+                  location: San Francisco
+                  marketCoverage: EMEA
+                  responsibility: BAU
+                  function: Trade Management
+                  instrument: Securities
+                  accountTypes:
+                  - NORMAL
+              users:
+              - id: 13056700581099
+                emailAddress: janedoe@symphony.com
+                firstName: Jane
+                lastName: Doe
+                displayName: Jane Doe
+                title: Sales Manager
+                company: Symphony
+                location: San Francisco
+                accountType: NORMAL
+                avatars:
+                - size: original
+                  url: ../avatars/static/150/default.png
+                - size: small
+                  url: ../avatars/static/50/default.png
+        '204':
+          description: No user found.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  UserSearchQuery:
+    type: object
+    properties:
+      query:
+        type: string
+        description: search / query term.  This can be firstname, lastname, displayname or email
+        example: jane
+      filters:
+        $ref: '#/definitions/UserSearchFilter'
+  UserSearchResults:
+    type: object
+    properties:
+      count:
+        description: The total number of users which matched the search criteria.
+        type: integer
+        format: int64
+        example: 1
+      skip:
+        description: The number of skipped results.
+        type: integer
+        format: int64
+        example: 0
+      limit:
+        description: The number of returned results.
+        type: integer
+        format: int64
+        example: 1
+      searchQuery:
+        $ref: '#/definitions/UserSearchQuery'
+      users:
+        description: A list of users which matched by the search criteria.
+        type: array
+        items:
+          $ref: '#/definitions/UserV2'
+        example:
+        - null
+  UserV2:
+    description: User record version 2
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 7696581394433
+      emailAddress:
+        type: string
+        format: email
+        example: admin@symphony.com
+      firstName:
+        type: string
+        example: Symphony
+      lastName:
+        type: string
+        example: Admin
+      displayName:
+        type: string
+        example: Symphony Admin
+      title:
+        type: string
+        example: Administrator
+      company:
+        type: string
+        example: Acme
+      username:
+        type: string
+        example: admin@symphony.com
+      location:
+        type: string
+        example: California
+      accountType:
+        type: string
+        enum:
+        - NORMAL
+        - SYSTEM
+        - SDL
+        example: NORMAL
+      avatars:
+        $ref: '#/definitions/AvatarList'
+      workPhoneNumber:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: '+33901020304'
+      mobilePhoneNumber:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: '+33601020304'
+      jobFunction:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: Sales
+      department:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: APIs
+      division:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: Partnerships
+      roles:
+        $ref: '#/definitions/StringList'
+        example:
+        - INDIVIDUAL
+        - SUPER_ADMINISTRATOR
+      userMetadata:
+        type: object
+        description: Metadata map of key/values
+        additionalProperties:
+          type: object
+        example:
+          com_symphony_metadataKey1: value
+          com_symphony_metadataKey2:
+          - value1
+          - value2
+  Avatar:
+    type: object
+    properties:
+      size:
+        description: The Avatar Size
+        type: string
+        example: original
+      url:
+        description: Url of the image
+        type: string
+        example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+  SuccessResponse:
+    type: object
+    properties:
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT
+      message:
+        type: string
+        example: Success
+  AvatarList:
+    type: array
+    items:
+      $ref: '#/definitions/Avatar'
+    example:
+    - size: original
+      url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    - size: small
+      url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+  V1Session:
+    description: V1 Detailed Session record.
+    type: object
+    properties:
+      sessionId:
+        type: string
+        description: The id of the user session
+      clientIp:
+        type: string
+        description: The ip address of the session initiator
+      userId:
+        type: integer
+        format: int64
+        description: The user id of the session initiator
+      userAgent:
+        type: string
+        description: The user agent of the session
+      browser:
+        type: string
+        description: The browser section of the user agent
+      os:
+        type: string
+        description: The os section of the user agent
+      device:
+        type: string
+        description: The device section of the user agent
+      deviceHash:
+        type: string
+        description: A hash uniquely identifying the device of the requester
+      creationTime:
+        type: integer
+        format: int64
+        description: The timestamp of the creation time the user session
+      expirationDelay:
+        type: integer
+        format: int64
+        description: The timestamp of the expiry time of the user session
+  StringList:
+    type: array
+    items:
+      type: string
+    example:
+    - ftp
+    - mailto
+    - fdsup
+    - skype
+  V1UserSessions:
+    description: V1 Detailed Sessions Record.
+    type: object
+    properties:
+      sessions:
+        type: array
+        items:
+          $ref: '#/definitions/V1Session'
+  UserSearchFilter:
+    type: object
+    properties:
+      accountTypes:
+        $ref: '#/definitions/StringList'
+        description: type of user used to search
+        example: NORMAL
+      title:
+        type: string
+        description: user's job title
+        example: Sales Manager
+      company:
+        type: string
+        description: company name
+        example: Symphony
+      location:
+        type: string
+        description: city of the user's job location
+        example: Marseille
+      marketCoverage:
+        type: string
+        description: geographic area the user works with
+        example: EMEA
+      responsibility:
+        type: string
+        description: user's responsibility
+        example: BAU
+      function:
+        type: string
+        description: user's function
+        example: Trade Management
+      instrument:
+        type: string
+        description: higher level instrument for the Asset Classes
+        example: Securities
+  UserError:
+    description: User error information
+    type: object
+    properties:
+      error:
+        type: string
+        description: Error code informing what is wrong
+        example: invalid.format
+      email:
+        type: string
+        description: 'Email with error. Only one of the following fields should be present: email or id'
+        example: notavalidemail
+      id:
+        type: string
+        description: 'Id with error. Only one of the following fields should be present: email or id'
+        example: notavalidid
+  V2UserList:
+    description: List of User record version 2
+    type: object
+    properties:
+      users:
+        type: array
+        items:
+          $ref: '#/definitions/UserV2'
+        description: List of all users found with the search
+        example:
+        - id: 15942919536460
+          emailAddress: technicalwriter@symphony.com
+          firstName: Technical
+          lastName: Writer
+          displayName: Technical Writer
+          title: Technical Writer
+          company: Symphony
+          department: Marketing // if internal user
+          username: tw
+          accountType: NORMAL
+          location: France // if internal user
+          mobilePhoneNumber: 33601020304
+          avatars:
+          - size: original
+            url: ../avatars/static/150/default.png
+          - size: small
+            url: ../avatars/static/50/default.png
+        - id: 15942919536461
+          emailAddress: serviceaccount@symphony.com
+          firstName: null
+          lastName: null
+          displayName: Service Account
+          title: null
+          company: pod232
+          department: Marketing // if internal user
+          username: SA
+          location: France // if internal user
+          accountType: SYSTEM
+          avatars:
+          - size: original
+            url: ../avatars/static/150/default.png
+          - size: small
+            url: ../avatars/static/50/default.png
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/UserError'
+        description: List of all errors found with the informed search criteria
+        example:
+        - error: invalid.format
+          email: notavalidemail
+        - error: invalid.format
+          id: 654321
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session

@@ -1,0 +1,326 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Disclaimer API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Disclaimer
+paths:
+  /v1/admin/disclaimer/{did}:
+    get:
+      summary: Get a disclaimer by disclaimer id
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: did
+        in: path
+        type: string
+        description: The ID of the entity
+        required: true
+      tags:
+      - Disclaimer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/Disclaimer'
+          examples:
+            application/json:
+              id: 571d20dae4b042aaf06d2e7c
+              name: New Enterprise Disclaimer
+              content: This is a second enterprise disclaimer.
+              frequencyInHours: 168
+              isDefault: false
+              isActive: true
+              createdDate: 1461526746875
+              modifiedDate: 1461526746875
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/disclaimer/list:
+    get:
+      summary: List all disclaimers for the company (pod)
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Disclaimer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DisclaimerList'
+          examples:
+            application/json:
+            - id: 571d2052e4b042aaf06d2e7a
+              name: Enterprise Disclaimer
+              content: This is a disclaimer for the enterprise.
+              frequencyInHours: 24
+              isDefault: false
+              isActive: true
+              createdDate: 1461526610846
+              modifiedDate: 1461526610846
+            - id: 571d20dae4b042aaf06d2e7c
+              name: New Enterprise Disclaimer
+              content: This is a second enterprise disclaimer.
+              frequencyInHours: 168
+              isDefault: false
+              isActive: true
+              createdDate: 1461526746875
+              modifiedDate: 1461526746875
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/disclaimer/{did}/users:
+    get:
+      summary: List all users assigned to this disclaimer
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: did
+        in: path
+        type: string
+        description: The ID of the entity
+        required: true
+      tags:
+      - Disclaimer
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserIdList'
+          examples:
+            application/json:
+            - 7215545078541
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  UserIdList:
+    type: array
+    items:
+      type: integer
+      format: int64
+    example:
+    - 7215545058313
+    - 7215545078461
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  DisclaimerList:
+    type: array
+    items:
+      $ref: '#/definitions/Disclaimer'
+    example:
+    - id: 571d2052e4b042aaf06d2e7a
+      name: Enterprise Disclaimer
+      content: This is a disclaimer for the enterprise.
+      frequencyInHours: 24
+      isDefault: false
+      isActive: true
+      createdDate: 1461526610846
+      modifiedDate: 1461526610846
+    - id: 571d20dae4b042aaf06d2e7c
+      name: New Enterprise Disclaimer
+      content: This is a second enterprise disclaimer.
+      frequencyInHours: 168
+      isDefault: false
+      isActive: true
+      createdDate: 1461526746875
+      modifiedDate: 1461526746875
+  Disclaimer:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 571d20dae4b042aaf06d2e7c
+      name:
+        type: string
+        example: New Enterprise Disclaimer
+      content:
+        type: string
+        example: This is a second enterprise disclaimer.
+      frequencyInHours:
+        type: integer
+        format: int32
+        example: 168
+      isDefault:
+        type: boolean
+        example: false
+      isActive:
+        type: boolean
+        example: true
+      createdDate:
+        type: integer
+        format: int64
+        example: 1461526746875
+      modifiedDate:
+        type: integer
+        format: int64
+        example: 1461526746875
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT

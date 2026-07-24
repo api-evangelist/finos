@@ -1,0 +1,238 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Message API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Message
+paths:
+  /v1/message/{mid}/status:
+    get:
+      summary: Get the read status of a particular message.
+      produces:
+      - application/json
+      parameters:
+      - name: mid
+        description: Message ID
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Message
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/MessageStatus'
+          examples:
+            application/json:
+              author:
+                userId: 7078106103901
+                firstName: Gustav
+                lastName: Mahler
+                displayName: Gustav Mahler
+                email: gustav.mahler@music.org
+                userName: gmahler
+                timestamp: 1531968487845
+              read:
+              - userId: 7078106103901
+                firsName: Gustav
+                lastName: Mahler
+                displayName: Gustav Mahler
+                email: gustav.mahler@music.org
+                userName: gmahler
+                timestamp: 1489769156271
+              - userId: 7078106103902
+                firsName: Hildegard
+                lastName: Bingen
+                displayName: Hildegard Bingen
+                email: hildegard.bingen@music.org
+                userName: hbingen
+                timestamp: 1487352923000
+              delivered:
+              - userId: 7078106103903
+                firsName: Franz
+                lastName: Liszt
+                displayName: Franz Liszt
+                email: franz.liszt@music.org
+                userName: fliszt
+                timestamp: 1484674523000
+              sent:
+              - userId: 7078106103904
+                firsName: Benjamin
+                lastName: Britten
+                displayName: Benjamin Britten
+                email: benjamin.britten@music.org
+                userName: bbritten
+                timestamp: 1484156123000
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Message ID does not exist.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Message ID does not exist. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  MessageStatusUser:
+    type: object
+    properties:
+      userId:
+        type: string
+        example: 7078106103901
+      firstName:
+        type: string
+        example: Gustav
+      lastName:
+        type: string
+        example: Mahler
+      displayName:
+        type: string
+        example: Gustav Mahler
+      email:
+        type: string
+        example: gustav.mahler@music.org
+      userName:
+        type: string
+        example: gmahler
+      timestamp:
+        type: string
+        example: 1531968487845
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  MessageStatus:
+    description: 'Holds the status of a particular message, indicating which user the message has been sent, delivered or read.
+
+      '
+    type: object
+    properties:
+      author:
+        description: User who has sent the message.
+        type: object
+        $ref: '#/definitions/MessageStatusUser'
+      read:
+        description: All users who have read that message, in any Symphony client.
+        type: array
+        items:
+          $ref: '#/definitions/MessageStatusUser'
+      delivered:
+        description: 'All users who have at least one Symphony client to which the message has been delivered, and not read yet.
+
+          '
+        type: array
+        items:
+          $ref: '#/definitions/MessageStatusUser'
+      sent:
+        description: 'All users to whom the message has been sent and received by the Symphony system,
+
+          but not yet delivered to any user''s Symphony client.
+
+          '
+        type: array
+        items:
+          $ref: '#/definitions/MessageStatusUser'
+        example:
+        - userId: 7078106103904
+          firsName: Benjamin
+          lastName: Britten
+          displayName: Benjamin Britten
+          email: benjamin.britten@music.org
+          userName: bbritten
+          timestamp: 1484156123000
+        - userId: 7078106103901
+          firsName: Gustav
+          lastName: Mahler
+          displayName: Gustav Mahler
+          email: gmahler@music.org
+          userName: gmahler
+          timestamp: 1531968487845

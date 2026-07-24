@@ -1,0 +1,864 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Security API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Security
+paths:
+  /v1/companycert/list:
+    get:
+      summary: List all trusted certs
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: Pagination start
+        in: query
+        required: false
+        type: integer
+      - name: limit
+        description: Row limit
+        in: query
+        required: false
+        type: integer
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertInfoList'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: agentservice
+                type:
+                  type: USER
+                status:
+                  type: TRUSTED
+              companyCertInfo:
+                fingerPrint: 300a...
+                lastSeen: 0
+                updatedAt: 0
+                updatedBy: 0
+                commonName: agentservice
+                expiryDate: 1781886755000
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v2/companycert/create:
+    post:
+      summary: Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: cert
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyCert'
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertDetail'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: jira
+                type:
+                  type: USER
+                status:
+                  type: KNOWN
+              companyCertInfo:
+                fingerPrint: 450369...
+                issuerFingerPrint: c35680...
+                lastSeen: 1529994790226
+                updatedAt: 1529598066602
+                updatedBy: 9208409884327
+                commonName: jiraWebHookIntegration
+                expiryDate: 1768510565000
+              certInfo:
+              - name: General
+                attributes:
+                - name: Issuer
+                  value: C=US O=Symphony Communications LLC CN=bot_user_provisioning
+                - name: Subject
+                  value: C=US OU=NOT FOR PRODUCTION USE O=Symphony Communications LLC CN=jiraWebHookIntegration
+                - name: Signature Algorithm
+                  value: SHA256withRSA
+              - name: Validity
+                attributes:
+                - name: Not Before
+                  value: Mon Jan 15 20:56:05 UTC 2018
+                - name: Not After
+                  value: Thu Jan 15 20:56:05 UTC 2026
+              - name: Public Key
+                attributes:
+                - name: Algorithm
+                  value: RSA
+                - name: Format
+                  value: X.509
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/delete:
+    post:
+      summary: Delete a company certificate
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: fingerPrint
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/StringId'
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: OK
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/{fingerPrint}/get:
+    get:
+      summary: Get the details of a company certificate
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: fingerPrint
+        description: Certificate fingerPrint (ID)
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertDetail'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: jira
+                type:
+                  type: USER
+                status:
+                  type: KNOWN
+              companyCertInfo:
+                fingerPrint: 450369...
+                issuerFingerPrint: c35680...
+                lastSeen: 1529994790226
+                updatedAt: 1529598066602
+                updatedBy: 9208409884327
+                commonName: jiraWebHookIntegration
+                expiryDate: 1768510565000
+              certInfo:
+              - name: General
+                attributes:
+                - name: Issuer
+                  value: C=US O=Symphony Communications LLC CN=bot_user_provisioning
+                - name: Subject
+                  value: C=US OU=NOT FOR PRODUCTION USE O=Symphony Communications LLC CN=jiraWebHookIntegration
+                - name: Signature Algorithm
+                  value: SHA256withRSA
+              - name: Validity
+                attributes:
+                - name: Not Before
+                  value: Mon Jan 15 20:56:05 UTC 2018
+                - name: Not After
+                  value: Thu Jan 15 20:56:05 UTC 2026
+              - name: Public Key
+                attributes:
+                - name: Algorithm
+                  value: RSA
+                - name: Format
+                  value: X.509
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/{fingerPrint}/update:
+    post:
+      summary: Update a company certificate
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: fingerPrint
+        description: Certificate fingerPrint (ID)
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: certAttributes
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyCertAttributes'
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: OK
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/{fingerPrint}/issuedBy:
+    get:
+      summary: 'Return a list of all certificates which were verified to the cert whose
+
+        fingerprint is passed.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: fingerPrint
+        description: Certificate fingerPrint (ID)
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertInfoList'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: agentservice
+                type:
+                  type: USER
+                status:
+                  type: TRUSTED
+              companyCertInfo:
+                fingerPrint: 300a...
+                lastSeen: 0
+                updatedAt: 0
+                updatedBy: 0
+                commonName: agentservice
+                expiryDate: 1781886755000
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/podmanaged/list:
+    get:
+      summary: List all trusted certs
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: Pagination start
+        in: query
+        required: false
+        type: integer
+      - name: limit
+        description: Row limit
+        in: query
+        required: false
+        type: integer
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertInfoList'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: agentservice
+                type:
+                  type: USER
+                status:
+                  type: TRUSTED
+              companyCertInfo:
+                fingerPrint: 300a...
+                lastSeen: 0
+                updatedAt: 0
+                updatedBy: 0
+                commonName: agentservice
+                expiryDate: 1781886755000
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/companycert/type/list:
+    post:
+      summary: List all certs of the given types
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: typeIdList
+        description: Certificate type list
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyCertTypeList'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: Pagination start
+        in: query
+        required: false
+        type: integer
+      - name: limit
+        description: Row limit
+        in: query
+        required: false
+        type: integer
+      tags:
+      - Security
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/CompanyCertInfoList'
+          examples:
+            application/json:
+            - companyCertAttributes:
+                name: agentservice
+                type:
+                  type: USER
+                status:
+                  type: TRUSTED
+              companyCertInfo:
+                fingerPrint: 300a...
+                lastSeen: 0
+                updatedAt: 0
+                updatedBy: 0
+                commonName: agentservice
+                expiryDate: 1781886755000
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  CertInfo:
+    type: array
+    items:
+      $ref: '#/definitions/CertInfoItem'
+    example:
+    - name: Validity
+      attributes:
+      - name: Not Before
+        value: Mon Jan 15 20:56:05 UTC 2018
+      - name: Not After
+        value: Thu Jan 15 20:56:05 UTC 2026
+    - name: Public Key
+      attributes:
+      - name: Algorithm
+        value: RSA
+      - name: Format
+        value: X.509
+  CompanyCertInfo:
+    type: object
+    properties:
+      fingerPrint:
+        type: string
+        description: Unique identifier
+        example: 300a...
+      issuerFingerPrint:
+        type: string
+        description: Unique identifier of issuer cert if known
+        example: 450s...
+      lastSeen:
+        type: integer
+        format: int64
+        description: Date when we last saw this certificate presented
+        example: 0
+      updatedAt:
+        type: integer
+        format: int64
+        description: Date when this cert was last updated by administrator
+        example: 0
+      updatedBy:
+        type: integer
+        format: int64
+        description: User ID of administrator who last updated this cert
+        example: 0
+      commonName:
+        type: string
+        description: The Symphony account name which this certificate authenticates
+        example: agentservice
+      expiryDate:
+        type: integer
+        format: int64
+        description: Expiry date of this cert
+        example: 1781886755000
+  SuccessResponse:
+    type: object
+    properties:
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT
+      message:
+        type: string
+        example: Success
+  CompanyCert:
+    type: object
+    properties:
+      pem:
+        type: string
+        description: An X509 certificate in PEM format
+        example: '-----BEGIN CERTIFICATE-----MIIH/TC...p9DBiB/-----END CERTIFICATE-----'
+      attributes:
+        $ref: '#/definitions/CompanyCertAttributes'
+  NameValuePair:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Algorithm
+      value:
+        type: string
+        example: RSA
+  CompanyCertType:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - USERSIGNING
+        - USER
+        - OPERATIONSSIGNING
+        - OPERATIONSUSER
+        example: USER
+  CompanyCertAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Friendly name assigned by administrator
+        example: agentservice
+      type:
+        $ref: '#/definitions/CompanyCertType'
+      status:
+        $ref: '#/definitions/CompanyCertStatus'
+  CompanyCertStatus:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - TRUSTED
+        - KNOWN
+        - REVOKED
+        - DISABLED
+        example: TRUSTED
+  CompanyCertTypeList:
+    type: array
+    items:
+      $ref: '#/definitions/CompanyCertType'
+  StringId:
+    type: object
+    properties:
+      id:
+        type: string
+        example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+  CompanyCertInfoList:
+    type: array
+    items:
+      type: object
+      properties:
+        companyCertAttributes:
+          $ref: '#/definitions/CompanyCertAttributes'
+        companyCertInfo:
+          $ref: '#/definitions/CompanyCertInfo'
+      example:
+      - companyCertAttributes:
+          name: agentservice
+          type:
+            type: USER
+          status:
+            type: TRUSTED
+        companyCertInfo:
+          fingerPrint: 300a...
+          lastSeen: 0
+          updatedAt: 0
+          updatedBy: 0
+          commonName: agentservice
+          expiryDate: 1781886755000
+  CertInfoItem:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Public Key
+      attributes:
+        type: array
+        items:
+          $ref: '#/definitions/NameValuePair'
+        example:
+        - name: Algorithm
+          value: RSA
+        - name: Format
+          value: X.509
+  CompanyCertDetail:
+    type: object
+    properties:
+      companyCertAttributes:
+        $ref: '#/definitions/CompanyCertAttributes'
+      companyCertInfo:
+        $ref: '#/definitions/CompanyCertInfo'
+      certInfo:
+        $ref: '#/definitions/CertInfo'
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session

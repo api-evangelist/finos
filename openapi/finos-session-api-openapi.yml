@@ -1,0 +1,220 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Session API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Session
+paths:
+  /v2/sessioninfo:
+    get:
+      summary: Get information about the current user's session.
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Session
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserV2'
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  UserV2:
+    description: User record version 2
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 7696581394433
+      emailAddress:
+        type: string
+        format: email
+        example: admin@symphony.com
+      firstName:
+        type: string
+        example: Symphony
+      lastName:
+        type: string
+        example: Admin
+      displayName:
+        type: string
+        example: Symphony Admin
+      title:
+        type: string
+        example: Administrator
+      company:
+        type: string
+        example: Acme
+      username:
+        type: string
+        example: admin@symphony.com
+      location:
+        type: string
+        example: California
+      accountType:
+        type: string
+        enum:
+        - NORMAL
+        - SYSTEM
+        - SDL
+        example: NORMAL
+      avatars:
+        $ref: '#/definitions/AvatarList'
+      workPhoneNumber:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: '+33901020304'
+      mobilePhoneNumber:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: '+33601020304'
+      jobFunction:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: Sales
+      department:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: APIs
+      division:
+        type: string
+        description: 'Note: only available if the application has the extended user or contact permission'
+        example: Partnerships
+      roles:
+        $ref: '#/definitions/StringList'
+        example:
+        - INDIVIDUAL
+        - SUPER_ADMINISTRATOR
+      userMetadata:
+        type: object
+        description: Metadata map of key/values
+        additionalProperties:
+          type: object
+        example:
+          com_symphony_metadataKey1: value
+          com_symphony_metadataKey2:
+          - value1
+          - value2
+  Avatar:
+    type: object
+    properties:
+      size:
+        description: The Avatar Size
+        type: string
+        example: original
+      url:
+        description: Url of the image
+        type: string
+        example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+  AvatarList:
+    type: array
+    items:
+      $ref: '#/definitions/Avatar'
+    example:
+    - size: original
+      url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    - size: small
+      url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+  StringList:
+    type: array
+    items:
+      type: string
+    example:
+    - ftp
+    - mailto
+    - fdsup
+    - skype
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session

@@ -1,0 +1,2367 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Streams API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Streams
+paths:
+  /v1/im/create:
+    post:
+      summary: Create a new single or multi party instant message conversation between the caller and specified users.
+      description: 'At least one user ID must be provided or
+
+        an error response will be sent.
+
+
+        The caller is implicitly included in the members of the
+
+        created chat.
+
+
+        Duplicate users will be included in the membership of the chat but
+
+        the duplication will be silently ignored.
+
+
+        If there is an existing IM conversation with the same set of participants then
+
+        the id of that existing stream will be returned.
+
+
+        This method was incorrectly specified to take a query parameter in
+
+        version 1.0 of this specification but now expects a JSON array of
+
+        user IDs in the body of the request.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: uidList
+        description: List of (integer) User IDs of participants
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserIdList'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Stream'
+          examples:
+            application/json:
+              id: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/im/{id}/update:
+    post:
+      summary: Update the attributes of an existing IM.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: IM streamID
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/V1IMAttributes'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V1IMDetail'
+          examples:
+            application/json:
+              V1IMAttributes:
+                pinnedMessageId: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+              IMSystemInfo:
+                id: usnBKBkH_BVrGOiVpaupEH___okFfE7QdA
+                creationDate: 1610520703317
+                active: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '451':
+          description: 'Unavailable for Legal Reasons: Compliance Issues found in IM update request.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 451
+              message: Compliance issues found in room update
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/im/{id}/info:
+    get:
+      summary: Get information about a partcular IM.
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: IM streamId
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V1IMDetail'
+          examples:
+            application/json:
+              V1IMAttributes:
+                pinnedMessageId: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+              IMSystemInfo:
+                id: usnBKBkH_BVrGOiVpaupEH___okFfE7QdA
+                creationDate: 1610520703317
+                active: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v3/room/create:
+    post:
+      summary: Create a new chatroom.
+      description: 'Create a new chatroom.
+
+
+        If no  attributes are specified, the room is created as a private chatroom.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/V3RoomAttributes'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V3RoomDetail'
+          examples:
+            application/json:
+              roomAttributes:
+                name: API room
+                keywords:
+                - key: region
+                  value: EMEA
+                - key: lead
+                  value: Bugs Bunny
+                description: Created via the API
+                membersCanInvite: true
+                discoverable: false
+                readOnly: false
+                copyProtected: false
+                crossPod: false
+                viewHistory: false
+                multiLateralRoom: false
+                public: false
+                groupChat: false
+              roomSystemInfo:
+                id: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
+                creationDate: 1547661232368
+                createdByUserId: 14362370637825
+                active: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '451':
+          description: 'Unavailable for Legal Reasons: Compliance Issues found in room creation request.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 451
+              message: Compliance issues found in room creation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v3/room/search:
+    post:
+      summary: Search rooms according to the specified criteria.
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: 'No. of results to skip.
+
+          '
+        in: query
+        type: integer
+      - name: limit
+        description: 'Max no. of results to return. If no value is provided, 50 is the default. Must be a positive
+
+          integer and must not exceed 100
+
+          '
+        in: query
+        type: integer
+        required: false
+      - name: includeNonDiscoverable
+        description: Whether the non discoverable rooms should be returned. false by default. Parameter introduced in sbe-25.5.0
+        in: query
+        type: boolean
+        default: false
+        required: false
+      - name: query
+        description: The search query object.
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/V2RoomSearchCriteria'
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V3RoomSearchResults'
+          examples:
+            application/json:
+              count: 2
+              skip: 0
+              limit: 10
+              query:
+                query: automobile
+                labels:
+                - industry
+                active: true
+                creator:
+                  id: 7696581411197
+              rooms:
+              - roomAttributes:
+                  name: Automobile Industry Room
+                  description: Room to discuss car companies
+                  membersCanInvite: true
+                  readOnly: false
+                  copyProtected: false
+                  crossPod: false
+                  viewHistory: false
+                  public: false
+                  multiLateralRoom: false
+                roomSystemInfo:
+                  id: tzwvAZIdDMG3ZPRxv+xsgH///qr+JJkWdA==
+                  creationDate: 1464615003895
+                  createdByUserId: 7696581411197
+                  active: true
+              - roomAttributes:
+                  name: Tesla Room
+                  keywords:
+                  - key: industry
+                    value: automobile
+                  description: Discussions on TSLA
+                  membersCanInvite: true
+                  readOnly: false
+                  copyProtected: false
+                  crossPod: false
+                  viewHistory: false
+                  public: false
+                  multiLateralRoom: false
+                roomSystemInfo:
+                  id: o6UkQ1TEmU0Tf/DHUlZrCH///qr+JQowdA==
+                  creationDate: 1464614974947
+                  createdByUserId: 7696581411197
+                  active: true
+              facetedMatchCount:
+              - facet: industry
+                count: 1
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v3/room/{id}/info:
+    get:
+      summary: Get information about a partcular chatroom.
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V3RoomDetail'
+          examples:
+            application/json:
+              roomAttributes:
+                name: API room
+                keywords:
+                - key: region
+                  value: EMEA
+                - key: lead
+                  value: Bugs Bunny
+                description: Created via the API
+                membersCanInvite: true
+                discoverable: false
+                readOnly: false
+                copyProtected: false
+                crossPod: false
+                viewHistory: false
+                multiLateralRoom: false
+                public: false
+                groupChat: false
+              roomSystemInfo:
+                id: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
+                creationDate: 1547661232368
+                createdByUserId: 14362370637825
+                active: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/room/{id}/setActive:
+    post:
+      summary: Deactivate or reactivate a chatroom. At creation, a new chatroom is active.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: active
+        in: query
+        required: true
+        type: boolean
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RoomDetail'
+          examples:
+            application/json:
+              roomAttributes:
+                name: API room
+                description: Updated via the API
+                membersCanInvite: true
+                discoverable: true
+              roomSystemInfo:
+                id: HNmksPVAR6-f14WqKXmqHX___qu8LMLgdA
+                creationDate: 1461426797875
+                createdByUserId: 7078106103809
+                active: false
+              immutableRoomAttributes:
+                readOnly: false
+                copyProtected: false
+                public: false
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v3/room/{id}/update:
+    post:
+      summary: Update the attributes of an existing chatroom.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/V3RoomAttributes'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V3RoomDetail'
+          examples:
+            application/json:
+              roomAttributes:
+                name: API room updated
+                keywords:
+                - key: region
+                  value: EMEA
+                - key: lead
+                  value: Bugs Bunny
+                description: Updated via the API
+                membersCanInvite: true
+                discoverable: false
+                readOnly: false
+                copyProtected: false
+                crossPod: false
+                viewHistory: true
+                multiLateralRoom: false
+                pinnedMessageId: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+                public: true
+                groupChat: false
+              roomSystemInfo:
+                id: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
+                creationDate: 1547661232368
+                createdByUserId: 14362370637825
+                active: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '451':
+          description: 'Unavailable for Legal Reasons: Compliance Issues found in room update request.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 451
+              message: Compliance issues found in room update
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/streams/list:
+    post:
+      summary: 'Retrieve a list of all streams of which the requesting user is a member,
+
+        sorted by creation date (ascending).
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: 'No. of results to skip.
+
+          '
+        in: query
+        type: integer
+      - name: limit
+        description: 'Max no. of results to return. If no value is provided, 50 is the default.
+
+          '
+        in: query
+        type: integer
+      - name: filter
+        description: Stream filtering criteria.
+        in: body
+        schema:
+          $ref: '#/definitions/StreamFilter'
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StreamList'
+          examples:
+            application/json:
+            - id: iWyZBIOdQQzQj0tKOLRivX___qu6YeyZdA
+              crossPod: false
+              active: true
+              streamType:
+                type: POST
+              streamAttributes:
+                members:
+                - 7215545078229
+        '204':
+          description: Stream not found.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/user/{uid}/streams/list:
+    post:
+      summary: 'Retrieve a list of all streams of which this user is a member,
+
+        sorted by creation date (ascending). Since SBE 20.16.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: uid
+        description: 'User ID as a decimal integer
+
+          '
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: skip
+        description: 'No. of results to skip.
+
+          '
+        in: query
+        type: integer
+      - name: limit
+        description: 'Max no. of results to return. If no value is provided, 50 is the default.
+
+          '
+        in: query
+        type: integer
+      - name: filter
+        description: Stream filtering criteria.
+        in: body
+        schema:
+          $ref: '#/definitions/StreamFilter'
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StreamList'
+          examples:
+            application/json:
+            - id: Jq6uPN4-uIop7lvjOkYdXX___nn9I0PHdA
+              crossPod: false
+              active: true
+              streamType:
+                type: IM
+              streamAttributes:
+                members:
+                - 9139690966401
+                - 9139691042211
+            - id: iWyZBIOdQQzQj0tKOLRivX___qu6YeyZdA
+              crossPod: false
+              active: true
+              streamType:
+                type: POST
+              streamAttributes:
+                members:
+                - 7215545078229
+        '204':
+          description: Stream not found.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v2/streams/{sid}/info:
+    get:
+      summary: Get information about a partcular stream.
+      produces:
+      - application/json
+      parameters:
+      - name: sid
+        description: Stream Id
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V2StreamAttributes'
+          examples:
+            application/json:
+              id: BZQYepoT0Zf4vL_jpeMPqn___oEWvVy3dA
+              crossPod: false
+              origin: INTERNAL
+              active: true
+              lastMessageDate: 1644590972696
+              streamType:
+                type: ROOM
+              roomAttributes:
+                name: API room
+                groups:
+                - id: 68719476744
+                  addedBy: 68719476743
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/streams/{sid}/attachments:
+    get:
+      summary: Get attachments in a particular stream.
+      produces:
+      - application/json
+      parameters:
+      - name: sid
+        description: Stream Id
+        in: path
+        required: true
+        type: string
+      - name: since
+        description: 'Timestamp of first required attachment.
+
+          This is a long integer value representing milliseconds since Jan 1 1970
+
+          '
+        in: query
+        required: false
+        type: integer
+        format: int64
+      - name: to
+        description: 'Timestamp of last required attachment.
+
+          This is a long integer value representing milliseconds since Jan 1 1970
+
+          '
+        in: query
+        required: false
+        type: integer
+        format: int64
+      - name: limit
+        description: Maximum number of attachments to return. Default is 50. Must be a positive integer and must not exceed 100.
+        in: query
+        type: integer
+        required: false
+      - name: sortDir
+        description: 'Attachment date sort direction : ASC or DESC (default to ASC)
+
+          '
+        in: query
+        type: string
+        required: false
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/StreamAttachmentResponse'
+          examples:
+            application/json:
+            - messageId: PYLHNm/1K6p...peOpj+FbQ
+              userId: USER_ID
+              ingestionDate: 1548089933946
+              fileId: internal_143623
+              name: butterfly.jpg
+              size: 70186
+              contentType: image/jpeg
+              previews:
+              - fileId: internal_143623
+                width: 600
+            - messageId: KpjYuzMLR+JK1co7QBfukX///peOpZmdbQ==
+              userId: USER_ID
+              ingestionDate: 1548089976418
+              fileId: internal_1436237
+              name: car.png
+              size: 15754
+              contentType: image/png
+              previews:
+              - fileId: internal_14362370637
+                width: 600
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/im/create:
+    post:
+      summary: Create a new single or multi party instant message conversation
+      description: 'At least two user IDs must be provided or
+
+        an error response will be sent.
+
+
+        The caller is not included in the members of the
+
+        created chat.
+
+
+        Duplicate users will be included in the membership of the chat but
+
+        the duplication will be silently ignored.
+
+
+        If there is an existing IM conversation with the same set of participants then
+
+        the id of that existing stream will be returned.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: uidList
+        description: List of (integer) User IDs of participants
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserIdList'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Stream'
+          examples:
+            application/json:
+              id: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/room/{id}/setActive:
+    post:
+      summary: Deactivate or reactivate a chatroom via AC Portal.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: active
+        in: query
+        required: true
+        type: boolean
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RoomDetail'
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v2/admin/streams/list:
+    post:
+      summary: 'Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: 'Number of items to skip. Default is 0.
+
+          '
+        in: query
+        type: integer
+      - name: limit
+        description: 'Maximum number of items to return. Default is 50.  This value cannot exceed 100.
+
+          '
+        in: query
+        type: integer
+      - name: filter
+        description: Stream filtering criteria.
+        in: body
+        schema:
+          $ref: '#/definitions/V2AdminStreamFilter'
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V2AdminStreamList'
+          examples:
+            application/json:
+              count: 4
+              skip: 0
+              limit: 50
+              filter:
+                streamTypes:
+                - null
+              streams:
+              - id: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
+                isExternal: false
+                isActive: true
+                isPublic: false
+                type: ROOM
+                attributes:
+                  roomName: Active Internal Private Room
+                  roomDescription: Active Internal Private Room
+                  createdByUserId: 8933531975689
+                  createdDate: 1481575056047
+                  lastModifiedDate: 1481575056047
+                  originCompany: Symphony
+                  originCompanyId: 130
+                  membersCount: 1
+                  lastMessageDate: 1516699467959
+              - id: _KnoYrMkhEn3H2_8vE0kl3___qb5SANQdA
+                isExternal: true
+                isActive: false
+                isPublic: false
+                type: ROOM
+                attributes:
+                  roomName: Inactive External Room
+                  roomDescription: Inactive External Room
+                  createdByUserId: 8933531975686
+                  createdDate: 1481876438194
+                  lastModifiedDate: 1481876438194
+                  originCompany: Symphony
+                  originCompanyId: 130
+                  membersCount: 2
+                  lastMessageDate: 1516699467959
+              - id: fBoaBSRUyb5Rq3YgeSqZvX___qbf5IAhdA
+                isExternal: false
+                isActive: true
+                type: IM
+                attributes:
+                  members:
+                  - 8933531975686
+                  - 8933531975689
+                  createdByUserId: 8933531975689
+                  createdDate: 1482302390238
+                  lastModifiedDate: 1482302390238
+                  originCompany: Symphony
+                  originCompanyId: 130
+                  membersCount: 2
+                  lastMessageDate: 1516699467959
+              - id: k19u9c3GSE_iq0VHDKe1on___qa0Cp2WdA
+                isExternal: false
+                isActive: true
+                type: MIM
+                attributes:
+                  members:
+                  - 8933531975688
+                  - 8933531975689
+                  - 8933531975717
+                  createdByUserId: 8933531975688
+                  createdDate: 1483038089833
+                  lastModifiedDate: 1483038089833
+                  originCompany: Symphony
+                  originCompanyId: 130
+                  membersCount: 3
+                  lastMessageDate: 1516699467959
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/stream/{id}/membership/list:
+    get:
+      summary: List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: stream Id
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: skip
+        description: Number of items to skip. Default is 0.
+        in: query
+        type: integer
+        required: false
+      - name: limit
+        description: Maximum number of items to return. Default is 100 and not to exceed 1000.
+        in: query
+        type: integer
+        required: false
+      tags:
+      - Streams
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/V2MembershipList'
+          examples:
+            application/json:
+              count: 3
+              skip: 0
+              limit: 32
+              members:
+              - user:
+                  userId: 13537736917000
+                  email: john.doe@symphony.com
+                  firstName: John
+                  lastName: Doe
+                  displayName: John Doe
+                  company: pod197
+                  companyId: 197
+                  isExternal: false
+                isOwner: true
+                isCreator: true
+                joinDate: 1604494574047
+              - user:
+                  userId: 13606456393736
+                  email: alice.smith@pod198.com
+                  firstName: Alice
+                  lastName: Smith
+                  displayName: Alice Smith
+                  company: pod198
+                  companyId: 198
+                  isExternal: true
+                isOwner: false
+                isCreator: false
+                joinDate: 1604494722469
+              - user:
+                  userId: 13537736917001
+                  email: bot@symphony.com
+                  displayName: User Provisioning Bot
+                  company: pod197
+                  companyId: 197
+                  isExternal: false
+                isOwner: false
+                isCreator: false
+                joinDate: 1604494605272
+                addedThroughGroups:
+                - 68719476744
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  UserIdList:
+    type: array
+    items:
+      type: integer
+      format: int64
+    example:
+    - 7215545058313
+    - 7215545078461
+  V2AdminStreamAttributes:
+    description: additional optional properties for the stream
+    type: object
+    properties:
+      roomName:
+        type: string
+        description: room name (room only)
+        example: API room
+      roomDescription:
+        type: string
+        description: description of the room (room only)
+        example: Room created via API
+      members:
+        type: array
+        description: list of userid who is member of the stream - im or mim only
+        items:
+          type: integer
+          format: int64
+        example:
+        - 8933531975686
+        - 8933531975689
+      createdByUserId:
+        type: integer
+        format: int64
+        description: creator user id
+        example: 8933531975689
+      createdDate:
+        type: integer
+        format: int64
+        description: created date
+        example: 1481575056047
+      lastModifiedDate:
+        type: integer
+        format: int64
+        description: last modified date
+        example: 1481575056047
+      originCompany:
+        type: string
+        description: company name of the creator
+        example: Symphony
+      originCompanyId:
+        type: integer
+        description: company id of the creator
+        example: 130
+      membersCount:
+        type: integer
+        description: total number of members in the stream
+        example: 1
+      lastMessageDate:
+        type: integer
+        format: int64
+        description: last date a message was sent in this stream
+        example: 1516699467959
+      groupChat:
+        type: boolean
+        description: whether a stream is a group chat or not. Since SBE 20.16.
+        x-since: 20.16
+        example: false
+  GroupItem:
+    type: object
+    properties:
+      id:
+        description: The ID of the added group (aka SDL).
+        type: integer
+        format: int64
+        example: 68719476744
+      addedBy:
+        description: The user ID who added the group to the room.
+        type: integer
+        format: int64
+        example: 68719476743
+  V2MembershipList:
+    description: List of members in the stream.
+    type: object
+    properties:
+      count:
+        type: integer
+        description: total members count
+        example: null
+      skip:
+        type: integer
+        description: number of items to skip from the request
+        example: null
+      limit:
+        type: integer
+        description: maximum number of items to return
+        example: null
+      members:
+        $ref: '#/definitions/V2MemberInfoList'
+  V2MemberInfoList:
+    type: array
+    items:
+      $ref: '#/definitions/V2MemberInfo'
+    example:
+    - user:
+        userId: 13537736917000
+        email: john.doe@symphony.com
+        firstName: John
+        lastName: Doe
+        displayName: John Doe
+        company: pod197
+        companyId: 197
+        isExternal: false
+      isOwner: true
+      isCreator: true
+      joinDate: 1604494574047
+    - user:
+        userId: 13537736917001
+        email: bot@symphony.com
+        displayName: User Provisioning Bot
+        company: pod197
+        companyId: 197
+        isExternal: false
+      isOwner: false
+      isCreator: false
+      joinDate: 1604494605272
+      addedThroughGroups:
+      - 68719476744
+  V3RoomDetail:
+    type: object
+    properties:
+      roomAttributes:
+        $ref: '#/definitions/V3RoomAttributes'
+      roomSystemInfo:
+        $ref: '#/definitions/RoomSystemInfo'
+      groups:
+        description: List of groups (aka SDLs) that were added to the room.
+        type: array
+        items:
+          $ref: '#/definitions/GroupItem'
+        example:
+        - id: 68719476744
+          addedBy: 68719476743
+  V2ConversationSpecificStreamAttributes:
+    type: object
+    properties:
+      members:
+        $ref: '#/definitions/UserIdList'
+  ConversationSpecificStreamAttributes:
+    type: object
+    properties:
+      members:
+        $ref: '#/definitions/UserIdList'
+  Stream:
+    type: object
+    properties:
+      id:
+        type: string
+        example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+  V1IMAttributes:
+    type: object
+    properties:
+      pinnedMessageId:
+        type: string
+        description: UrlSafe message id of the pinned message inside the IM. To perform unpin operation, send an empty string.
+        example: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+  V1IMDetail:
+    type: object
+    properties:
+      V1IMAttributes:
+        $ref: '#/definitions/V1IMAttributes'
+      IMSystemInfo:
+        $ref: '#/definitions/IMSystemInfo'
+  StreamType:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - IM
+        - MIM
+        - ROOM
+        - POST
+        example: ROOM
+  V2AdminStreamInfo:
+    description: Stream information
+    type: object
+    properties:
+      id:
+        type: string
+        description: stream id
+        example: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
+      isExternal:
+        type: boolean
+        description: true indicate this stream has the scope of external and false indictate this stream has the scope of internal. Deprecated, use origin
+        example: false
+      isActive:
+        type: boolean
+        description: true indicate that this stream has the status of active and false indicate this stream has the scope of inactive
+        example: true
+      isPublic:
+        type: boolean
+        description: true indicate that this stream has a privacy setting of public.  This only apply a ROOM stream type.
+        example: false
+      type:
+        type: string
+        description: type of stream (IM, MIM, ROOM)
+        example: ROOM
+      crossPod:
+        type: boolean
+        description: If true, this is a cross-pod stream.
+        example: false
+      origin:
+        type: string
+        description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
+        example: INTERNAL
+      attributes:
+        $ref: '#/definitions/V2AdminStreamAttributes'
+  V2AdminStreamFilter:
+    description: stream filter criteria
+    type: object
+    properties:
+      streamTypes:
+        description: type of streams to search for
+        type: array
+        items:
+          description: Valid values are IM, MIM or ROOM
+          $ref: '#/definitions/V2AdminStreamType'
+        example:
+        - type: IM
+        - type: ROOM
+      scope:
+        description: 'Scope of the room. Valid values are INTERNAL or EXTERNAL.
+
+          If not specified, it will include both Internal and External scope
+
+          '
+        type: string
+        example: INTERNAL
+      origin:
+        description: 'Origin of the room. It indicates whether the room was created by a user within the company by another company.
+
+          Valid values are INTERNAL or EXTERNAL.
+
+          If not specified, it will include both Internal and External origin
+
+          '
+        type: string
+        example: INTERNAL
+      status:
+        description: 'Status of the room.
+
+          Valid values are ACTIVE or INACTIVE.
+
+          If not specified, it will include both Active and Inactive status
+
+          '
+        type: string
+        example: ACTIVE
+      privacy:
+        description: 'Privacy setting of the stream.
+
+          Valid values are PUBLIC or PRIVATE.
+
+          If not specified, it will include both public and private streams
+
+          '
+        type: string
+        example: PRIVATE
+      startDate:
+        description: Start date in unix timestamp in millseconds
+        type: integer
+        format: int64
+        example: 1481575056047
+      endDate:
+        description: End date in unix timestamp in millseconds.  If not specified, it assume to be current time.
+        type: integer
+        format: int64
+        example: 1483038089833
+  StreamAttachmentItem:
+    description: File attachments for a message in a stream
+    type: object
+    properties:
+      messageId:
+        type: string
+        example: PYLHNm/1K6p...peOpj+FbQ
+      ingestionDate:
+        type: integer
+        format: int64
+        example: 1548089933946
+      userId:
+        type: integer
+        format: int64
+        example: 14568529068038
+      fileId:
+        type: string
+        description: The attachment File ID.
+        example: internal_14362
+      name:
+        type: string
+        description: The file name.
+        example: butterfly.jpg
+      size:
+        type: integer
+        format: int64
+        description: Size in bytes.
+        example: 70186
+      content-type:
+        type: string
+        example: image/jpeg
+      previews:
+        type: array
+        items:
+          $ref: '#/definitions/AttachmentPreview'
+  V2MemberUserDetail:
+    description: User detail information for stream membership
+    type: object
+    properties:
+      userId:
+        type: integer
+        format: int64
+        example: 13537736917013
+      email:
+        type: string
+        example: dpayet@om.fr
+      firstName:
+        type: string
+        example: Dimitri
+      lastName:
+        type: string
+        example: Payet
+      displayName:
+        type: string
+        description: Display name for the user
+        example: Dimitri Payet
+      company:
+        type: string
+        description: Company name
+        example: Mars
+      companyId:
+        type: integer
+        description: Company ID
+        example: 13
+      isExternal:
+        type: boolean
+        description: true indicate that this user belong to another company
+        example: true
+  RoomSpecificStreamAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Room name.
+  V2AdminStreamType:
+    type: object
+    properties:
+      type:
+        type: string
+        example: ROOM
+  FacetedMatchCount:
+    description: An object respresenting the result count of faceted search.
+    properties:
+      facet:
+        description: The matched query.
+        type: string
+      count:
+        description: The result count.
+        type: integer
+  ImmutableRoomAttributes:
+    type: object
+    description: These attributes cannot be changed once the room has been created
+    properties:
+      public:
+        type: boolean
+        description: If true, this is a public chatroom. IF false, a private chatroom.
+      readOnly:
+        type: boolean
+        description: If true, only stream owners can send messages.
+      copyProtected:
+        type: boolean
+        description: If true, clients disable the clipboard copy for content in this stream.
+  V2StreamAttributes:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The stream ID.
+        example: BZQYepoT0Zf4vL_jpeMPqn___oEWvVy3dA
+      crossPod:
+        type: boolean
+        description: If true, this is a cross-pod stream.
+        example: false
+      origin:
+        type: string
+        description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
+        example: INTERNAL
+      active:
+        type: boolean
+        description: If true, this stream is active.
+        example: true
+      lastMessageDate:
+        type: integer
+        format: int64
+        description: unix timestamp of the last message sent in the stream
+        example: 1644590972696
+      streamType:
+        description: The type of the stream (IM = IM, multi-IM = MIM, chat room = ROOM, user wall = POST).
+        $ref: '#/definitions/V2StreamType'
+      streamAttributes:
+        $ref: '#/definitions/V2ConversationSpecificStreamAttributes'
+      roomAttributes:
+        $ref: '#/definitions/V2RoomSpecificStreamAttributes'
+  RoomSearchCriteria:
+    description: Room Query Object. Used to specify the parameters for room search.
+    properties:
+      query:
+        description: The search query. Matches the room name and description.
+        type: string
+        example: automobile
+      labels:
+        description: A list of room tag labels whose values will be queried.
+        type: array
+        items:
+          type: string
+        example:
+        - industry
+      searchFields:
+        description: The room fields on which to search. Parameter introduced in sbe-25.10.0
+        type: array
+        items:
+          type: string
+        example:
+        - name
+        - description
+        - keywords_key
+        - keywords_value
+      active:
+        description: Restrict the search to active/inactive rooms. If unspecified, search all rooms.
+        type: boolean
+        example: true
+      private:
+        description: Restrict the search to private rooms. If unspecified, search all rooms.
+        type: boolean
+        example: true
+      owner:
+        $ref: '#/definitions/UserId'
+      creator:
+        $ref: '#/definitions/UserId'
+      member:
+        $ref: '#/definitions/UserId'
+      sortOrder:
+        description: 'Sort algorithm to be used. Supports two values: "BASIC" (legacy algorithm)
+
+          and "RELEVANCE" (enhanced algorithm).
+
+          '
+        type: string
+        enum:
+        - BASIC
+        - RELEVANCE
+        example: RELEVANCE
+    required:
+    - query
+  V3RoomAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Room name.
+        example: API room
+      keywords:
+        type: array
+        description: Keywords for search to use to find this room
+        items:
+          $ref: '#/definitions/RoomTag'
+        example:
+        - key: region
+          value: EMEA
+        - key: lead
+          value: Daffy Duck
+      description:
+        type: string
+        description: Room description.
+        example: Created via the API
+      membersCanInvite:
+        type: boolean
+        description: If true, any chatroom participant can add new participants. If false, only owners can add new participants.
+        example: true
+      discoverable:
+        type: boolean
+        description: If true, this chatroom (name, description and messages) can be searched and listed by non-participants. If false, only participants can search this room.
+        example: false
+      public:
+        type: boolean
+        description: If true, this is a public chatroom. IF false, a private chatroom.
+        example: false
+      readOnly:
+        type: boolean
+        description: If true, only stream owners can send messages.
+        example: false
+      copyProtected:
+        type: boolean
+        description: If true, clients disable the clipboard copy for content in this stream.
+        example: false
+      crossPod:
+        type: boolean
+        description: If true, this room is a cross pod room
+        example: false
+      viewHistory:
+        type: boolean
+        description: If true, new members can view the room chat history of the room.
+        example: false
+      multiLateralRoom:
+        type: boolean
+        description: If true, this is a multi lateral room where we can find users belonging to more than 2 companies.
+        example: false
+      scheduledMeeting:
+        type: boolean
+        description: If true, this room is for a scheduled meeting.
+        example: false
+      subType:
+        type: string
+        description: This field is ignored when creating a new room as it was only used for email integration which is now sunset.
+      pinnedMessageId:
+        type: string
+        description: UrlSafe message id of the pinned message inside the room. To perform unpin operation, send an empty string.
+        example: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+      groupChat:
+        type: boolean
+        description: 'If true, this room is a group chat. Note: this parameter is ignored for creating rooms. Since SBE 20.16.'
+        x-since: 20.16
+        example: false
+  V2AdminStreamInfoList:
+    type: array
+    description: list of stream info
+    items:
+      $ref: '#/definitions/V2AdminStreamInfo'
+    example:
+    - id: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
+      isExternal: false
+      isActive: true
+      isPublic: false
+      type: ROOM
+      attributes:
+        roomName: Active Internal Private Room
+        roomDescription: Active Internal Private Room
+        createdByUserId: 8933531975689
+        createdDate: 1481575056047
+        lastModifiedDate: 1481575056047
+        originCompany: Symphony
+        originCompanyId: 130
+        membersCount: 1
+        lastMessageDate: 1516699467959
+    - id: _KnoYrMkhEn3H2_8vE0kl3___qb5SANQdA
+      isExternal: true
+      isActive: false
+      isPublic: false
+      type: ROOM
+      attributes:
+        roomName: Inactive External Room
+        roomDescription: Inactive External Room
+        createdByUserId: 8933531975686
+        createdDate: 1481876438194
+        lastModifiedDate: 1481876438194
+        originCompany: Symphony
+        originCompanyId: 130
+        membersCount: 2
+        lastMessageDate: 1516699467959
+  V2RoomSpecificStreamAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Room name.
+        example: API room
+      groups:
+        description: List of groups (aka SDLs) that were added to the room. Since SBE 20.14.
+        x-since: 20.14
+        type: array
+        items:
+          $ref: '#/definitions/GroupItem'
+        example:
+        - id: 68719476744
+          addedBy: 68719476743
+  RoomDetail:
+    type: object
+    properties:
+      roomAttributes:
+        $ref: '#/definitions/RoomAttributes'
+      roomSystemInfo:
+        $ref: '#/definitions/RoomSystemInfo'
+      immutableRoomAttributes:
+        $ref: '#/definitions/ImmutableRoomAttributes'
+  RoomTag:
+    description: Room Tag object. A key:value pair describing additional properties of the room.
+    properties:
+      key:
+        description: A unique label of the Tag.
+        type: string
+        example: region
+      value:
+        description: The value of this Tag's label.
+        type: string
+        example: EMEA
+    required:
+    - key
+    - value
+  V2AdminStreamList:
+    description: list of streams info
+    type: object
+    properties:
+      count:
+        type: integer
+        format: int64
+        description: total number of streams which match the filter criteria
+        example: 4
+      skip:
+        type: integer
+        description: number of streams skipped
+        example: 0
+      limit:
+        type: integer
+        description: maximum number of streams return
+        example: 50
+      filter:
+        $ref: '#/definitions/V2AdminStreamFilter'
+      streams:
+        $ref: '#/definitions/V2AdminStreamInfoList'
+  StreamList:
+    description: A list of streams of which the requesting user is a member.
+    type: array
+    items:
+      $ref: '#/definitions/StreamAttributes'
+  V2RoomSearchCriteria:
+    description: Room Query Object. Used to specify the parameters for room search.
+    allOf:
+    - $ref: '#/definitions/RoomSearchCriteria'
+    - type: object
+      properties:
+        subType:
+          description: 'Restrict the search to the specific room subtype. Valid values are: EMAIL'
+          type: string
+          example: EMAIL
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  RoomSystemInfo:
+    type: object
+    properties:
+      id:
+        type: string
+        example: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
+      creationDate:
+        type: integer
+        format: int64
+        description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
+        example: 1547661232368
+      createdByUserId:
+        type: integer
+        format: int64
+        example: 14362370637825
+      active:
+        type: boolean
+        description: If false, no messages can be sent in this stream, and membership is locked.
+        example: true
+  RoomAttributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Room name.
+      description:
+        type: string
+        description: Room description.
+      membersCanInvite:
+        type: boolean
+        description: If true, any chatroom participant can add new participants. If false, only owners can add new participants.
+      discoverable:
+        type: boolean
+        description: If true, this chatroom (name, description and messages) can be searched and listed by non-participants. If false, only participants can search this room.
+  V2MemberInfo:
+    description: Detailed membership record.
+    type: object
+    properties:
+      user:
+        $ref: '#/definitions/V2MemberUserDetail'
+      isOwner:
+        type: boolean
+        description: true if this is an owner of the room
+        example: true
+      isCreator:
+        type: boolean
+        description: true if this is the creator of the room
+        example: true
+      joinDate:
+        description: unix timestamp for join date
+        type: integer
+        format: int64
+        example: 1604494574047
+      addedThroughGroups:
+        description: When the user has been added to the stream through a group (aka SDL), this array contains the group ID which the user belongs to. Since SBE 20.14.
+        x-since: 20.14
+        type: array
+        items:
+          type: integer
+          format: int64
+        example:
+        - 68719476744
+  AttachmentPreview:
+    description: Preview file for image attachments
+    type: object
+    properties:
+      fileId:
+        type: string
+        description: The preview file ID
+        example: internal_14362
+      width:
+        type: integer
+        description: The preview image width
+        example: 600
+  StreamAttributes:
+    type: object
+    properties:
+      id:
+        type: string
+        description: The stream ID.
+      crossPod:
+        type: boolean
+        description: If true, this is a cross-pod stream.
+      active:
+        type: boolean
+        description: If true, this stream is active.
+      streamType:
+        $ref: '#/definitions/StreamType'
+      streamAttributes:
+        $ref: '#/definitions/ConversationSpecificStreamAttributes'
+      roomAttributes:
+        $ref: '#/definitions/RoomSpecificStreamAttributes'
+  UserId:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 7215545058313
+  StreamAttachmentResponse:
+    type: array
+    items:
+      $ref: '#/definitions/StreamAttachmentItem'
+  IMSystemInfo:
+    type: object
+    properties:
+      id:
+        type: string
+        example: usnBKBkH_BVrGOiVpaupEH___okFfE7QdA
+      creationDate:
+        type: integer
+        format: int64
+        description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
+        example: 1610520703317
+      active:
+        type: boolean
+        description: If false, no messages can be sent in this stream, and membership is locked.
+        example: true
+  V2StreamType:
+    type: object
+    properties:
+      type:
+        type: string
+        example: ROOM
+  StreamFilter:
+    description: Stream filtering parameters.
+    properties:
+      streamTypes:
+        description: Types of streams to search for.
+        type: array
+        items:
+          $ref: '#/definitions/StreamType'
+        example:
+        - type: IM
+        - type: ROOM
+      includeInactiveStreams:
+        description: Whether to include inactive streams in the list of results.
+        type: boolean
+        example: 'false'
+  V3RoomSearchResults:
+    description: A list of search results and counts per search parameter.
+    properties:
+      count:
+        description: The total number of rooms matched by the search.
+        type: integer
+        format: int64
+        example: 2
+      skip:
+        description: The number of skipped results.
+        type: integer
+        example: 0
+      limit:
+        description: The number of returned results.
+        type: integer
+        example: 10
+      query:
+        $ref: '#/definitions/V2RoomSearchCriteria'
+      rooms:
+        description: A list of rooms matched by the query.
+        type: array
+        items:
+          $ref: '#/definitions/V3RoomDetail'
+        example:
+        - roomAttributes:
+            name: Automobile Industry Room
+            description: Room to discuss car companies
+            membersCanInvite: true
+            readOnly: false
+            copyProtected: false
+            crossPod: false
+            viewHistory: false
+            public: false
+            multiLateralRoom: false
+          roomSystemInfo:
+            id: tzwvAZIdDMG3ZPRxv+xsgH///qr+JJkWdA==
+            creationDate: 1464615003895
+            createdByUserId: 7696581411197
+            active: true
+        - roomAttributes:
+            name: Tesla Room
+            keywords:
+            - key: industry
+              value: automobile
+            description: Discussions on TSLA
+            membersCanInvite: true
+            readOnly: false
+            copyProtected: false
+            crossPod: false
+            viewHistory: false
+            public: false
+            multiLateralRoom: false
+          roomSystemInfo:
+            id: o6UkQ1TEmU0Tf/DHUlZrCH///qr+JQowdA==
+            creationDate: 1464614974947
+            createdByUserId: 7696581411197
+            active: true
+      facetedMatchCount:
+        description: Detailed counts of matched rooms per search criterion.
+        type: array
+        items:
+          $ref: '#/definitions/FacetedMatchCount'
+        example:
+        - facet: industry
+          count: 1

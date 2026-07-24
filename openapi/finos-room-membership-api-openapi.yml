@@ -1,0 +1,653 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Room Membership API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Room Membership
+paths:
+  /v1/room/{id}/membership/add:
+    post:
+      summary: Adds new member to an existing room.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: Member added
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/room/{id}/membership/remove:
+    post:
+      summary: Removes member from an existing room.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: Member removed
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/room/{id}/membership/promoteOwner:
+    post:
+      summary: Promotes user to owner.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: Member promoted to owner
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/room/{id}/membership/demoteOwner:
+    post:
+      summary: Demotes room owner.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: Owner demoted
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v2/room/{id}/membership/list:
+    get:
+      summary: Lists current members of an existing room.
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/MembershipList'
+          examples:
+            application/json:
+            - id: 7078106103900
+              owner: false
+              joinDate: 1461430710531
+            - id: 7078106103809
+              owner: true
+              joinDate: 1461426797875
+            - id: 7078106103810
+              owner: true
+              joinDate: 1461426797833
+              addedThroughGroups:
+              - 68719476744
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/room/{id}/membership/list:
+    get:
+      summary: Lists current and previous members of an existing room.
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: includePastMembers
+        in: query
+        required: false
+        type: boolean
+        description: If true, the membership list will include past members of the stream. If false, the listing will only incude current members. Default false.
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/MembershipList'
+          examples:
+            application/json:
+            - id: 7078106103900
+              owner: false
+              joinDate: 1461430710531
+            - id: 7078106103809
+              owner: true
+              joinDate: 1461426797875
+            - id: 7078106103810
+              owner: true
+              joinDate: 1461426797833
+              addedThroughGroups:
+              - 68719476744
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/room/{id}/membership/add:
+    post:
+      summary: Add a member to an existing room.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/room/{id}/membership/remove:
+    post:
+      summary: Remove a member from a room.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        description: Room streamId
+        in: path
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserId'
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - Room Membership
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  MembershipList:
+    description: List of members in a room.
+    type: array
+    items:
+      $ref: '#/definitions/MemberInfo'
+    example:
+    - id: 7078106103900
+      owner: false
+      joinDate: 1461430710531
+    - id: 7078106103809
+      owner: true
+      joinDate: 1461426797875
+    - id: 7078106103810
+      owner: true
+      joinDate: 1461426797833
+      addedThroughGroups:
+      - 68719476744
+  SuccessResponse:
+    type: object
+    properties:
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT
+      message:
+        type: string
+        example: Success
+  UserId:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 7215545058313
+  MemberInfo:
+    description: Detailed membership record.
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        example: 7078106103810
+      owner:
+        type: boolean
+        example: true
+      joinDate:
+        type: integer
+        format: int64
+        example: 1461426797833
+      addedThroughGroups:
+        description: When the user has been added to the stream through a group (aka SDL), this array contains the group ID which the user belongs to. Since SBE 20.14.
+        x-since: 20.14
+        type: array
+        items:
+          type: integer
+          format: int64
+        example:
+        - 68719476744
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session

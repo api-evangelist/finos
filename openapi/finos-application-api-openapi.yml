@@ -1,0 +1,516 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Application API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Application
+paths:
+  /v1/admin/app/create:
+    post:
+      summary: Creates a new app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: applicationDetail
+        description: Application detail to create the app with
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ApplicationDetail'
+      tags:
+      - Application
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationDetail'
+          examples:
+            application/json:
+              applicationInfo:
+                appId: my-test-app
+                name: my-test-app
+                appUrl: https://joe.mydomain.com
+                domain: mydomain.com
+                publisher: Joe Smith
+              description: a test app
+              allowOrigins: mydomain.com
+              permissions:
+              - ACT_AS_USER
+              - SEND_MESSAGES
+              notification:
+                url: https://some.url
+                apiKey: 123456
+              cert: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+              authenticationKeys: null
+              properties:
+              - key: port
+                value: 4000
+              - key: url
+                value: https://someother.url
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/app/{id}/update:
+    post:
+      summary: Updates a app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: id
+        description: Id of the app
+        in: path
+        required: true
+        type: string
+      - name: applicationDetail
+        description: Details to update the app with
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/ApplicationDetail'
+      tags:
+      - Application
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationDetail'
+          examples:
+            application/json:
+              applicationInfo:
+                appId: my-test-app
+                name: my-test-app
+                appUrl: https://joe.mydomain.com
+                domain: mydomain.com
+                publisher: Joe Smith
+              description: a test app
+              allowOrigins: mydomain.com
+              permissions:
+              - ACT_AS_USER
+              - SEND_MESSAGES
+              notification:
+                url: https://some.url
+                apiKey: 123456
+              cert: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+              authenticationKeys: null
+              properties:
+              - key: port
+                value: 4000
+              - key: url
+                value: https://someother.url
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/app/{id}/delete:
+    post:
+      summary: Deletes a app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: id
+        description: The id of the app
+        in: path
+        required: true
+        type: string
+      tags:
+      - Application
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: OK
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/app/{id}/get:
+    get:
+      summary: Gets a app
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: id
+        description: the id of the app to get
+        in: path
+        required: true
+        type: string
+      tags:
+      - Application
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationDetail'
+          examples:
+            application/json:
+              applicationInfo:
+                appId: my-test-app
+                name: my-test-app
+                appUrl: https://joe.mydomain.com
+                domain: mydomain.com
+                publisher: Joe Smith
+              description: a test app
+              allowOrigins: mydomain.com
+              permissions:
+              - ACT_AS_USER
+              - SEND_MESSAGES
+              notification:
+                url: https://some.url
+                apiKey: 123456
+              cert: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+              authenticationKeys: null
+              properties:
+              - key: port
+                value: 4000
+              - key: url
+                value: https://someother.url
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  ApplicationInfo:
+    description: 'Required information for creating an application.
+
+      '
+    type: object
+    properties:
+      appId:
+        description: An unique id for the application.
+        type: string
+        maxLength: 256
+        minLength: 1
+      name:
+        description: User defined name for the application.
+        type: string
+      appUrl:
+        description: The url for the app. Must start with "https://".
+        type: string
+      domain:
+        description: Domain for app, that must match app url domain.
+        type: string
+      publisher:
+        description: The publisher for this application.
+        type: string
+    example:
+      appId: my-test-app
+      name: my-test-app
+      appUrl: https://joe.mydomain.com
+      domain: mydomain.com
+      publisher: Joe Smith
+  AppProperties:
+    type: array
+    description: Application configuration properties that are shared with the extension application, client side. Do not store sensitive information here. Since SBE 20.14.
+    x-since: 20.14
+    items:
+      $ref: '#/definitions/AppProperty'
+    example:
+    - key: port
+      value: 4000
+    - key: url
+      value: https://someother.url
+  AppProperty:
+    type: object
+    description: Application configuration property that is shared with the extension application, client side. Do not store sensitive information here.
+    properties:
+      key:
+        type: string
+        description: Name of an application configuration property. It cannot be null or empty and its length is limited to 1024 characters. Keys are unique.
+      value:
+        type: string
+        description: Value of an application configuration property. It cannot be null and its length is limited to 4096 characters. It can be empty.
+    example:
+      key: port
+      value: 4000
+  SuccessResponse:
+    type: object
+    properties:
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT
+      message:
+        type: string
+        example: Success
+  AppAuthenticationKey:
+    description: App RSA key information.
+    type: object
+    properties:
+      key:
+        description: Application RSA public key.
+        type: string
+        example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+      expirationDate:
+        description: RSA key expiration date. This value is set just for rotated keys.
+        type: integer
+        format: int64
+        example: 1700815176000
+      action:
+        description: "Action to be performed on the RSA key.\nThe following actions can be performed onto the app's active RSA key:\n  - SAVE\n  - REVOKE\nThe following actions can be performed onto the app's rotated RSA key:\n  - REVOKE\n  - EXTEND\n"
+        type: string
+        example: SAVE
+  ApplicationDetail:
+    description: Detailed record of application.
+    type: object
+    properties:
+      applicationInfo:
+        $ref: '#/definitions/ApplicationInfo'
+      iconUrl:
+        description: Url to a icon to use for app. Must start with "https://".
+        type: string
+        example: https://myiconUrl.com
+      description:
+        description: Description of the application.
+        type: string
+        example: a test app
+      allowOrigins:
+        description: 'The permitted domains to send or receive a request from.
+
+          The field is for the purpose of CORS which set the app specific "ALLOW-ORIGIN-DOMAINS" header in HTTP.
+
+          '
+        type: string
+        example: mydomain.com
+      permissions:
+        description: "List of application permissions provisioned for the application.\nIn addition to the known ones, custom permissions are accepted.\nA custom permission should only contain upper case alphanumeric characters and underscore.\nIt should not be empty or only contain spaces and its length is limited to 64 characters.\n\nKnown permissions:\n  - SEND_MESSAGES\n  - GET_USER_CONNECTIONS\n  - REQUEST_USER_CONNECTIONS\n  - SET_PRESENCE\n  - GET_PRESENCE\n  - GET_BASIC_USER_INFO\n  - GET_EXTENDED_USER_INFO\n  - GET_BASIC_CONTACT_INFO\n  - GET_EXTENDED_CONTACT_INFO\n  - ACT_AS_USER\n  - MANAGE_SIGNALS\n  - MANAGE_USER_FOLLOWING\n  - TRUST_APP\n"
+        type: array
+        items:
+          type: string
+          maxLength: 64
+          minLength: 1
+        example:
+        - ACT_AS_USER
+        - SEND_MESSAGES
+      cert:
+        description: The app public certificate in pem format.
+        type: string
+        example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+      authenticationKeys:
+        $ref: '#/definitions/AppAuthenticationKeys'
+      notification:
+        $ref: '#/definitions/AppNotification'
+      properties:
+        $ref: '#/definitions/AppProperties'
+  AppAuthenticationKeys:
+    description: App RSA keys information.
+    type: object
+    properties:
+      current:
+        $ref: '#/definitions/AppAuthenticationKey'
+      previous:
+        $ref: '#/definitions/AppAuthenticationKey'
+  AppNotification:
+    type: object
+    description: Application callback information
+    properties:
+      url:
+        type: string
+        description: callback URL
+        example: https://some.url
+      apiKey:
+        type: string
+        description: apiKey sent into every callback request, using the X-API-KEY header
+        example: test123456
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session

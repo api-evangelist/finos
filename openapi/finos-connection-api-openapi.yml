@@ -1,0 +1,593 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin Connection API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: Connection
+paths:
+  /v1/connection/list:
+    get:
+      summary: List of requesting user's connection
+      description: 'This retrieves all connections of the requesting user. (i.e. both connections in which the requesting user is the sender and those
+
+        in which the requesting user is the inivtee) By default, if you haven''t specified the connection status to filter on, this call will only
+
+        return results for both "pending_incoming" and "pending_outgoing". You can optionally filter by userIds to further restrict the results of
+
+        a specific connection status. If the users are in the same private pod, the users have an implicit connection status of "accepted". Those
+
+        users will not be returned in the response if you don''t specify the connection status as "accepted" (default is "pending")
+
+        and the explicit userIds in the request.
+
+        '
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: status
+        description: 'Filter the connection list based on the connection status.
+
+          The connection status can only be pending_incoming, pending_outgoing, accepted, rejected, or all (all of the above)
+
+          '
+        in: query
+        type: string
+        enum:
+        - PENDING_INCOMING
+        - PENDING_OUTGOING
+        - ACCEPTED
+        - REJECTED
+        - ALL
+      - name: userIds
+        description: 'The userIds parameter should be specified as a comma delimited list of user ids and can be used to restrict the results of a specific connection.
+
+          Note that this is particularly important if the caller intends to retrieve results for implicit connection (user within the same pod).
+
+          Implicit connections will not be included in the response if userId is not provided.
+
+          '
+        in: query
+        type: string
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserConnectionList'
+          examples:
+            application/json:
+            - userId: 769658112378
+              status: ACCEPTED
+              updatedAt: 1471018076255
+            - userId: 7078106103809
+              status: PENDING_INCOMING
+              updatedAt: 1467562406219
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Connection cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Connection cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/connection/create:
+    post:
+      summary: Sends an invitation to connect with another user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: connectionRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserConnectionRequest'
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserConnection'
+          examples:
+            application/json:
+              userId: 7078106126503
+              status: PENDING_OUTGOING
+              firstRequestedAt: 1470018076306
+              updatedAt: 1471018076255
+              requestCounter: 1
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: User cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. User cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/connection/accept:
+    post:
+      summary: Accept the connection request for the requesting user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: connectionRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserConnectionRequest'
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserConnection'
+          examples:
+            application/json:
+              userId: 7078106126503
+              status: ACCEPTED
+              firstRequestedAt: 1470018076306
+              updatedAt: 1471018076255
+              requestCounter: 1
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Connection cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Connection cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/connection/reject:
+    post:
+      summary: Reject the connection request for the requesting user.
+      description: 'Reject the connection between the requesting user and request sender. If both users are in the same private pod,
+
+        an error will be returned because both users have an implicit connection which cannot be rejected.
+
+        '
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: connectionRequest
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserConnectionRequest'
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserConnection'
+          examples:
+            application/json:
+              userId: 7078106126503
+              status: REJECTED
+              firstRequestedAt: 1470018076306
+              updatedAt: 1471018076255
+              requestCounter: 1
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Connection cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Connection cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/connection/user/{userId}/info:
+    get:
+      summary: The status of the connection invitation to another user.
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: userId
+        description: user Id
+        in: path
+        required: true
+        type: string
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/UserConnection'
+          examples:
+            application/json:
+              userId: 769658112378
+              status: ACCEPTED
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Connection cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Connection cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/connection/user/{uid}/remove:
+    post:
+      summary: Removes a connection with a user.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: uid
+        description: 'User ID as a decimal integer
+
+          '
+        in: path
+        required: true
+        type: integer
+        format: int64
+      tags:
+      - Connection
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResponse'
+          examples:
+            application/json:
+              format: TEXT
+              message: Connection Removed.
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '404':
+          description: 'Not Found: Connection cannot be found.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: // Not Found. Connection cannot be found. See response body for fruther details.
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  UserConnectionList:
+    type: array
+    items:
+      $ref: '#/definitions/UserConnection'
+    example:
+    - userId: 769658112378
+      status: PENDING_OUTGOING
+      firstRequestedAt: 1470018073812
+      updatedAt: 1471018076255
+      requestCounter: 1
+    - userId: 7078106103809
+      status: ACCEPTED
+  SuccessResponse:
+    type: object
+    properties:
+      format:
+        type: string
+        enum:
+        - TEXT
+        - XML
+        example: TEXT
+      message:
+        type: string
+        example: Success
+  UserConnectionRequest:
+    type: object
+    description: Request body for the Connection APIs
+    properties:
+      userId:
+        type: integer
+        format: int64
+        description: user id
+        example: 769658112378
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
+  UserConnection:
+    type: object
+    description: Connection status between two users
+    properties:
+      userId:
+        type: integer
+        format: int64
+        description: user id
+        example: 769658112378
+      status:
+        type: string
+        description: Connection status between the requesting user and the request sender
+        enum:
+        - PENDING_INCOMING
+        - PENDING_OUTGOING
+        - ACCEPTED
+        - REJECTED
+        example: ACCEPTED
+      firstRequestedAt:
+        type: integer
+        format: int64
+        description: unix timestamp when the first request was made
+        example: 1470018073812
+      updatedAt:
+        type: integer
+        format: int64
+        description: unix timestamp on the last updated date
+        example: 1471018076255
+      requestCounter:
+        type: integer
+        format: int32
+        description: number of requests made
+        example: 1

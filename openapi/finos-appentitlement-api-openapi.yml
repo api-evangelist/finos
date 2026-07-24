@@ -1,0 +1,622 @@
+openapi: 3.0.1
+info:
+  title: Agent Admin AppEntitlement API
+  description: 'This document refers to Symphony API calls to send and receive messages
+
+    and content. They need the on-premise Agent installed to perform
+
+    decryption/encryption of content.
+
+
+    - sessionToken and keyManagerToken can be obtained by calling the
+
+    authenticationAPI on the symphony back end and the key manager
+
+    respectively. Refer to the methods described in authenticatorAPI.yaml.
+
+    - Actions are defined to be atomic, ie will succeed in their entirety
+
+    or fail and have changed nothing.
+
+    - If it returns a 40X status then it will have sent no message to any
+
+    stream even if a request to some subset of the requested streams
+
+    would have succeeded.
+
+    - If this contract cannot be met for any reason then this is an error
+
+    and the response code will be 50X.
+
+    - MessageML is a markup language for messages. See reference here:
+
+    https://rest-api.symphony.com/docs/messagemlv2
+
+    - **Real Time Events**: The following events are returned when reading
+
+    from a real time messages and events stream ("datafeed"). These
+
+    events will be returned for datafeeds created with the v5 endpoints.
+
+    To know more about the endpoints, refer to Create Messages/Events
+
+    Stream and Read Messages/Events Stream. Unless otherwise specified,
+
+    all events were added in 1.46.
+
+    '
+  version: 25.8.1
+servers:
+- url: youragentURL.symphony.com/agent
+tags:
+- name: AppEntitlement
+paths:
+  /v1/admin/app/entitlement/list:
+    get:
+      summary: Get the list of application entitlements for the company
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      tags:
+      - AppEntitlement
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PodAppEntitlementList'
+          examples:
+            application/json:
+            - appId: djApp
+              appName: Dow Jones
+              enable: true
+              listed: true
+              install: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+    post:
+      summary: Update the application entitlements for the company
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/PodAppEntitlementList'
+      tags:
+      - AppEntitlement
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/PodAppEntitlementList'
+          examples:
+            application/json:
+            - appId: djApp
+              appName: Dow Jones
+              enable: true
+              listed: true
+              install: false
+            - appId: spcapiq
+              appName: S&P Capital IQ Data
+              enable: true
+              listed: true
+              install: false
+            - appId: selerity
+              appName: Selerity Context
+              enable: false
+              listed: true
+              install: true
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+  /v1/admin/user/{uid}/app/entitlement/list:
+    get:
+      summary: Get the list of application entitlements for this user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: uid
+        description: User ID as a decimal integer
+        in: path
+        required: true
+        type: integer
+        format: int64
+      tags:
+      - AppEntitlement
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserAppEntitlementList'
+          examples:
+            application/json:
+            - appId: djApp
+              appName: Dow Jones
+              listed: true
+              install: false
+            - appId: selerity
+              appName: Selerity Context
+              listed: true
+              install: true
+              products:
+              - appId: selerity
+                name: Standard
+                subscribed: true
+                type: default
+              - appId: selerity
+                name: Premium
+                sku: AcDccU53SsY
+                subscribed: false
+                type: premium
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+    post:
+      summary: Update the application entitlements for this user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: uid
+        description: User ID as a decimal integer
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserAppEntitlementList'
+      tags:
+      - AppEntitlement
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserAppEntitlementList'
+          examples:
+            application/json:
+            - appId: djApp
+              appName: Dow Jones
+              listed: true
+              install: false
+            - appId: selerity
+              appName: Selerity Context
+              listed: true
+              install: true
+              products:
+              - appId: selerity
+                name: Standard
+                subscribed: true
+                type: default
+              - appId: selerity
+                name: Premium
+                sku: AcDccU53SsY
+                subscribed: false
+                type: premium
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+    patch:
+      summary: Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: sessionToken
+        description: Session authentication token.
+        in: header
+        required: true
+        type: string
+      - name: uid
+        description: User ID as a decimal integer
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: payload
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/UserAppEntitlementsPatchList'
+      tags:
+      - AppEntitlement
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/UserAppEntitlementList'
+          examples:
+            application/json:
+            - appId: djApp
+              appName: Dow Jones
+              listed: true
+              install: false
+            - appId: selerity
+              appName: Selerity Context
+              listed: true
+              install: true
+              products:
+              - appId: selerity
+                name: Standard
+                subscribed: true
+                type: default
+              - appId: selerity
+                name: Premium
+                sku: AcDccU53SsY
+                subscribed: false
+                type: premium
+        '400':
+          description: Client error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 400
+              message: // Client error, see response body for further details.
+        '401':
+          description: 'Unauthorized: Invalid session token.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 401
+              message: Invalid session
+        '403':
+          description: 'Forbidden: Caller lacks necessary entitlement.'
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 403
+              message: The user lacks the required entitlement to perform this operation
+        '500':
+          description: Server error, see response body for further details.
+          schema:
+            $ref: '#/definitions/Error'
+          examples:
+            application/json:
+              code: 500
+              message: // Server error, see response body for further details.
+definitions:
+  PodAppEntitlementList:
+    type: array
+    items:
+      $ref: '#/definitions/PodAppEntitlement'
+    example:
+    - appId: djApp
+      appName: Dow Jones
+      enable: true
+      listed: true
+      install: false
+    - appId: selerity
+      appName: Selerity Context
+      enable: false
+      listed: true
+      install: true
+  UserAppEntitlement:
+    description: Application Entitlements for the user
+    type: object
+    required:
+    - appId
+    - listed
+    - install
+    properties:
+      appId:
+        type: string
+        description: Unique ID for the Application
+        maxLength: 256
+        minLength: 1
+        example: selerity
+      appName:
+        type: string
+        description: Name for this Application
+        maxLength: 50
+        minLength: 1
+        example: Selerity Context
+      listed:
+        type: boolean
+        description: if true, this application will be listed in the appstore for this user.  Otherwise, this application will be hidden in the appstore.
+        example: true
+      install:
+        type: boolean
+        description: if true, it indicate this application is installed for this user.  Otherwise, this user does not have this application installed.
+        example: true
+      products:
+        $ref: '#/definitions/ProductList'
+  UserAppEntitlementList:
+    type: array
+    items:
+      $ref: '#/definitions/UserAppEntitlement'
+    example:
+    - appId: djApp
+      appName: Dow Jones
+      listed: true
+      install: false
+    - appId: selerity
+      appName: Selerity Context
+      listed: true
+      install: true
+      products:
+      - appId: selerity
+        name: Standard
+        subscribed: true
+        type: default
+      - appId: selerity
+        name: Premium
+        sku: AcDccU53SsY
+        subscribed: false
+        type: premium
+  UserAppEntitlementsPatchList:
+    description: Array of app entitlements to patch for a user
+    type: array
+    items:
+      $ref: '#/definitions/UserAppEntitlementPatch'
+  UserAppEntitlementPatch:
+    description: Application Entitlements to patch for the user
+    type: object
+    required:
+    - appId
+    properties:
+      appId:
+        type: string
+        description: Unique ID for the Application
+        maxLength: 256
+        minLength: 1
+        example: selerity
+      listed:
+        type: string
+        enum: &id001
+        - 'TRUE'
+        - 'FALSE'
+        - KEEP
+        - REMOVE
+        default: KEEP
+        description: If "TRUE", this application will be listed in the appstore for this user. If "FALSE", this application will be hidden in the appstore. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
+        example: KEEP
+      install:
+        type: string
+        enum: *id001
+        default: KEEP
+        description: If "TRUE", this application will be installed for this user. If "FALSE", this application will not be installed for this user. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
+        example: true
+      product:
+        $ref: '#/definitions/Product'
+  ProductList:
+    type: array
+    items:
+      $ref: '#/definitions/Product'
+    example:
+    - appId: selerity
+      name: Standard
+      subscribed: true
+      type: default
+    - appId: selerity
+      name: Premium
+      sku: AcDccU53SsY
+      subscribed: false
+      type: premium
+  PodAppEntitlement:
+    description: Application Entitlements for the company
+    type: object
+    required:
+    - appId
+    - appName
+    - enable
+    - listed
+    - install
+    properties:
+      appId:
+        type: string
+        description: Unique ID for the Application
+        maxLength: 256
+        minLength: 1
+        example: djApp
+      appName:
+        type: string
+        description: Name for this Application
+        maxLength: 50
+        minLength: 1
+        example: Dow Jones
+      enable:
+        type: boolean
+        example: true
+      listed:
+        type: boolean
+        description: if true, this application will be listed in the appstore for everyone.  Otherwise, this application will be hidden in the appstore.
+        example: true
+      install:
+        type: boolean
+        description: if true, the entitlement is set to automatic for the company.  Otherwise, it is set to manual.
+        example: true
+  Product:
+    description: Application Product
+    type: object
+    required:
+    - name
+    - type
+    - subscribed
+    properties:
+      appId:
+        type: string
+        description: App ID for the Product
+        maxLength: 256
+        minLength: 1
+        example: selerity
+      name:
+        type: string
+        minLength: 1
+        maxLength: 50
+        description: Product Name
+        example: Premium
+      sku:
+        type: string
+        minLength: 1
+        maxLength: 100
+        description: Product SKU
+        example: AcDccU53SsY
+      subscribed:
+        type: boolean
+        description: indicate whether the product is subscribed or not
+        example: false
+      type:
+        type: string
+        description: Product Type (default or premium)
+        example: premium
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+        example: 401
+      message:
+        type: string
+        example: Invalid session
