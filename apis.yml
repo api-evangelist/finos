@@ -7,9 +7,21 @@ description: >-
   cloud compliance (Common Cloud Controls), business and technology modeling (Morphir), and messaging APIs (Symphony API
   Spec), among others.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/finos.png
 tags:
   - Financial Services
   - Fintech
@@ -20,96 +32,467 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/finos/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: finos:fdc3
-    name: FDC3
-    description: >-
-      FDC3 is an open standard for financial desktop interoperability, defining how applications launch, share context,
-      and resolve intents across the financial desktop. The standard includes a Desktop Agent API and an App Directory
-      specification.
-    humanURL: https://fdc3.finos.org/
-    tags:
-      - Desktop Interoperability
-      - FDC3
-      - Financial Services
-      - Open Standard
-    properties:
-      - type: Documentation
-        url: https://fdc3.finos.org/docs/fdc3-intro
-      - type: GitHubRepository
-        url: https://github.com/finos/FDC3
-      - type: Reference
-        url: https://fdc3.finos.org/docs/app-directory/overview
-  - aid: finos:common-domain-model
-    name: Common Domain Model
-    description: >-
-      The Common Domain Model (CDM) is a standardized, machine-readable, and machine-executable model that represents
-      financial products, trades in those products, and the lifecycle events of those trades.
-    humanURL: https://www.finos.org/common-domain-model
-    tags:
-      - Common Domain Model
-      - Financial Products
-      - Open Standard
-      - Trade Lifecycle
-    properties:
-      - type: Documentation
-        url: https://cdm.finos.org/
-      - type: GitHubRepository
-        url: https://github.com/finos/common-domain-model
-  - aid: finos:common-cloud-controls
-    name: Common Cloud Controls
-    description: >-
-      FINOS Common Cloud Controls is an open standard project that describes consistent controls for compliant public
-      cloud deployments in the financial services sector.
-    humanURL: https://www.finos.org/common-cloud-controls-project
-    tags:
-      - Cloud
-      - Compliance
-      - Financial Services
-      - Open Standard
-    properties:
-      - type: Documentation
-        url: https://www.finos.org/common-cloud-controls-project
-      - type: GitHubRepository
-        url: https://github.com/finos/common-cloud-controls
-  - aid: finos:morphir
-    name: Morphir
-    description: >-
-      Morphir is a universal language for business and technology that captures business logic in a portable,
-      technology-agnostic intermediate representation that can be compiled to multiple target languages and runtimes.
-    humanURL: https://morphir.finos.org/
-    tags:
-      - Business Modeling
-      - Domain Modeling
-      - Morphir
-      - Open Source
-    properties:
-      - type: Documentation
-        url: https://morphir.finos.org/
-      - type: GitHubRepository
-        url: https://github.com/finos/morphir
-  - aid: finos:symphony-api
-    name: Symphony API Spec
-    description: >-
-      The Symphony API Spec project hosted at FINOS publishes the OpenAPI definitions for the Symphony platform,
-      including the Pod API, Agent API, and Authenticator API used to send messages, manage users, and authenticate bots
-      and integrations.
-    humanURL: https://github.com/finos/symphony-api-spec
-    tags:
-      - Authentication
-      - Messaging
-      - OpenAPI
-      - Symphony
-    properties:
-      - type: Documentation
-        url: https://github.com/finos/symphony-api-spec
-      - type: GitHubRepository
-        url: https://github.com/finos/symphony-api-spec
-      - type: OpenAPI
-        url: openapi/finos-symphony-pod-api-openapi.yml
-      - type: OpenAPI
-        url: openapi/finos-symphony-agent-api-openapi.yml
-      - type: OpenAPI
-        url: openapi/finos-symphony-authenticator-api-openapi.yml
+- aid: finos:fdc3
+  name: FDC3
+  description: >-
+    FDC3 is an open standard for financial desktop interoperability, defining how applications launch,
+    share context, and resolve intents across the financial desktop. The standard includes a Desktop Agent
+    API and an App Directory specification.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Desktop Interoperability
+  - FDC3
+  - Financial Services
+  - Open Standard
+  properties:
+  - type: Documentation
+    url: https://fdc3.finos.org/docs/fdc3-intro
+  - type: GitHubRepository
+    url: https://github.com/finos/FDC3
+  - type: Reference
+    url: https://fdc3.finos.org/docs/app-directory/overview
+- aid: finos:common-domain-model
+  name: Common Domain Model
+  description: >-
+    The Common Domain Model (CDM) is a standardized, machine-readable, and machine-executable model that
+    represents financial products, trades in those products, and the lifecycle events of those trades.
+  humanURL: https://www.finos.org/common-domain-model
+  tags:
+  - Common Domain Model
+  - Financial Products
+  - Open Standard
+  - Trade Lifecycle
+  properties:
+  - type: Documentation
+    url: https://cdm.finos.org/
+  - type: GitHubRepository
+    url: https://github.com/finos/common-domain-model
+- aid: finos:common-cloud-controls
+  name: Common Cloud Controls
+  description: >-
+    FINOS Common Cloud Controls is an open standard project that describes consistent controls for compliant
+    public cloud deployments in the financial services sector.
+  humanURL: https://www.finos.org/common-cloud-controls-project
+  tags:
+  - Cloud
+  - Compliance
+  - Financial Services
+  - Open Standard
+  properties:
+  - type: Documentation
+    url: https://www.finos.org/common-cloud-controls-project
+  - type: GitHubRepository
+    url: https://github.com/finos/common-cloud-controls
+- aid: finos:morphir
+  name: Morphir
+  description: >-
+    Morphir is a universal language for business and technology that captures business logic in a portable,
+    technology-agnostic intermediate representation that can be compiled to multiple target languages
+    and runtimes.
+  humanURL: https://morphir.finos.org/
+  tags:
+  - Business Modeling
+  - Domain Modeling
+  - Morphir
+  - Open Source
+  properties:
+  - type: Documentation
+    url: https://morphir.finos.org/
+  - type: GitHubRepository
+    url: https://github.com/finos/morphir
+- aid: finos:finos-admin-api
+  name: FINOS Admin API
+  description: The Admin API from FINOS — 3 operation(s) for admin.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Admin
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-admin-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-appentitlement-api
+  name: FINOS AppEntitlement API
+  description: The AppEntitlement API from FINOS — 2 operation(s) for appentitlement.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - AppEntitlement
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-appentitlement-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-application-api
+  name: FINOS Application API
+  description: The Application API from FINOS — 4 operation(s) for application.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Application
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-application-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-attachments-api
+  name: FINOS Attachments API
+  description: The Attachments API from FINOS — 1 operation(s) for attachments.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Attachments
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-attachments-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-audittrail-api
+  name: FINOS AuditTrail API
+  description: The AuditTrail API from FINOS — 1 operation(s) for audittrail.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - AuditTrail
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-audittrail-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-certificateauthentication-api
+  name: FINOS CertificateAuthentication API
+  description: >-
+    The CertificateAuthentication API from FINOS — 2 operation(s) for certificateauthentication.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - CertificateAuthentication
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-certificateauthentication-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-certificatepod-api
+  name: FINOS CertificatePod API
+  description: The CertificatePod API from FINOS — 1 operation(s) for certificatepod.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - CertificatePod
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-certificatepod-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-connection-api
+  name: FINOS Connection API
+  description: The Connection API from FINOS — 6 operation(s) for connection.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Connection
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-connection-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-datafeed-api
+  name: FINOS Datafeed API
+  description: The Datafeed API from FINOS — 3 operation(s) for datafeed.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Datafeed
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-datafeed-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-datahose-api
+  name: FINOS Datahose API
+  description: The Datahose API from FINOS — 1 operation(s) for datahose.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Datahose
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-datahose-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-disclaimer-api
+  name: FINOS Disclaimer API
+  description: The Disclaimer API from FINOS — 3 operation(s) for disclaimer.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Disclaimer
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-disclaimer-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-dlp-policies-and-dictionary-management-api
+  name: FINOS DLP Policies and Dictionary Management API
+  description: >-
+    The DLP Policies and Dictionary Management API from FINOS — 14 operation(s) for dlp policies and dictionary
+    management.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - DLP Policies and Dictionary Management
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-dlp-policies-and-dictionary-management-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-file-ext-api
+  name: FINOS File Ext API
+  description: The File Ext API from FINOS — 2 operation(s) for file ext.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - File Ext
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-file-ext-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-infobarriers-api
+  name: FINOS InfoBarriers API
+  description: The InfoBarriers API from FINOS — 5 operation(s) for infobarriers.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - InfoBarriers
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-infobarriers-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-message-api
+  name: FINOS Message API
+  description: The Message API from FINOS — 1 operation(s) for message.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Message
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-message-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-messages-api
+  name: FINOS Messages API
+  description: The Messages API from FINOS — 7 operation(s) for messages.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-messages-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-messagesuppression-api
+  name: FINOS MessageSuppression API
+  description: The MessageSuppression API from FINOS — 1 operation(s) for messagesuppression.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - MessageSuppression
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-messagesuppression-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-pod-api
+  name: FINOS Pod API
+  description: The Pod API from FINOS — 3 operation(s) for pod.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Pod
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-pod-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-presence-api
+  name: FINOS Presence API
+  description: The Presence API from FINOS — 8 operation(s) for presence.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Presence
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-presence-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-room-membership-api
+  name: FINOS Room Membership API
+  description: The Room Membership API from FINOS — 8 operation(s) for room membership.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Room Membership
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-room-membership-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-security-api
+  name: FINOS Security API
+  description: The Security API from FINOS — 8 operation(s) for security.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Security
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-security-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-session-api
+  name: FINOS Session API
+  description: The Session API from FINOS — 1 operation(s) for session.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Session
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-session-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-share-api
+  name: FINOS Share API
+  description: The Share API from FINOS — 1 operation(s) for share.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Share
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-share-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-signals-api
+  name: FINOS Signals API
+  description: The Signals API from FINOS — 9 operation(s) for signals.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Signals
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-signals-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-streams-api
+  name: FINOS Streams API
+  description: The Streams API from FINOS — 16 operation(s) for streams.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Streams
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-streams-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-system-api
+  name: FINOS System API
+  description: The System API from FINOS — 7 operation(s) for system.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-system-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-user-api
+  name: FINOS User API
+  description: The User API from FINOS — 24 operation(s) for user.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-user-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-users-api
+  name: FINOS Users API
+  description: The Users API from FINOS — 6 operation(s) for users.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-users-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-util-api
+  name: FINOS Util API
+  description: The Util API from FINOS — 1 operation(s) for util.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Util
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-util-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-violations-api
+  name: FINOS Violations API
+  description: The Violations API from FINOS — 7 operation(s) for violations.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Violations
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-violations-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
 common:
   - type: AgenticAccess
     url: agentic-access/finos-agentic-access.yml
