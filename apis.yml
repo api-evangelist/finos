@@ -494,6 +494,16 @@ apis:
   - type: GitHubRepository
     url: https://github.com/finos/symphony-api-spec
 common:
+  - type: IssueTracker
+    url: https://github.com/finos/FDC3/issues
+  - type: Releases
+    url: https://github.com/finos/FDC3/releases
+  - type: SecurityPolicy
+    url: https://github.com/finos/FDC3/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/finos/FDC3/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/finos/FDC3/blob/main/CONTRIBUTING.md
   - type: AgenticAccess
     url: agentic-access/finos-agentic-access.yml
   - type: DomainSecurity
