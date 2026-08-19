@@ -1,0 +1,1085 @@
+{
+  "item": [
+    {
+      "id": "18ba6b3f-c25a-4721-a758-1687b4e12590",
+      "name": "Admin",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "606bfd2e-f09a-4a09-bc4b-6cf53e6d735f",
+          "name": "Fetch message details",
+          "request": {
+            "name": "Fetch message details",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "94f5fba1-ada4-4d06-8b98-54f77a33cdb6",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dbe0cb15-17b0-44d4-aebf-6c8fca4efff0",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2a8f87c2-e4da-4af7-bcf5-3ff8461aa91f",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ffbb8a6d-b1cf-4da6-8b81-69aabce0e250",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d804b1d-0f90-43ce-856e-70a792483f3c",
+              "name": "Not Found: Message ID could not be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "074d17e4-2228-4f20-920d-8881cac64b0b",
+              "name": "Unprocessable entity: Invalid message type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c946ff2-35b5-4d39-9652-56bceb47effb",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6cd5cf4-7722-4cb6-86ee-bd9a6ac3bc01",
+          "name": "Fetch receipts details from a specific message.",
+          "request": {
+            "name": "Fetch receipts details from a specific message.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "messages",
+                ":messageId",
+                "receipts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "Returns results from an opaque “before” cursor value as presented via a response cursor.",
+                    "type": "text/plain"
+                  },
+                  "key": "before",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Returns results from an opaque “after” cursor value as presented via a response cursor.",
+                    "type": "text/plain"
+                  },
+                  "key": "after",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "messageId",
+                  "description": "(Required) The message ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4706fc2-a47e-413a-b8f6-37c1069609d4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b4dbe8be-f5f9-41ea-9b3a-2ef8fb5bd37c",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7a8b458-a22b-4d91-a7b6-00c68ec3b2c0",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "94a30aba-303f-4823-89e2-7bfc2c8ed7a8",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bcb41258-5ff9-434a-9877-9493c67e2f79",
+              "name": "Not Found: Message receipt details cannot be found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "440d1639-d514-47da-bdf9-2fc1929538e2",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "receipts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) The message ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aebb9c9c-0268-45d0-aa38-a9334a7607d4",
+          "name": "Get the message metadata relationship",
+          "request": {
+            "name": "Get the message metadata relationship",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "messages",
+                ":messageId",
+                "metadata",
+                "relationships"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "messageId",
+                  "description": "(Required) Valid id of a SOCIALMESSAGE"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              },
+              {
+                "disabled": false,
+                "description": "(Required) Request user agent.",
+                "key": "User-Agent",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28933691-8ccd-44ee-be8e-e0e7596f123d",
+              "name": "Successful Operation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "metadata",
+                    "relationships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) Valid id of a SOCIALMESSAGE"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request user agent.",
+                    "key": "User-Agent",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c83adb0f-b96f-438d-b966-6065d836012a",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "metadata",
+                    "relationships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) Valid id of a SOCIALMESSAGE"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request user agent.",
+                    "key": "User-Agent",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "070159ea-a47b-42da-9f69-f67d1fee0d78",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "metadata",
+                    "relationships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) Valid id of a SOCIALMESSAGE"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request user agent.",
+                    "key": "User-Agent",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5f326404-0a2b-4869-8397-3ce2502ff036",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "metadata",
+                    "relationships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) Valid id of a SOCIALMESSAGE"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request user agent.",
+                    "key": "User-Agent",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f27e222d-c964-425a-886b-fe4e8eb6ff44",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "messages",
+                    ":messageId",
+                    "metadata",
+                    "relationships"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "messageId",
+                      "description": "(Required) Valid id of a SOCIALMESSAGE"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Request user agent.",
+                    "key": "User-Agent",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "23c3f225-7576-4f4c-9d56-1d9a4445f5c0",
+    "name": "Agent Admin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

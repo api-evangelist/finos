@@ -1,0 +1,372 @@
+{
+  "item": [
+    {
+      "id": "11a12537-ab4f-4da0-b7ef-d086be52e975",
+      "name": "CertificateAuthentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "561ca75f-bc5c-4c01-bcee-93f788f268e5",
+          "name": "Authenticate.",
+          "request": {
+            "name": "Authenticate.",
+            "description": {
+              "content": "Based on the SSL client certificate presented by the TLS layer, authenticate\nthe API caller and return a session token.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fcad6edc-938b-4395-85c3-271dd23c429f",
+              "name": "OK.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a7eba467-fe05-4bc7-b58c-033057dc6150",
+              "name": "Client error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5e78598-0a21-4f0d-9dcf-6f28b9cc5abf",
+              "name": "Forbidden: Certificate authentication is not allowed for the requested user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a1d53f7-801f-4cc9-8c26-f56edaf06644",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6b50ec7-cd7a-4b80-a6a7-01ef924e625e",
+          "name": "Logout.",
+          "request": {
+            "name": "Logout.",
+            "description": {
+              "content": "Logout a users session.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "logout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) the session token to logout.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ebe47a4c-80ef-4df1-b0ef-43d2cf8cd4e2",
+              "name": "OK.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) the session token to logout.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1cf6cdb6-7fbe-4b5d-8ab4-82e24a272be8",
+              "name": "Client error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) the session token to logout.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f1a22a46-39a7-449b-b292-3fb499d71469",
+              "name": "Forbidden: Certificate authentication is not allowed for the requested user.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) the session token to logout.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e110ef8d-6171-4d3b-b764-4d7f6dae15a4",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "logout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) the session token to logout.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d1b76212-8647-4de3-9458-a02353c7a3a3",
+    "name": "Agent Admin CertificateAuthentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

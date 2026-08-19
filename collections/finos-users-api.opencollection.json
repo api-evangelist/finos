@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Users API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get user information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/user",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User ID as a decimal integer"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Email address"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "login user name"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\nNote: for username search, the local flag must be true\n"
+              }
+            ]
+          },
+          "docs": "Get user information"
+        },
+        {
+          "info": {
+            "name": "Search users by emails or ids.\nOnly one of the search lists should be informed at a time.\nSearch lists may containt up to 100 elements.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/users",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "query",
+                "description": "User IDs as a list of decimal integers separated by comma"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "List of email addresses separated by comma"
+              },
+              {
+                "name": "username",
+                "value": "",
+                "type": "query",
+                "description": "List of username separated by comma"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\n"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "If not set all user status will be returned,\nif true all active users will be returned,\nif false all inactive users will be returned\n"
+              }
+            ]
+          },
+          "docs": "Search users by emails or ids.\nOnly one of the search lists should be informed at a time.\nSearch lists may containt up to 100 elements.\n"
+        },
+        {
+          "info": {
+            "name": "Ends the session identified by {sid} for the user with the identifier {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/users/:uid/sessions/:sid/logout",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user who owns the session to be terminated."
+              },
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the session to be terminated."
+              }
+            ]
+          },
+          "docs": "Ends the session identified by {sid} for the user with the identifier {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Ends all sessions for the user identified by {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/users/:uid/sessions/logout",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user whose sessions are to be terminated."
+              }
+            ]
+          },
+          "docs": "Ends all sessions for the user identified by {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Lists all sessions for the user identified by {uid}.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/users/:uid/sessions",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the user whose sessions are to be listed."
+              }
+            ]
+          },
+          "docs": "Lists all sessions for the user identified by {uid}.\n"
+        },
+        {
+          "info": {
+            "name": "Search for users by name or email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/user/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "number of records to skip"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true then a local DB search will be performed and only local pod users will be\nreturned. If absent or false then a directory search will be performed and users\nfrom other pods who are visible to the calling user will also be returned.\n"
+              }
+            ]
+          },
+          "docs": "Search for users by name or email address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

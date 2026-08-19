@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Room Membership API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Room Membership",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Adds new member to an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/room/:id/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Adds new member to an existing room."
+        },
+        {
+          "info": {
+            "name": "Removes member from an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/room/:id/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Removes member from an existing room."
+        },
+        {
+          "info": {
+            "name": "Promotes user to owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/room/:id/membership/promoteOwner",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Promotes user to owner."
+        },
+        {
+          "info": {
+            "name": "Demotes room owner.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/room/:id/membership/demoteOwner",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Demotes room owner."
+        },
+        {
+          "info": {
+            "name": "Lists current members of an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/room/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Lists current members of an existing room."
+        },
+        {
+          "info": {
+            "name": "Lists current and previous members of an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/room/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "includePastMembers",
+                "value": "",
+                "type": "query",
+                "description": "If true, the membership list will include past members of the stream. If false, the listing will only incude current members. Default false."
+              }
+            ]
+          },
+          "docs": "Lists current and previous members of an existing room."
+        },
+        {
+          "info": {
+            "name": "Add a member to an existing room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/room/:id/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Add a member to an existing room."
+        },
+        {
+          "info": {
+            "name": "Remove a member from a room.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/room/:id/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Remove a member from a room."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

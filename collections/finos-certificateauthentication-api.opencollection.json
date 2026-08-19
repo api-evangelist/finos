@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin CertificateAuthentication API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CertificateAuthentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/authenticate"
+          },
+          "docs": "Based on the SSL client certificate presented by the TLS layer, authenticate\nthe API caller and return a session token.\n"
+        },
+        {
+          "info": {
+            "name": "Logout.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/logout",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Logout a users session.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

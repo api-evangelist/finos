@@ -1,0 +1,476 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Streams API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Streams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a new single or multi party instant message conversation between the caller and specified users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/im/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "At least one user ID must be provided or\nan error response will be sent.\n\nThe caller is implicitly included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n\nThis method was incorrectly specified to take a query parameter in\nversion 1.0 of this specification but now expects"
+        },
+        {
+          "info": {
+            "name": "Update the attributes of an existing IM.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/im/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "IM streamID"
+              }
+            ]
+          },
+          "docs": "Update the attributes of an existing IM."
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular IM.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/im/:id/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "IM streamId"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular IM."
+        },
+        {
+          "info": {
+            "name": "Create a new chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/room/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new chatroom.\n\nIf no  attributes are specified, the room is created as a private chatroom.\n"
+        },
+        {
+          "info": {
+            "name": "Search rooms according to the specified criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/room/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default. Must be a positive\ninteger and must not exceed 100\n"
+              },
+              {
+                "name": "includeNonDiscoverable",
+                "value": "",
+                "type": "query",
+                "description": "Whether the non discoverable rooms should be returned. false by default. Parameter introduced in sbe-25.5.0"
+              }
+            ]
+          },
+          "docs": "Search rooms according to the specified criteria."
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/room/:id/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular chatroom."
+        },
+        {
+          "info": {
+            "name": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/room/:id/setActive",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active."
+        },
+        {
+          "info": {
+            "name": "Update the attributes of an existing chatroom.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/room/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              }
+            ]
+          },
+          "docs": "Update the attributes of an existing chatroom."
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n"
+        },
+        {
+          "info": {
+            "name": "Get information about a partcular stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/streams/:sid/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream Id"
+              }
+            ]
+          },
+          "docs": "Get information about a partcular stream."
+        },
+        {
+          "info": {
+            "name": "Get attachments in a particular stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/streams/:sid/attachments",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream Id"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of first required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of last required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of attachments to return. Default is 50. Must be a positive integer and must not exceed 100."
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Attachment date sort direction : ASC or DESC (default to ASC)\n"
+              }
+            ]
+          },
+          "docs": "Get attachments in a particular stream."
+        },
+        {
+          "info": {
+            "name": "Create a new single or multi party instant message conversation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/im/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "At least two user IDs must be provided or\nan error response will be sent.\n\nThe caller is not included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n"
+        },
+        {
+          "info": {
+            "name": "Deactivate or reactivate a chatroom via AC Portal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/room/:id/setActive",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Room streamId"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deactivate or reactivate a chatroom via AC Portal."
+        },
+        {
+          "info": {
+            "name": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v2/admin/streams/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 50.  This value cannot exceed 100.\n"
+              }
+            ]
+          },
+          "docs": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n"
+        },
+        {
+          "info": {
+            "name": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/stream/:id/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "stream Id"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 100 and not to exceed 1000."
+              }
+            ]
+          },
+          "docs": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

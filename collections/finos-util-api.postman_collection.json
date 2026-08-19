@@ -1,0 +1,376 @@
+{
+  "item": [
+    {
+      "id": "d785a711-b817-49c6-b8af-e66c8ce7c68a",
+      "name": "Util",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b524e7d5-a052-4974-9467-68abb5ac1174",
+          "name": "Test endpoint, returns input.",
+          "request": {
+            "name": "Test endpoint, returns input.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "util",
+                "echo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8b5919e4-0d15-4000-9b7b-5a796c39043e",
+              "name": "Message sent.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "util",
+                    "echo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a05d2256-6f57-4152-b6e4-3a54862982ef",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "util",
+                    "echo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3194,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0639a93-ac8d-41ec-8853-27b5b4172463",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "util",
+                    "echo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3194,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ce9e349-f605-424f-95d2-8c302ac7ff68",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "util",
+                    "echo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3194,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9813bb76-5f31-41dc-aab6-eda4b53e2ced",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "util",
+                    "echo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3194,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ac2e53cf-46e7-4254-a7d9-7ced3a195122",
+    "name": "Agent Admin Util API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

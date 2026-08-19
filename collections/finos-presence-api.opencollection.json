@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Presence API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Presence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/presence/feed/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new stream capturing presence status changes (\"presence feed\").\nWhen read from, the feed will return the current presence status of company (pod) users\nif it has changed since the last read.\n\nReturns the ID of the presence feed to be used in subsequent read operations.\n"
+        },
+        {
+          "info": {
+            "name": "Read a presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/presence/feed/:feedId/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Presence feed ID."
+              }
+            ]
+          },
+          "docs": "Returns the current presence status of company (pod) users\nif it has changed since the last read. Returns up to 500 records at a time.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a presence status feed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/presence/feed/:feedId/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "feedId",
+                "value": "",
+                "type": "path",
+                "description": "Presence feed ID."
+              }
+            ]
+          },
+          "docs": "Returns the ID of the deleted feed.\n"
+        },
+        {
+          "info": {
+            "name": "Register interest in a user's presence status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/user/presence/register",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Register interest in a user's presence status"
+        },
+        {
+          "info": {
+            "name": "Get presence information about the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get presence information about the requesting user."
+        },
+        {
+          "info": {
+            "name": "Set the presence of the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v2/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "soft",
+                "value": "",
+                "type": "query",
+                "description": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n"
+              }
+            ]
+          },
+          "docs": "Set the presence of the requesting user."
+        },
+        {
+          "info": {
+            "name": "Get presence information about a particular user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/user/:uid/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              },
+              {
+                "name": "local",
+                "value": "",
+                "type": "query",
+                "description": "If true, a local query will be performed and the presence will be\nset to OFFLINE for users who are not local to the calling user's\npod. If false or absent, then the presence of all local users and\nthe presence of all external users to whom the calling user is\nconnected will be queried.\n\nFor external users, a \"presence interest\" should be registered through\n/v1/user/presence/register before querying for presence.\n"
+              }
+            ]
+          },
+          "docs": "Get presence information about a particular user."
+        },
+        {
+          "info": {
+            "name": "Get presence information about all company (pod) users.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/users/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "lastUserId",
+                "value": "",
+                "type": "query",
+                "description": "Last user ID retrieved. Used for paging; if provided, results will skip users with IDs less than this parameter."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. If no value is provided, 1000 is the default. The maximum supported value is 5000."
+              }
+            ]
+          },
+          "docs": "The returned data is taken from the in-memory cache for performance\nreasons which means inactive users may be omitted from the response.\n\nAll non-inactive users WILL be returned and some inactive users MAY\nbe included. Any omitted user IS inactive.\n\nReturned records are sorted by user ID, ascending.\n\nThis method is expensive. It pulls ALL records from the cache, sorts them and then only uses a subset.\nFor large numbers of users, this can be very inefficient both due to sorting\nand due to the cac"
+        },
+        {
+          "info": {
+            "name": "Set presence information for a particular user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v3/user/presence",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "soft",
+                "value": "",
+                "type": "query",
+                "description": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n"
+              }
+            ]
+          },
+          "docs": "Set presence information for a particular user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

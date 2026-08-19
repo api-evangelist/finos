@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Util API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Util",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Test endpoint, returns input.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/util/echo",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test endpoint, returns input."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

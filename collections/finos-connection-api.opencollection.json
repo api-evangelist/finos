@@ -1,0 +1,150 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Connection API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of requesting user's connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/connection/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter the connection list based on the connection status.\nThe connection status can only be pending_incoming, pending_outgoing, accepted, rejected, or all (all of the above)\n"
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "The userIds parameter should be specified as a comma delimited list of user ids and can be used to restrict the results of a specific connection.\nNote that this is particularly important if the caller intends to retrieve results for implicit connection (user within the same pod).\nImplicit connections will not be included in the response if userId is not provided.\n"
+              }
+            ]
+          },
+          "docs": "This retrieves all connections of the requesting user. (i.e. both connections in which the requesting user is the sender and those\nin which the requesting user is the inivtee) By default, if you haven't specified the connection status to filter on, this call will only\nreturn results for both \"pending_incoming\" and \"pending_outgoing\". You can optionally filter by userIds to further restrict the results of\na specific connection status. If the users are in the same private pod, the users have an im"
+        },
+        {
+          "info": {
+            "name": "Sends an invitation to connect with another user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/connection/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Sends an invitation to connect with another user"
+        },
+        {
+          "info": {
+            "name": "Accept the connection request for the requesting user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/connection/accept",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Accept the connection request for the requesting user"
+        },
+        {
+          "info": {
+            "name": "Reject the connection request for the requesting user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/connection/reject",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Reject the connection between the requesting user and request sender. If both users are in the same private pod,\nan error will be returned because both users have an implicit connection which cannot be rejected.\n"
+        },
+        {
+          "info": {
+            "name": "The status of the connection invitation to another user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/connection/user/:userId/info",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "user Id"
+              }
+            ]
+          },
+          "docs": "The status of the connection invitation to another user."
+        },
+        {
+          "info": {
+            "name": "Removes a connection with a user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/connection/user/:uid/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Removes a connection with a user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

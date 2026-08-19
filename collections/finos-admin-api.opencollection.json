@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch message details",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/messages",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Fetch message details"
+        },
+        {
+          "info": {
+            "name": "Fetch receipts details from a specific message.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/messages/:messageId/receipts",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "The message ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Fetch receipts details from a specific message."
+        },
+        {
+          "info": {
+            "name": "Get the message metadata relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/messages/:messageId/metadata/relationships",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "User-Agent",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Valid id of a SOCIALMESSAGE"
+              }
+            ]
+          },
+          "docs": "Get the message metadata relationship"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,684 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin User API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a list of all users in the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/admin/user/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of users to skip. Default is 0. Must be a integer equals or bigger than 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all users in the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Find a user based on attributes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/find",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of users to skip. Default is 0. Must be a integer equals or bigger than 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return. Default is 100. Must be a positive integer and must not exceed 1000."
+              }
+            ]
+          },
+          "docs": "Find a user based on attributes"
+        },
+        {
+          "info": {
+            "name": "Add a role to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/roles/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Add a role to a user"
+        },
+        {
+          "info": {
+            "name": "Remove a role from a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/roles/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Remove a role from a user"
+        },
+        {
+          "info": {
+            "name": "Get the URL of the avatar of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/avatar",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the URL of the avatar of a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the avatar of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/avatar/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the avatar of a particular user"
+        },
+        {
+          "info": {
+            "name": "Get the disclaimer assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/disclaimer",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the disclaimer assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Unassign a disclaimer from a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/disclaimer",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Unassign a disclaimer from a user"
+        },
+        {
+          "info": {
+            "name": "Assign a disclaimer to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/disclaimer/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Assign a disclaimer to a user"
+        },
+        {
+          "info": {
+            "name": "Get the delegates assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/delegates",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the delegates assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Update the delegates assigned to a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/delegates/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the delegates assigned to a user"
+        },
+        {
+          "info": {
+            "name": "Get the list of Symphony feature entitlements enabled for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/features",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the list of Symphony feature entitlements enabled for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the list of Symphony feature entitlements for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/features/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the list of Symphony feature entitlements for a particular user"
+        },
+        {
+          "info": {
+            "name": "Make a list of users start following a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/user/:uid/follow",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user to be followed"
+              }
+            ]
+          },
+          "docs": "Make a list of users start following a specific user"
+        },
+        {
+          "info": {
+            "name": "Make a list of users unfollowing a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/user/:uid/unfollow",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user to be unfollowed"
+              }
+            ]
+          },
+          "docs": "Make a list of users unfollowing a specific user"
+        },
+        {
+          "info": {
+            "name": "Returns the list of followers for a specific user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/user/:uid/followers",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user we want to get the followers list"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Returns the list of followers for a specific user"
+        },
+        {
+          "info": {
+            "name": "Returns the list of users that a specific user is following",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/user/:uid/following",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer of the user we want to get the following list"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned."
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “before” cursor value as presented via a response cursor."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque “after” cursor value as presented via a response cursor."
+              }
+            ]
+          },
+          "docs": "Returns the list of users that a specific user is following"
+        },
+        {
+          "info": {
+            "name": "Get own service account manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/user/manifest/own",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get own service account manifest"
+        },
+        {
+          "info": {
+            "name": "Update own service account manifest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/user/manifest/own",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update own service account manifest"
+        },
+        {
+          "info": {
+            "name": "Get the status, active or inactive, for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/status",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Get the status, active or inactive, for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the status of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/status/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update the status of a particular user"
+        },
+        {
+          "info": {
+            "name": "Get a list of all roles available in the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/system/roles/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all roles available in the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Create a new V2 User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v2/admin/user/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a new V2 User"
+        },
+        {
+          "info": {
+            "name": "Update an existing V2 User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v2/admin/user/:uid/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Update an existing V2 User"
+        },
+        {
+          "info": {
+            "name": "Retrieve V2 User details for a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/admin/user/:uid",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer\n"
+              }
+            ]
+          },
+          "docs": "Retrieve V2 User details for a particular user"
+        },
+        {
+          "info": {
+            "name": "Update the status of suspension of a particular user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:userId/suspension/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update the status of suspension of a particular user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,127 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin AppEntitlement API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AppEntitlement",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the list of application entitlements for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the list of application entitlements for the company"
+        },
+        {
+          "info": {
+            "name": "Update the application entitlements for the company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Update the application entitlements for the company"
+        },
+        {
+          "info": {
+            "name": "Get the list of application entitlements for this user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Get the list of application entitlements for this user"
+        },
+        {
+          "info": {
+            "name": "Update the application entitlements for this user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update the application entitlements for this user"
+        },
+        {
+          "info": {
+            "name": "Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "youragentURL.symphony.com/agent/v1/admin/user/:uid/app/entitlement/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "User ID as a decimal integer"
+              }
+            ]
+          },
+          "docs": "Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

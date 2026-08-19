@@ -1,0 +1,2527 @@
+{
+  "item": [
+    {
+      "id": "ee035b54-28c8-44fe-95ab-e6934baf52b5",
+      "name": "Presence",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6b7c87af-9c7c-469b-b867-28f9cf9975f5",
+          "name": "Create Presence status feed.",
+          "request": {
+            "name": "Create Presence status feed.",
+            "description": {
+              "content": "Create a new stream capturing presence status changes (\"presence feed\").\nWhen read from, the feed will return the current presence status of company (pod) users\nif it has changed since the last read.\n\nReturns the ID of the presence feed to be used in subsequent read operations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "presence",
+                "feed",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2a94a81-f3c5-4c83-a029-16a156dd66f2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "685863b6-b329-41d1-97ae-edc29b39fabc",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6be4fe51-c5d0-43dc-aa95-ed7f1118d1ee",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0388770-b28d-4647-b059-61117b0d447c",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "068c0cd8-bfc3-4c2d-b3fe-4288428c743f",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf287ba3-ce17-4bb4-8f15-b9a182bc8182",
+          "name": "Read a presence status feed.",
+          "request": {
+            "name": "Read a presence status feed.",
+            "description": {
+              "content": "Returns the current presence status of company (pod) users\nif it has changed since the last read. Returns up to 500 records at a time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "presence",
+                "feed",
+                ":feedId",
+                "read"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "feedId",
+                  "description": "(Required) Presence feed ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1438b0fa-8d29-4365-bf0b-efb8980ba614",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eddca8df-3721-46cb-adc4-6de9e56f7d96",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f432ba9-5634-4683-be69-9757e78526a0",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff48b715-e4fc-4c26-a324-855953220f77",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce98098e-0b73-4a1d-a454-887eb3385c15",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4b1446e-076c-48cf-90bf-7d6cf20e7fa1",
+          "name": "Delete a presence status feed.",
+          "request": {
+            "name": "Delete a presence status feed.",
+            "description": {
+              "content": "Returns the ID of the deleted feed.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "presence",
+                "feed",
+                ":feedId",
+                "delete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "feedId",
+                  "description": "(Required) Presence feed ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f6713b1a-2c2e-4041-aba0-43212a2aa995",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "801ceed7-b600-4f39-ac9d-d05386d38f39",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4fd33c08-a379-4cea-b614-e169c8475add",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53c690ec-f449-4af2-8acb-30cac1449a37",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9d7d7fe-0c9a-483e-8e53-b2a09503946e",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "presence",
+                    "feed",
+                    ":feedId",
+                    "delete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "feedId",
+                      "description": "(Required) Presence feed ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e03967fd-f481-4005-bb8a-3bf4f4f109ec",
+          "name": "Register interest in a user's presence status",
+          "request": {
+            "name": "Register interest in a user's presence status",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "user",
+                "presence",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef2b635b-0cf5-4795-b154-231fa208b5a4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5587d1a0-32e6-442d-98d0-22577fe089a9",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "07450876-a466-4535-b727-f25aee5ceb5b",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf604e26-3e12-4c89-b9b8-b0ea1e56e06a",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dd1fcf78-9a7d-40ab-9983-683a8d6d2a3e",
+              "name": "Not Found: user id cannot be located.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3818b976-17c6-4192-b4d1-0ceed3f417bf",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "user",
+                    "presence",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8017c76c-63a0-4b12-a30f-0c756236884e",
+          "name": "Get presence information about the requesting user.",
+          "request": {
+            "name": "Get presence information about the requesting user.",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "user",
+                "presence"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc5ef15b-2601-475f-8f47-3edc27b8bde3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "40fa87cb-a55d-462b-bedc-f501aac1ccb4",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "db19610c-ea58-4a8b-9b07-300acebe5398",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c955795c-c59a-4528-9901-d77776cca967",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0e00522-d35f-495a-ac08-a4468145dbb7",
+          "name": "Set the presence of the requesting user.",
+          "request": {
+            "name": "Set the presence of the requesting user.",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "user",
+                "presence"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n",
+                    "type": "text/plain"
+                  },
+                  "key": "soft",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "213c4bae-994b-45ea-b144-76bceed930ff",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c15cb595-304f-4731-ae5b-bb288c83f077",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6d206e66-1ec1-413e-ad6a-aa252deb2e94",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7cb8680e-8e63-4234-98d4-2c33b43adbef",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23a59b54-0821-4467-9d7e-602fc89a3168",
+          "name": "Get presence information about a particular user.",
+          "request": {
+            "name": "Get presence information about a particular user.",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "user",
+                ":uid",
+                "presence"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "If true, a local query will be performed and the presence will be\nset to OFFLINE for users who are not local to the calling user's\npod. If false or absent, then the presence of all local users and\nthe presence of all external users to whom the calling user is\nconnected will be queried.\n\nFor external users, a \"presence interest\" should be registered through\n/v1/user/presence/register before querying for presence.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "local",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "uid",
+                  "description": "(Required) User ID as a decimal integer\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3aef9605-3fb4-454f-a9c5-5b8601479e57",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4991333-d7d9-43d0-94e9-b8c00b501a2c",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3dba7a9d-9552-4f2b-b6c3-536d938af7e0",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "26595096-a7f4-4f65-85ca-b1b4ed4660aa",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bc97e940-a95e-4387-94f2-a50180944dcc",
+              "name": "Not Found: user id cannot be located.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ad59172-7649-4b5e-ba5a-88e11d47e62c",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    ":uid",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "local",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d55eeef0-fb3b-4612-905b-8ef35d3ca675",
+          "name": "Get presence information about all company (pod) users.",
+          "request": {
+            "name": "Get presence information about all company (pod) users.",
+            "description": {
+              "content": "The returned data is taken from the in-memory cache for performance\nreasons which means inactive users may be omitted from the response.\n\nAll non-inactive users WILL be returned and some inactive users MAY\nbe included. Any omitted user IS inactive.\n\nReturned records are sorted by user ID, ascending.\n\nThis method is expensive. It pulls ALL records from the cache, sorts them and then only uses a subset.\nFor large numbers of users, this can be very inefficient both due to sorting\nand due to the cache being distributed across many nodes.\n\nAddiionally, there is the potential to miss users if they become active\nafter the page in which their user ID falls has already been read by the client.\nTo avoid this situation, a presence feed should be created (and optionally read from)\nfirst to capture presence changes of users who get reactivated during a paged call to this endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "users",
+                "presence"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "Last user ID retrieved. Used for paging; if provided, results will skip users with IDs less than this parameter.",
+                    "type": "text/plain"
+                  },
+                  "key": "lastUserId",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Max number of records to return. If no value is provided, 1000 is the default. The maximum supported value is 5000.",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9be0770-f309-4cc9-917a-137367faea1c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastUserId",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "218dc6c2-f0da-49f6-be22-7a2ecd32fee7",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastUserId",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c21dfb6d-f393-420e-b1e6-5e148d5dadf4",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastUserId",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ff30dc8-669f-47fa-82f6-72f2f270cf28",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastUserId",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9276d7df-5bce-40c1-81aa-832913206128",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "users",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastUserId",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb41671b-6ba5-440c-af84-bdbba2ce2747",
+          "name": "Set presence information for a particular user.",
+          "request": {
+            "name": "Set presence information for a particular user.",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "user",
+                "presence"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "If true, the user's current status is taken into consideration. If the user is currently OFFLINE,\nthe user's presence will still be OFFLINE, but the new presence will take effect when the\nuser comes online. If the user is currently online, the user's activity state will be\napplied to the presence if applicable. (e.g. if you are setting their presence to AVAILABLE,\nbut the user is currently idle, their status will be represented as AWAY)\n",
+                    "type": "text/plain"
+                  },
+                  "key": "soft",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9bcdddc-73f1-4930-8297-133b9d2829d0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8b3006cf-ae55-415a-a0d3-f36a986209dd",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6c3cd136-3957-493c-9cf8-defc5057603f",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d269643a-d4e6-40bf-8ec0-8342b620e520",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d885c4f7-f53d-4fe1-b5d0-8868a0b64c37",
+              "name": "Not Found: user id cannot be located.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b3d18e32-927c-44c5-a0a1-eba03fcfcb76",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "user",
+                    "presence"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "soft",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9da5019e-f16e-485e-8bd7-48946778ce4f",
+    "name": "Agent Admin Presence API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

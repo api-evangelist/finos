@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Disclaimer API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Disclaimer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a disclaimer by disclaimer id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/disclaimer/:did",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "did",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the entity"
+              }
+            ]
+          },
+          "docs": "Get a disclaimer by disclaimer id"
+        },
+        {
+          "info": {
+            "name": "List all disclaimers for the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/disclaimer/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "List all disclaimers for the company (pod)"
+        },
+        {
+          "info": {
+            "name": "List all users assigned to this disclaimer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/disclaimer/:did/users",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "did",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the entity"
+              }
+            ]
+          },
+          "docs": "List all users assigned to this disclaimer"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

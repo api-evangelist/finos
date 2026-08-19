@@ -1,0 +1,5082 @@
+{
+  "item": [
+    {
+      "id": "8f699746-e501-4dbd-96ca-06d575225670",
+      "name": "Streams",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "caaada46-50be-43b9-a073-dc5c39faf08d",
+          "name": "Create a new single or multi party instant message conversation between the caller and specified users.",
+          "request": {
+            "name": "Create a new single or multi party instant message conversation between the caller and specified users.",
+            "description": {
+              "content": "At least one user ID must be provided or\nan error response will be sent.\n\nThe caller is implicitly included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n\nThis method was incorrectly specified to take a query parameter in\nversion 1.0 of this specification but now expects a JSON array of\nuser IDs in the body of the request.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "im",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6447336-7475-4fd0-b5fa-6b6daccbbf85",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "99056f8a-4e6b-4352-b0df-1879b58d5960",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1069633f-c930-4ed2-be40-969ab91a1c1d",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "df370972-ab24-4df6-a01e-53fdf5851b7f",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "95b4b050-4aed-4c0b-8d2e-c7bc06285191",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d121bf4c-4d24-416a-b988-ae7bccd2aecb",
+          "name": "Update the attributes of an existing IM.",
+          "request": {
+            "name": "Update the attributes of an existing IM.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "im",
+                ":id",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) IM streamID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "efea8a85-564d-4a61-b010-2f6353151f20",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8267f1d9-09d1-44fa-b699-97be23ffe50c",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c6919828-86e3-4cfb-80ef-8f901f8d0612",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d4bf6976-7983-4f29-95a3-b3e2c2c2afbf",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c4a67596-3690-47b5-b29f-c6fea78764d2",
+              "name": "Unavailable for Legal Reasons: Compliance Issues found in IM update request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "77b96dd6-6e1c-45d2-a399-1e3757c47bbe",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "591aecc1-74f5-474d-99d8-477c1d40e25b",
+          "name": "Get information about a partcular IM.",
+          "request": {
+            "name": "Get information about a partcular IM.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "im",
+                ":id",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) IM streamId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "401130ea-44c2-4237-bd28-27aafd8e1eef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "65819087-675d-4128-a29e-500435e68807",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "df6aae92-10c4-4487-ba7c-7dd8c4ad58d4",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5dd219cb-d94a-4cf4-9e1f-f491dc1ace26",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a647fb3-4ff6-4b2e-a0fa-ebf40c6d52be",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "im",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) IM streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1bb9286-f3d1-4411-afb7-8f95d13473b0",
+          "name": "Create a new chatroom.",
+          "request": {
+            "name": "Create a new chatroom.",
+            "description": {
+              "content": "Create a new chatroom.\n\nIf no  attributes are specified, the room is created as a private chatroom.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "room",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eef6b31b-e1e7-4b72-a240-c7c8daaba986",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0dae31aa-1a98-4177-a415-3afae093d968",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "459fdf5c-76d9-4382-aa9e-8a61325712e9",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4cf8e2d1-781e-4ab2-8dab-aefebf72a68e",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "82497fb7-1f63-46d4-ab3a-77d06a9f2af0",
+              "name": "Unavailable for Legal Reasons: Compliance Issues found in room creation request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "380ffa06-abe0-4c91-b06d-41f1c5c44850",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98c19641-cb82-4385-98ed-f69ada476031",
+          "name": "Search rooms according to the specified criteria.",
+          "request": {
+            "name": "Search rooms according to the specified criteria.",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "room",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "No. of results to skip.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "skip",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Max no. of results to return. If no value is provided, 50 is the default. Must be a positive\ninteger and must not exceed 100\n",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Whether the non discoverable rooms should be returned. false by default. Parameter introduced in sbe-25.5.0",
+                    "type": "text/plain"
+                  },
+                  "key": "includeNonDiscoverable",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e095230f-cc74-48fd-b907-9e290bdbed80",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "includeNonDiscoverable",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b6720bc4-9880-46dd-81e9-6712195973d9",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "includeNonDiscoverable",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "515cb0dd-22c6-4613-9f40-ddf7a2bd876c",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "includeNonDiscoverable",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "389443ce-9dd5-4afe-b373-0b5e343ab8ee",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "includeNonDiscoverable",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b480ce79-822b-4d12-9be5-e565d84d9faf",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "includeNonDiscoverable",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34a18ab3-01f0-40f5-bc47-a7d12fb110b3",
+          "name": "Get information about a partcular chatroom.",
+          "request": {
+            "name": "Get information about a partcular chatroom.",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "room",
+                ":id",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) Room streamId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05a827ec-c31f-4565-ad12-e3beddc60b80",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03113110-0ae3-461c-a371-f7e9d41a5921",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3be87bdc-6909-470a-ad2c-e7eab2223731",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42b326ee-7fbe-4e15-b4fc-2e8b9d9fcff2",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "25d6583c-80e6-4426-af84-cac4577f6a30",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1699126-2272-4327-b9af-26a5e5cf8e70",
+          "name": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active.",
+          "request": {
+            "name": "Deactivate or reactivate a chatroom. At creation, a new chatroom is active.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "room",
+                ":id",
+                "setActive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "active",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) Room streamId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84dcd26e-cc2a-4480-bb1e-2b2abd688008",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7625899c-0414-4735-b7bd-2ddd161acefe",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5775199d-9783-43dd-b64f-0bffdf80e1b1",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ba7f802-f98b-4f34-a7ef-c02f1ddcb3c5",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "10c12cbb-8dce-4e76-9cd4-d48131bb4e71",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf866182-3f37-4902-8757-d3d9fe564199",
+          "name": "Update the attributes of an existing chatroom.",
+          "request": {
+            "name": "Update the attributes of an existing chatroom.",
+            "description": {},
+            "url": {
+              "path": [
+                "v3",
+                "room",
+                ":id",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) Room streamId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4e96946b-beeb-457c-9f06-2abf35ede0f4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "402c33b5-26df-40bc-bb45-4fdebca1def8",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9c508d6-9f06-43d7-bc1f-604811d0d87e",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d2428d60-9bb5-498b-b3ed-f6fd7469c0d0",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8cb10d93-4160-4cb0-b157-b66c7a941f58",
+              "name": "Unavailable for Legal Reasons: Compliance Issues found in room update request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "code": 451,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9c0ce3d-96ca-4093-9e66-db9b0bc72413",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "room",
+                    ":id",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f3cd5094-199a-4b10-b1d3-cf33ca05722f",
+          "name": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n",
+          "request": {
+            "name": "Retrieve a list of all streams of which the requesting user is a member,\nsorted by creation date (ascending).\n",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "streams",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "No. of results to skip.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "skip",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Max no. of results to return. If no value is provided, 50 is the default.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8dcfe5a-22aa-4808-8451-0833cb056796",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2960f610-e259-48d0-9d10-c042a265e5db",
+              "name": "Stream not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c9fac0d6-d892-4f2d-bec8-0393604953d1",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "733757d8-ab52-45ea-b311-7dc95c576072",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c60505a7-180c-4fab-a387-4b22f45731b5",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef8cb1ed-9509-4877-9751-e8080eacfcf1",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25a9a9f8-254d-46b6-960e-13a5415e5d30",
+          "name": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n",
+          "request": {
+            "name": "Retrieve a list of all streams of which this user is a member,\nsorted by creation date (ascending). Since SBE 20.16.\n",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "user",
+                ":uid",
+                "streams",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "No. of results to skip.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "skip",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Max no. of results to return. If no value is provided, 50 is the default.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "uid",
+                  "description": "(Required) User ID as a decimal integer\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6030009-4099-48a0-bec2-0434c78fffce",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "df8db10a-aec8-47f7-ac55-0e2d2942d2df",
+              "name": "Stream not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "925e93b4-e931-4dfa-b5c1-a4dba5779b7b",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9926e4d0-e92a-46c0-a6b1-8358d62d7345",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a0042510-68ec-4c34-9ac6-3801ef588ad3",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b580d4ff-730a-402d-ad6f-62206d3fda98",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "user",
+                    ":uid",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "uid",
+                      "description": "(Required) User ID as a decimal integer\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d81cfbe-193e-44f2-8924-5292ced40007",
+          "name": "Get information about a partcular stream.",
+          "request": {
+            "name": "Get information about a partcular stream.",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "streams",
+                ":sid",
+                "info"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "sid",
+                  "description": "(Required) Stream Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c945c2b8-748f-4422-b1bf-c29e7dd5d4d6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "streams",
+                    ":sid",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a5bc487-0f7c-425d-864d-7f8487de3a09",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "streams",
+                    ":sid",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06d1f960-f6db-435f-abfd-b8a72b980823",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "streams",
+                    ":sid",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3bb6e6b-c2b5-4870-b634-5ac538f91233",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "streams",
+                    ":sid",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6791c7d8-e0c5-4dae-8157-7c12c0500bad",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "streams",
+                    ":sid",
+                    "info"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac5be8f5-ef77-482f-8a2f-611e0dd6ec8a",
+          "name": "Get attachments in a particular stream.",
+          "request": {
+            "name": "Get attachments in a particular stream.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "streams",
+                ":sid",
+                "attachments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "Timestamp of first required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n",
+                    "type": "text/plain"
+                  },
+                  "key": "since",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Timestamp of last required attachment.\nThis is a long integer value representing milliseconds since Jan 1 1970\n",
+                    "type": "text/plain"
+                  },
+                  "key": "to",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Maximum number of attachments to return. Default is 50. Must be a positive integer and must not exceed 100.",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Attachment date sort direction : ASC or DESC (default to ASC)\n",
+                    "type": "text/plain"
+                  },
+                  "key": "sortDir",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "sid",
+                  "description": "(Required) Stream Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d74879ad-162c-42b9-a739-425b187697a8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    ":sid",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": ""
+                    },
+                    {
+                      "key": "to",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c836eee-71b4-473d-9875-7423ddd63336",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    ":sid",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": ""
+                    },
+                    {
+                      "key": "to",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "db610e66-ed05-4d3b-a6d4-b56c66f0201b",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    ":sid",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": ""
+                    },
+                    {
+                      "key": "to",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c5cd99d6-0bb2-4668-b5bf-e5505615e5cf",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    ":sid",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": ""
+                    },
+                    {
+                      "key": "to",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f7c3dd3-e993-4902-88e8-545e0d596ebe",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "streams",
+                    ":sid",
+                    "attachments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": ""
+                    },
+                    {
+                      "key": "to",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "sortDir",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "sid",
+                      "description": "(Required) Stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4b0c4943-2389-4473-8560-e347af195445",
+          "name": "Create a new single or multi party instant message conversation",
+          "request": {
+            "name": "Create a new single or multi party instant message conversation",
+            "description": {
+              "content": "At least two user IDs must be provided or\nan error response will be sent.\n\nThe caller is not included in the members of the\ncreated chat.\n\nDuplicate users will be included in the membership of the chat but\nthe duplication will be silently ignored.\n\nIf there is an existing IM conversation with the same set of participants then\nthe id of that existing stream will be returned.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "im",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "320527f4-0222-4e49-9960-26e860437b87",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a0c4ebd1-8d0f-4ada-85a9-f5cd57f39a8f",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0a70b53c-8cea-47a2-b1bb-48c8362e5e82",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b66dbae-0a16-4611-83bf-63a131493c7a",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "971a14f8-4339-43a4-9e0c-d3385225a0f5",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "im",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab0457dc-ecb6-4633-a15b-59bb8110ec1c",
+          "name": "Deactivate or reactivate a chatroom via AC Portal.",
+          "request": {
+            "name": "Deactivate or reactivate a chatroom via AC Portal.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "room",
+                ":id",
+                "setActive"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "key": "active",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) Room streamId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c955be90-730e-4337-ba35-a1b220f77332",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a484b5c-3ab7-435b-82a2-901fc8ee4484",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d993fd77-ca13-4c49-9002-019c91716f37",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0be84608-a3e8-40cf-8174-a0a8268d1e0f",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7539946-fb2e-4d6e-abf5-7370dce78114",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "room",
+                    ":id",
+                    "setActive"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "active",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) Room streamId"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2462f091-ea3f-4ce3-bae2-16eb8fc89732",
+          "name": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n",
+          "request": {
+            "name": "Retrieve all the streams across the enterprise where the membership of the stream has been modified between a given time range\n",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "admin",
+                "streams",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "Number of items to skip. Default is 0.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "skip",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Maximum number of items to return. Default is 50.  This value cannot exceed 100.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a672b5a3-fb38-48b3-b2b7-b706419329ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "admin",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2fe0a717-91e4-40a9-8f18-66041796a5be",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "admin",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f68e9002-9c88-4729-b77e-9dbdef89edd6",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "admin",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2c05c6b8-6f85-4b61-b84d-ec7b0d81d746",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "admin",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "59de8277-97e5-43dd-a784-de5e3bd29b05",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "admin",
+                    "streams",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3fcfb936-041a-4c4e-bab4-b4c4756b6c9d",
+          "name": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM",
+          "request": {
+            "name": "List the current members of an existing stream.  The stream can be of type IM, MIM, or ROOM",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "admin",
+                "stream",
+                ":id",
+                "membership",
+                "list"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "Number of items to skip. Default is 0.",
+                    "type": "text/plain"
+                  },
+                  "key": "skip",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Maximum number of items to return. Default is 100 and not to exceed 1000.",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "id",
+                  "description": "(Required) stream Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b6fba2b-7997-4604-b2d3-71fb10e24f5e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "stream",
+                    ":id",
+                    "membership",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae7a3618-09b3-42c0-8526-34d133117c04",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "stream",
+                    ":id",
+                    "membership",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f1c31be0-c01c-4e0c-bac3-19ca99677a00",
+              "name": "Unauthorized: Invalid session token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "stream",
+                    ":id",
+                    "membership",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e73be265-6ce7-4209-a641-43aabb3dbbd9",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "stream",
+                    ":id",
+                    "membership",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "10521358-7f94-4184-95b0-5977d617cb0d",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "admin",
+                    "stream",
+                    ":id",
+                    "membership",
+                    "list"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": ""
+                    },
+                    {
+                      "key": "limit",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "id",
+                      "description": "(Required) stream Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "13b9d374-eb87-4163-9a83-1981bd1fd852",
+    "name": "Agent Admin Streams API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

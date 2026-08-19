@@ -1,0 +1,293 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Signals API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List signals for the requesting user. This includes signals that the user has created and public signals\nto which they subscribed.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of signals to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of signals to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "List signals for the requesting user. This includes signals that the user has created and public signals\nto which they subscribed.\n"
+        },
+        {
+          "info": {
+            "name": "Get details of the requested signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/get",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the signal to display."
+              }
+            ]
+          },
+          "docs": "Get details of the requested signal."
+        },
+        {
+          "info": {
+            "name": "Create a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a signal."
+        },
+        {
+          "info": {
+            "name": "Update a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a signal."
+        },
+        {
+          "info": {
+            "name": "Delete a signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ]
+          },
+          "docs": "Delete a signal."
+        },
+        {
+          "info": {
+            "name": "Subscribe to a Signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/subscribe",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              },
+              {
+                "name": "pushed",
+                "value": "",
+                "type": "query",
+                "description": "Prevent the user to unsubscribe (only for bulk subscription)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to a Signal."
+        },
+        {
+          "info": {
+            "name": "Unsubscribe to a Signal.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/unsubscribe",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unsubscribe to a Signal."
+        },
+        {
+          "info": {
+            "name": "Get the subscribers of a signal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/signals/:id/subscribers",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the signal."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of subscribers to return. If no value is provided, 100 is the default."
+              }
+            ]
+          },
+          "docs": "Get the subscribers of a signal"
+        },
+        {
+          "info": {
+            "name": "Get information about the Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/info"
+          },
+          "docs": "Get information about the Agent"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

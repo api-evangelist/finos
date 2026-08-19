@@ -1,0 +1,3278 @@
+{
+  "item": [
+    {
+      "id": "040ff7a0-3d45-4244-b63d-b302b8aec653",
+      "name": "Violations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "df339f5c-d15b-4a01-b0bb-8a1be2ce3667",
+          "name": "Get violations as a result of policy enforcement on messages.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on messages.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "dlp",
+                "violations",
+                "message"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d5557367-67b0-4183-882c-a03e5edfac3f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 7064,\n        \"lastModified\": 8321,\n        \"requesterId\": 6356,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": true\n      },\n      \"message\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 4886,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 3524,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": false,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            5728,\n            7138\n          ]\n        },\n        \"externalRecipients\": false,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 9844,\n        \"initialMessageId\": \"string\",\n        \"silent\": true\n      },\n      \"diagnostic\": \"string\"\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 2850,\n        \"lastModified\": 863,\n        \"requesterId\": 7575,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"message\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 1664,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 6541,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": false,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            4278,\n            6579\n          ]\n        },\n        \"externalRecipients\": false,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 7663,\n        \"initialMessageId\": \"string\",\n        \"silent\": false\n      },\n      \"diagnostic\": \"string\"\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8a17427-c530-45bf-bb5b-1e74935bbacc",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5b327f96-c952-4132-a117-f3ea987c1b45",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f71202cd-1658-40aa-b35a-e59ca001368b",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2767843-93d2-4690-b41d-ca334dc2552a",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7d837c9-966c-41a4-8148-1c839109b032",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d29a5829-465e-4adc-8406-ec137a6997e5",
+          "name": "Get violations as a result of policy enforcement on streams.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on streams.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "dlp",
+                "violations",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25135e4e-0d88-4cbf-85fe-509bd128187b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 7432,\n        \"lastModified\": 5324,\n        \"requesterId\": 3988,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"stream\": {\n        \"name\": \"string\",\n        \"creatorPrettyName\": \"string\",\n        \"publicRoom\": true,\n        \"crossPod\": true,\n        \"allowExternal\": true,\n        \"creatorId\": \"string\",\n        \"roomDescription\": \"string\",\n        \"streamId\": \"string\",\n        \"state\": \"string\",\n        \"type\": \"string\",\n        \"lastDisabled\": 2958,\n        \"memberAddUserEnabled\": true,\n        \"active\": false,\n        \"discoverable\": true,\n        \"readOnly\": true,\n        \"copyDisabled\": false,\n        \"externalOwned\": true,\n        \"sendMessageDisabled\": false,\n        \"moderated\": true,\n        \"shareHistoryEnabled\": false,\n        \"diagnostic\": \"string\"\n      }\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 2726,\n        \"lastModified\": 802,\n        \"requesterId\": 2992,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"stream\": {\n        \"name\": \"string\",\n        \"creatorPrettyName\": \"string\",\n        \"publicRoom\": false,\n        \"crossPod\": false,\n        \"allowExternal\": false,\n        \"creatorId\": \"string\",\n        \"roomDescription\": \"string\",\n        \"streamId\": \"string\",\n        \"state\": \"string\",\n        \"type\": \"string\",\n        \"lastDisabled\": 386,\n        \"memberAddUserEnabled\": true,\n        \"active\": false,\n        \"discoverable\": true,\n        \"readOnly\": true,\n        \"copyDisabled\": true,\n        \"externalOwned\": true,\n        \"sendMessageDisabled\": true,\n        \"moderated\": true,\n        \"shareHistoryEnabled\": false,\n        \"diagnostic\": \"string\"\n      }\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3167eda-26da-4719-a308-7ca8bcde02e3",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba8084de-5bb5-4101-a552-8439c242d32f",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c631f605-c613-47e0-8a09-db8504a2aaa2",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b76d2ca-b6de-4d07-98f9-50c49a8c9f0c",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4a7dc2b-97b3-4442-8ade-f0bbd33a5ced",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a3cad061-5267-4bd8-910a-38d99f0e681c",
+          "name": "Get violations as a result of policy enforcement on signals.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on signals.",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "dlp",
+                "violations",
+                "signal"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f76652e1-c9c1-457c-a241-566558e249c7",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 5598,\n        \"lastModified\": 5334,\n        \"requesterId\": 4990,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"signal\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"rules\": \"string\",\n        \"diagnostic\": \"string\"\n      }\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 3215,\n        \"lastModified\": 373,\n        \"requesterId\": 2254,\n        \"matchedPolicies\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"version\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"policyName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"terms\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"diagnostic\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"contentType\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": true\n      },\n      \"signal\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"rules\": \"string\",\n        \"diagnostic\": \"string\"\n      }\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f20d103-590f-4353-a312-3bf2f8fd4012",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14b59239-364e-4c4d-8a79-066e694aed6a",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b04080b-9e78-4d22-917f-ec64debb2ee7",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5db103de-c22b-453e-99a4-7dcd0238107f",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d744b83-5cb6-4859-b9b7-ca975b91b935",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bbf294d-1668-4e04-996e-b91b5499225c",
+          "name": "Get violations as a result of policy enforcement on messages.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on messages.",
+            "description": {
+              "content": "Retrieves DLP v3 message related violations for a given time range",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "dlp",
+                "violations",
+                "message"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "feaf1bab-3e6a-492b-adee-c1f8115a1c56",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 1565,\n        \"lastModified\": 2277,\n        \"requesterId\": 1512,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": true\n      },\n      \"message\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 4361,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 808,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": true,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            7595,\n            8971\n          ]\n        },\n        \"externalRecipients\": true,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 4442,\n        \"initialMessageId\": \"string\",\n        \"silent\": true\n      },\n      \"sharedMessage\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 6926,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 8188,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": true,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            7898,\n            3834\n          ]\n        },\n        \"externalRecipients\": false,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 5868,\n        \"initialMessageId\": \"string\",\n        \"silent\": true\n      },\n      \"diagnostic\": \"string\"\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 7959,\n        \"lastModified\": 1702,\n        \"requesterId\": 5021,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"message\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 2143,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 2549,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": false,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            6014,\n            9716\n          ]\n        },\n        \"externalRecipients\": true,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 2592,\n        \"initialMessageId\": \"string\",\n        \"silent\": true\n      },\n      \"sharedMessage\": {\n        \"messageId\": \"string\",\n        \"parentMessageId\": \"string\",\n        \"timestamp\": 8889,\n        \"message\": \"string\",\n        \"sharedMessage\": {\n          \"value\": \"<Circular reference to #/components/schemas/V4Message detected>\"\n        },\n        \"data\": \"string\",\n        \"user\": {\n          \"userId\": 9254,\n          \"firstName\": \"string\",\n          \"lastName\": \"string\",\n          \"displayName\": \"string\",\n          \"email\": \"string\",\n          \"username\": \"string\"\n        },\n        \"stream\": {\n          \"streamId\": \"string\",\n          \"streamType\": \"string\",\n          \"roomName\": \"string\",\n          \"members\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"external\": false,\n          \"crossPod\": false,\n          \"recipientTenantIds\": [\n            6317,\n            7135\n          ]\n        },\n        \"externalRecipients\": true,\n        \"diagnostic\": \"string\",\n        \"userAgent\": \"string\",\n        \"originalFormat\": \"string\",\n        \"disclaimer\": \"string\",\n        \"sid\": \"fa691cd3-484a-4109-aeb2-57c05b78c95b\",\n        \"replacing\": \"string\",\n        \"replacedBy\": \"string\",\n        \"initialTimestamp\": 8103,\n        \"initialMessageId\": \"string\",\n        \"silent\": false\n      },\n      \"diagnostic\": \"string\"\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22418bd2-da3b-4142-a251-0aa2777acbee",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "865bad91-7323-4a0a-addb-8243bdb9df2b",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "727217d4-9c41-4111-b22c-4168abbf67db",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8741824-3f0a-4a97-9bfa-790459c3b145",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be76e7dd-6a63-49a8-9694-c39c958ebbda",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "message"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3af39393-c3cb-4dec-92ac-6eace01b0c8c",
+          "name": "Get violations as a result of policy enforcement on streams.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on streams.",
+            "description": {
+              "content": "Retrieves DLP v3 signal related violations for a given time range",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "dlp",
+                "violations",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7190576e-4c13-45ba-b3c9-80671dbecfab",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 3004,\n        \"lastModified\": 8004,\n        \"requesterId\": 3697,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"stream\": {\n        \"name\": \"string\",\n        \"creatorPrettyName\": \"string\",\n        \"publicRoom\": true,\n        \"crossPod\": false,\n        \"allowExternal\": false,\n        \"creatorId\": \"string\",\n        \"roomDescription\": \"string\",\n        \"streamId\": \"string\",\n        \"state\": \"string\",\n        \"type\": \"string\",\n        \"lastDisabled\": 2594,\n        \"memberAddUserEnabled\": true,\n        \"active\": false,\n        \"discoverable\": true,\n        \"readOnly\": false,\n        \"copyDisabled\": false,\n        \"externalOwned\": false,\n        \"sendMessageDisabled\": false,\n        \"moderated\": false,\n        \"shareHistoryEnabled\": true,\n        \"diagnostic\": \"string\"\n      }\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 6494,\n        \"lastModified\": 6451,\n        \"requesterId\": 2874,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": true\n      },\n      \"stream\": {\n        \"name\": \"string\",\n        \"creatorPrettyName\": \"string\",\n        \"publicRoom\": true,\n        \"crossPod\": true,\n        \"allowExternal\": false,\n        \"creatorId\": \"string\",\n        \"roomDescription\": \"string\",\n        \"streamId\": \"string\",\n        \"state\": \"string\",\n        \"type\": \"string\",\n        \"lastDisabled\": 9105,\n        \"memberAddUserEnabled\": true,\n        \"active\": false,\n        \"discoverable\": false,\n        \"readOnly\": true,\n        \"copyDisabled\": true,\n        \"externalOwned\": true,\n        \"sendMessageDisabled\": false,\n        \"moderated\": true,\n        \"shareHistoryEnabled\": true,\n        \"diagnostic\": \"string\"\n      }\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04f5c321-d9d6-4cbb-aa7c-fd748974e50b",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "67100109-3d2b-4fb6-8ccc-0a2b53e1b523",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e6a3ec4-f98a-4666-a138-36ee9ca1d324",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73f981c7-9a2f-4575-b514-cee39a97c1bd",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e3ac5b7e-8056-47a5-b6a3-96d1560e4ebc",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4802f6db-49f4-4faf-a8db-8f22078832cc",
+          "name": "Get violations as a result of policy enforcement on signals.",
+          "request": {
+            "name": "Get violations as a result of policy enforcement on signals.",
+            "description": {
+              "content": "Retrieves DLP v3 signal related violations for a given time range",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "dlp",
+                "violations",
+                "signal"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<long>",
+                  "description": "(Required) Timestamp of the first required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<long>",
+                  "description": "Timestamp of the last required violation.\nThis is a long integer value representing milliseconds since Jan 1 1970\nIf unspecified, it will default to current time of the request.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "next",
+                  "value": "<string>",
+                  "description": "Offset of the next chunk of violations. Value is null for the first request."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Max No. of violations to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a71ff0d-9ce5-404c-a479-0b789bc73336",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"violations\": [\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 8070,\n        \"lastModified\": 2334,\n        \"requesterId\": 1924,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"signal\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"rules\": \"string\",\n        \"diagnostic\": \"string\"\n      }\n    },\n    {\n      \"violation\": {\n        \"enforcementEventID\": \"string\",\n        \"entityID\": \"string\",\n        \"createTime\": 6650,\n        \"lastModified\": 9761,\n        \"requesterId\": 8969,\n        \"action\": \"string\",\n        \"outcome\": {\n          \"type\": \"string\"\n        },\n        \"version\": \"string\",\n        \"ignoreDLPwarning\": false\n      },\n      \"signal\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"rules\": \"string\",\n        \"diagnostic\": \"string\"\n      }\n    }\n  ],\n  \"nextOffset\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfb67509-6688-4dd4-be6c-e9907603703b",
+              "name": "No Messages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b9784ce-a0a8-49fe-b208-8afe547da0ff",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "499e01c7-8717-4244-bd5a-01931dc03f90",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e0cd1ba-45bd-4d5e-b13e-d179553e1a82",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17cfa3c7-1d72-4345-b650-ed35319f76de",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violations",
+                    "signal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "next",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8203,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cddad649-7d24-44b9-aefb-6dcec23b8fcc",
+          "name": "Get attachments that were sent as part of messages that were flagged by the DLP System.",
+          "request": {
+            "name": "Get attachments that were sent as part of messages that were flagged by the DLP System.",
+            "description": {
+              "content": "Retrieves attachments from related message violations as a base64 encoded String.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v3",
+                "dlp",
+                "violation",
+                "attachment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fileId",
+                  "value": "<string>",
+                  "description": "(Required) ID of attachment that will be downloaded."
+                },
+                {
+                  "disabled": false,
+                  "key": "violationId",
+                  "value": "<string>",
+                  "description": "(Required) ID of violation that corresponds to the flagged message that contains the attachment"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe0f33e7-1f4d-4b3d-ae2c-b6ad8f5ab5df",
+              "name": "Attachment body as Base64 encoded string.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6b9a271-e833-4cd5-9e06-1c048754bed2",
+              "name": "Client error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ebb407bd-3246-44a0-83e1-b58c763dce8e",
+              "name": "Unauthorized: Session tokens invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "adbcb228-0441-4a29-b06f-53221f209d3b",
+              "name": "Forbidden: Caller lacks necessary entitlement.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "15e06872-e803-4a47-87fc-984f09a167ec",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "57e0db94-4230-4451-9c13-fc6c7ee0213d",
+              "name": "Server error, see response body for further details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v3",
+                    "dlp",
+                    "violation",
+                    "attachment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "violationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0effe951-9bb1-4c18-86f7-c76d37e3777c",
+    "name": "Agent Admin Violations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

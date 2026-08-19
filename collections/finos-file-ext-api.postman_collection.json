@@ -1,0 +1,876 @@
+{
+  "item": [
+    {
+      "id": "85241216-d678-45f6-aba7-7cfe8dcb6c34",
+      "name": "File Ext",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eae662bc-6bb1-4045-b443-28f10357ccd2",
+          "name": "Allows iteration of all file extensions supported for upload",
+          "request": {
+            "name": "Allows iteration of all file extensions supported for upload",
+            "description": {
+              "content": "Provides a RESTful API to iterate all file extensions configured by the tenant admin\nthat are allowed for the upload.  Pagination of this list is managed through a\ncombination of the optional request parameters and service-side managed maximums.\n\nPagination of the results is provided through the before or after input paramters\nand presented through the opaque cursor values provided as output from a previous\nresponse.  Only one of before or after or neither may be provided.\n\nDO NOT store cursors. Cursors can quickly become invalid if items are added or deleted.\nUse them only during a short-period of time that you are traversing the list.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "file_ext",
+                "v1",
+                "allowed_extensions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "description": {
+                    "content": "This is the maximum number of objects that may be returned. A query may return\nfewer than the value of limit due to filtering or service-side maximums. Do not\ndepend on the number of results being fewer than the limit value to indicate your\nquery reached the end of the list of data, use the absence of next instead as\ndescribed below. For example, if you set limit to 10 and 9 results are returned,\nthere may be more data available, but one item was removed due to privacy filtering.\nSome maximums for limit may be enforced for performance reasons. In all cases, the\nAPI returns the correct pagination links.\n",
+                    "type": "text/plain"
+                  },
+                  "key": "limit",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Returns results from an opaque \"before\" cursor value as presented via a response cursor\n",
+                    "type": "text/plain"
+                  },
+                  "key": "before",
+                  "value": ""
+                },
+                {
+                  "description": {
+                    "content": "Returns results from an opaque \"after\" cursor value as presented via a response cursor\n",
+                    "type": "text/plain"
+                  },
+                  "key": "after",
+                  "value": ""
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c6266086-1d40-4a61-ae2e-f497c040e915",
+              "name": "Requested sequence of file extensions object records with the page size\nlimited by the optional limit paramter or the service-specific maximum\nlimit offered.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "12d0e091-a34d-4017-986f-113c4bf19eec",
+              "name": "Invalid arguments were passed by the client\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e1c3c6b6-ca8b-4cdb-984a-5b858fc790de",
+              "name": "Authentication was not provided\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ad0d5fd-5cb6-4c16-9a8d-28b3e95f1b98",
+              "name": "Authorization is not provided to this request\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "acb0c14e-e350-47a2-90c0-e0f3701b9b2c",
+              "name": "Unexpected service error - a retry may work\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "13d9201a-a813-4172-8d6b-efe515238c09",
+              "name": "Temporarily unable to handle request - could be due to service overload or maintenance\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d96f461-acac-4a47-a64f-a5324175d783",
+              "name": "Timeout waiting on response at gateway\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": ""
+                    },
+                    {
+                      "key": "before",
+                      "value": ""
+                    },
+                    {
+                      "key": "after",
+                      "value": ""
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gateway Timeout",
+              "code": 504,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e98e72b-c815-4f15-b814-b92f7d612bfa",
+          "name": "Allows replacement or creation of a specific file extension supported for upload",
+          "request": {
+            "name": "Allows replacement or creation of a specific file extension supported for upload",
+            "description": {
+              "content": "Provides a method to create or replace a specific file extension configured for upload\nsupport via an admin. The API treats the file extension in the path case-insensitively\nby converting it to lowecase.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "file_ext",
+                "v1",
+                "allowed_extensions",
+                ":extension"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "extension",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a4698e9-d682-4f7b-bfde-b4e3bcec7ff6",
+              "name": "200 response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31bf23ab-a0d8-4e48-85f3-bb7a919b7400",
+              "name": "Invalid arguments were passed by the client: the file extension object specified\nthe source as 'system' yet the file extension is not known to the system (API cannot\ncreate system file extensions, only customer-defined file extensions), the extension\nin the path doesn't match the extension in the body, the length of the file extension\nexceeded the maximum length (64 characters)\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fee77609-1946-4671-a58a-b5dd1c54090a",
+              "name": "Authorization is not provided to this request\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "23c76947-4476-4d70-95d5-026a9c1568eb",
+              "name": "Unexpected service error - a retry may work\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c08135df-e441-4269-9624-fd206e47dfba",
+          "name": "Allows deletion of a specific file extension supported for upload",
+          "request": {
+            "name": "Allows deletion of a specific file extension supported for upload",
+            "description": {
+              "content": "Provides a method to delete a specific file extension configured for upload\nsupport via an admin. The file extension identifying the resource is treated\ncase-insensitively by the API.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "file_ext",
+                "v1",
+                "allowed_extensions",
+                ":extension"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "extension",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": ""
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbc587cf-7612-4161-9f57-705364fcf6b2",
+              "name": "204 response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "eee5c40f-16d4-4e83-9bf9-8ed38120b542",
+              "name": "Invalid arguments were passed by the client\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "35e44d91-45ba-4189-a7be-be42e81842ee",
+              "name": "Authorization is not provided to this request\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8b8eff95-d3ba-4bdc-8105-8f9b701e56a9",
+              "name": "Unexpected service error - a retry may work\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "file_ext",
+                    "v1",
+                    "allowed_extensions",
+                    ":extension"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "extension",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": ""
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2592ebd3-8ba2-4aae-83a4-cfa5dc75c249",
+    "name": "Agent Admin File Ext API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

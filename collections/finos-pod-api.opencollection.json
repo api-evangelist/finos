@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Pod API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pod",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the pod certificate that can be use to validate signed JWT tokens generated from the pod\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/podcert"
+          },
+          "docs": "Retrieve the pod certificate that can be use to validate signed JWT tokens generated from the pod\n"
+        },
+        {
+          "info": {
+            "name": "Get supported attachment types for the pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/files/allowedTypes",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get supported attachment types for the pod"
+        },
+        {
+          "info": {
+            "name": "Lists available languages for the pod.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/languages"
+          },
+          "docs": "Lists available languages for the pod."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

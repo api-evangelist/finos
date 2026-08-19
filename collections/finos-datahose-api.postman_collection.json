@@ -1,0 +1,379 @@
+{
+  "item": [
+    {
+      "id": "5be2d923-eb40-47c2-8e56-d17a5b564670",
+      "name": "Datahose",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "26ab0415-1a8e-45cf-a212-a60cbf28847a",
+          "name": "Creates and Reads a real time feed of messages and events of your pod (Datahose)",
+          "request": {
+            "name": "Creates and Reads a real time feed of messages and events of your pod (Datahose)",
+            "description": {
+              "content": "_Available on Agent 22.5.1 and above._\n\nThis API provides a real time feed of all the messages and events in the pod, \neven from conversations where the calling service account is not a member. The types of events surfaced \ncan be found in the Real Time Events list.\nIn case you retrieving SOCIALMESSAGE events, the credentials of the ceservice \naccount must be properly configured in the Agent.\n\nThe types of events returned can be found in the Real Time\nEvents list (see definition on top of the file). \n\nThe ackId sent as parameter must be empty for the first call. In the response an ackId will be sent back\nand it can be used for the next call: in this way you acknowledge that\nyou have received the events that came with that ackId.\n\nIf you have several instances of the same bot, they must share the same feed so \nthat events are spread across all bot instances. To do so, you must: share the same \nservice account provide the same \"tag\" and same \"filters\" values.\n\nThe Datahose API is an add-on to the Symphony Services, and is subject to additional charges. \nPrior to using Datahose in your Symphony environment(s), you will need to enter into a specific contract.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v5",
+                "events",
+                "read"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Session authentication token.",
+                "key": "sessionToken",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "Key Manager authentication token.",
+                "key": "keyManagerToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tag\": \"<string>\",\n  \"type\": \"<string>\",\n  \"eventTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"ackId\": \"<string>\",\n  \"updatePresence\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe973293-f161-47ef-8663-1f7820433042",
+              "name": "Datafeed successfully read.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v5",
+                    "events",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"datahose\",\n  \"tag\": \"mybotusername\",\n  \"eventTypes\": [\n    \"MESSAGE_SENT\"\n  ],\n  \"updatePresence\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ackId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaedefe1-7451-409b-b53e-31e66d0b4899",
+              "name": "Bad request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v5",
+                    "events",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"datahose\",\n  \"tag\": \"mybotusername\",\n  \"eventTypes\": [\n    \"MESSAGE_SENT\"\n  ],\n  \"updatePresence\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8712,\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "954116f1-b204-41a4-8163-cc46066f86e4",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v5",
+                    "events",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"datahose\",\n  \"tag\": \"mybotusername\",\n  \"eventTypes\": [\n    \"MESSAGE_SENT\"\n  ],\n  \"updatePresence\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8712,\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ac53b21-adc6-4890-86f0-f20495576a54",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v5",
+                    "events",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"datahose\",\n  \"tag\": \"mybotusername\",\n  \"eventTypes\": [\n    \"MESSAGE_SENT\"\n  ],\n  \"updatePresence\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8712,\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ddca6fd-8114-4bba-8d9d-8ad5c702e8a1",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v5",
+                    "events",
+                    "read"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Session authentication token.",
+                    "key": "sessionToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Key Manager authentication token.",
+                    "key": "keyManagerToken",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"datahose\",\n  \"tag\": \"mybotusername\",\n  \"eventTypes\": [\n    \"MESSAGE_SENT\"\n  ],\n  \"updatePresence\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 8712,\n  \"message\": \"string\",\n  \"details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "youragentURL.symphony.com/agent",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5c69d3d4-5777-4617-a3ac-13840d3fbffa",
+    "name": "Agent Admin Datahose API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "This document refers to Symphony API calls to send and receive messages\nand content. They need the on-premise Agent installed to perform\ndecryption/encryption of content.\n\n- sessionToken and keyManagerToken can be obtained by calling the\nauthenticationAPI on the symphony back end and the key manager\nrespectively. Refer to the methods described in authenticatorAPI.yaml.\n- Actions are defined to be atomic, ie will succeed in their entirety\nor fail and have changed nothing.\n- If it returns a 40X status then it will have sent no message to any\nstream even if a request to some subset of the requested streams\nwould have succeeded.\n- If this contract cannot be met for any reason then this is an error\nand the response code will be 50X.\n- MessageML is a markup language for messages. See reference here:\nhttps://rest-api.symphony.com/docs/messagemlv2\n- **Real Time Events**: The following events are returned when reading\nfrom a real time messages and events stream (\"datafeed\"). These\nevents will be returned for datafeeds created with the v5 endpoints.\nTo know more about the endpoints, refer to Create Messages/Events\nStream and Read Messages/Events Stream. Unless otherwise specified,\nall events were added in 1.46.\n",
+      "type": "text/plain"
+    }
+  }
+}

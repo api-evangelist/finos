@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Datafeed API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Datafeed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns the list of active datafeeds of the user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "A unique identifier to ensure uniqueness of the datafeed. Used to restrict search."
+              }
+            ]
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the [Real Time Events](./docs/real-time-events.md) list.\nIn most cases, only one active datafeed per user is required at a time.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new real time feed of messages and events.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nReturns the ID of the newly created datafeed.\nThis ID should then be used as input to the Read Datafeed endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Delete the specified real time message / event stream (\"datafeed\").",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds/:datafeedId",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "datafeedId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the datafeed"
+              }
+            ]
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nDelete the specified datafeed.\n"
+        },
+        {
+          "info": {
+            "name": "Read the specified real time message / event stream (\"datafeed\").",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/datafeeds/:datafeedId/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "datafeedId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the datafeed"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nThe datafeed provides messages and events from all conversations that the user\nis in. The types of events surfaced in the datafeed can be found in the Real Time Events list.\n(see definition on top of the file)\n\nRead the specified datafeed.\n\nThe ackId sent as parameter can be empty for the first call. In the response an ackId will be sent back and it can be used for\nthe next call: in this way you acknowledge that you have received the events that came with "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

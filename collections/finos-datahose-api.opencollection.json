@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Datahose API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Datahose",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates and Reads a real time feed of messages and events of your pod (Datahose)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v5/events/read",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "_Available on Agent 22.5.1 and above._\n\nThis API provides a real time feed of all the messages and events in the pod, \neven from conversations where the calling service account is not a member. The types of events surfaced \ncan be found in the Real Time Events list.\nIn case you retrieving SOCIALMESSAGE events, the credentials of the ceservice \naccount must be properly configured in the Agent.\n\nThe types of events returned can be found in the Real Time\nEvents list (see definition on top of the fi"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

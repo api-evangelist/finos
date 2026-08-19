@@ -1,0 +1,220 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Security API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Security",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all trusted certs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all trusted certs"
+        },
+        {
+          "info": {
+            "name": "Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v2/companycert/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates."
+        },
+        {
+          "info": {
+            "name": "Delete a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/delete",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Delete a company certificate"
+        },
+        {
+          "info": {
+            "name": "Get the details of a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/:fingerPrint/get",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Get the details of a company certificate"
+        },
+        {
+          "info": {
+            "name": "Update a company certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/:fingerPrint/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Update a company certificate"
+        },
+        {
+          "info": {
+            "name": "Return a list of all certificates which were verified to the cert whose\nfingerprint is passed.\n",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/:fingerPrint/issuedBy",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "fingerPrint",
+                "value": "",
+                "type": "path",
+                "description": "Certificate fingerPrint (ID)"
+              }
+            ]
+          },
+          "docs": "Return a list of all certificates which were verified to the cert whose\nfingerprint is passed.\n"
+        },
+        {
+          "info": {
+            "name": "List all trusted certs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/podmanaged/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all trusted certs"
+        },
+        {
+          "info": {
+            "name": "List all certs of the given types",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/companycert/type/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Pagination start"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Row limit"
+              }
+            ]
+          },
+          "docs": "List all certs of the given types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

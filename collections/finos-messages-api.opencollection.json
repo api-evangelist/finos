@@ -1,0 +1,426 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin Messages API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Messages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import messages from other systems into Symphony.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/message/import",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a message to be imported into the system.\nAllows you to override the timestamp and author of the message with your desired values.\nThe requesting user must have the Content Management role.\nThe user that the message is intended to have come from must also be present in the conversation.\nThe intended message timestamp must be a valid time from the past. It cannot be a future timestamp.\nOptionally the original message ID can be specified to identify the imported message for the purpose of re"
+        },
+        {
+          "info": {
+            "name": "Post a message to multiple existing streams.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/message/blast",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "sids",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Post a new message to the given list of streams. The stream can be a chatroom,\nan IM or a multiparty IM.\n\nYou may include an attachment on the message.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nIf the message is i"
+        },
+        {
+          "info": {
+            "name": "Get a message by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/message/:id",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Message ID as a URL-safe string"
+              }
+            ]
+          },
+          "docs": "Get a message by ID"
+        },
+        {
+          "info": {
+            "name": "Search messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/message/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The search query. See above for the query syntax."
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Describes where content should be searched for that query.\nIt can exclusively apply to Symphony content or to one Connector.\n"
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Messages sort direction : ASC or DESC (default to DESC)\n"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Target search tier : hot, warm or all (default to hot)\n"
+              }
+            ]
+          },
+          "docs": "Search messages according to the specified criteria. The \"query\" parameter takes a search query defined as\n\"field:value\" pairs combined by the operator \"AND\" (e.g. \"text:foo AND autor:bar\"). Supported fields are\n (case-insensitive): \"text\", \"author\", \"hashtag\", \"cashtag\", \"mention\", \"signal\", \"fromDate\", \"toDate\",\n \"streamId\", \"streamType\".\n \"text\" search requires a \"streamId\" to be specified.\n \"streamType\" accepts one of the following values: \"chat\" (IMs and MIMs), \"im\", \"mim\", \"chatroom\", \"pos"
+        },
+        {
+          "info": {
+            "name": "Search messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/message/search",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of results to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max no. of results to return. If no value is provided, 50 is the default."
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Describes where content should be searched for that query.\nIt can exclusively apply to Symphony content or to one Connector.\n"
+              },
+              {
+                "name": "sortDir",
+                "value": "",
+                "type": "query",
+                "description": "Messages sort direction : ASC or DESC (default to DESC)\n"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Target search tier : hot, warm or all (default to hot)\n"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search messages according to the specified criteria."
+        },
+        {
+          "info": {
+            "name": "Get messages from an existing stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of first required message.\n\nThis is a long integer value representing milliseconds since\nJan 1 1970\n"
+              },
+              {
+                "name": "until",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp of last required message.\n\nThis is a long integer value representing milliseconds since\nJan 1 1970\n"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "No. of messages to skip."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max No. of messages to return. If no value is provided, 50 is the default. The maximum supported value is 500.\n"
+              }
+            ]
+          },
+          "docs": "A caller can fetch all unseen messages by passing the timestamp of\nthe last message seen as the since parameter and the number of messages\nwith the same timestamp value already seen as the skip parameter. This\nmeans that every message will be seen exactly once even in the case that\nan additional message is processed with the same timestamp as the last\nmessage returned by the previous call, and the case where there are\nmore than maxMessages with the same timestamp value.\n\nThis method is intended "
+        },
+        {
+          "info": {
+            "name": "Post a message to one existing stream.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message/create",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Post a new message to the given stream. The stream can be a chatroom,,an IM or a multiparty IM.\n\nYou may include an attachment on the message.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nIf the message is in Message"
+        },
+        {
+          "info": {
+            "name": "Update an existing message.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v4/stream/:sid/message/:mid/update",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              },
+              {
+                "name": "keyManagerToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "sid",
+                "value": "",
+                "type": "path",
+                "description": "Stream ID"
+              },
+              {
+                "name": "mid",
+                "value": "",
+                "type": "path",
+                "description": "ID of the message to be updated"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "message",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "version",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "attachment",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "preview",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "silent",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Update an existing message. The existing message must be a valid social message, that has not been deleted.\n\nThe message can be provided as MessageMLV2 or PresentationML. Both formats support Freemarker templates.\n\nThe optional parameter \"data\" can be used to provide a JSON payload containing entity data.\nIf the message contains explicit references to entity data (in \"data-entity-id\" element attributes),\nthis parameter is required.\n\nRegarding authentication, you must either use the sessionToken "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

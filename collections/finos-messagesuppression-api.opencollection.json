@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin MessageSuppression API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "MessageSuppression",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Suppress a message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/messagesuppression/:id/suppress",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Message ID"
+              }
+            ]
+          },
+          "docs": "Suppress a message"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

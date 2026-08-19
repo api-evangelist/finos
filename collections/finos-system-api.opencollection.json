@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin System API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "System",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Checks health status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/health"
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nReturns the connectivity status of your Agent server. If your Agent server is started and running, the status value will be `UP`\n"
+        },
+        {
+          "info": {
+            "name": "Checks health status of services and users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v3/health/extended"
+          },
+          "docs": "_Available on Agent 2.57.0 and above._\n\nReturns the connectivity status of the Agent services (**pod**, **key manager** and **datafeed**) as well as users\nconnectivity (**agentservice** and **ceservice**).\n\nThe global status will be set to `DOWN` if at least one of the sub-status is also `DOWN`.\n"
+        },
+        {
+          "info": {
+            "name": "Get the full set of Symphony features available for this pod",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/system/features/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get the full set of Symphony features available for this pod"
+        },
+        {
+          "info": {
+            "name": "Get a list of all URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/system/protocols/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Get a list of URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v2/system/protocols",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to skip. Default is 0."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return. Default is 100 and not to exceed 1000."
+              }
+            ]
+          },
+          "docs": "Get a list of URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Add an entry to URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/system/protocols",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Add an entry to URI protocols supported by the company (pod)"
+        },
+        {
+          "info": {
+            "name": "Remove an entry from URI protocols supported by the company (pod)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/v1/admin/system/protocols/:scheme",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scheme",
+                "value": "",
+                "type": "path",
+                "description": "the scheme to remove from the protocols list"
+              }
+            ]
+          },
+          "docs": "Remove an entry from URI protocols supported by the company (pod)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

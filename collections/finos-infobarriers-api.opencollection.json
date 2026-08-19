@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin InfoBarriers API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "InfoBarriers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of all Information Barrier Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/group/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get a list of all Information Barrier Groups"
+        },
+        {
+          "info": {
+            "name": "Get the list of userids in this Information Barrier Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/group/:gid/membership/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              },
+              {
+                "name": "skip",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip. Must be a positive integer."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Max number of records to return. Default is 10000. Must be a positive integer and must not exceed 10000."
+              }
+            ]
+          },
+          "docs": "Get the list of userids in this Information Barrier Group"
+        },
+        {
+          "info": {
+            "name": "Add members to an Information Barrier group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/group/:gid/membership/add",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              }
+            ]
+          },
+          "docs": "Add members to an Information Barrier group."
+        },
+        {
+          "info": {
+            "name": "Remove members from an Information Barrier group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "youragentURL.symphony.com/agent/v1/admin/group/:gid/membership/remove",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "gid",
+                "value": "",
+                "type": "path",
+                "description": "URL-Safe encoded Group ID"
+              }
+            ]
+          },
+          "docs": "Remove members from an Information Barrier group"
+        },
+        {
+          "info": {
+            "name": "Get all Information Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/v1/admin/policy/list",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get all Information Policies"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

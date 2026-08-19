@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Agent Admin File Ext API",
+    "version": "25.8.1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "File Ext",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Allows iteration of all file extensions supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "youragentURL.symphony.com/agent/file_ext/v1/allowed_extensions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "This is the maximum number of objects that may be returned. A query may return\nfewer than the value of limit due to filtering or service-side maximums. Do not\ndepend on the number of results being fewer than the limit value to indicate your\nquery reached the end of the list of data, use the absence of next instead as\ndescribed below. For example, if you set limit to 10 and 9 results are returned,\nthere may be more data available, but one item was removed due to privacy filtering.\nSome maximums for limit may be enforced for performance reasons. In all cases, the\nAPI returns the correct pagination links.\n"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque \"before\" cursor value as presented via a response cursor\n"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "Returns results from an opaque \"after\" cursor value as presented via a response cursor\n"
+              }
+            ]
+          },
+          "docs": "Provides a RESTful API to iterate all file extensions configured by the tenant admin\nthat are allowed for the upload.  Pagination of this list is managed through a\ncombination of the optional request parameters and service-side managed maximums.\n\nPagination of the results is provided through the before or after input paramters\nand presented through the opaque cursor values provided as output from a previous\nresponse.  Only one of before or after or neither may be provided.\n\nDO NOT store cursors."
+        },
+        {
+          "info": {
+            "name": "Allows replacement or creation of a specific file extension supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "youragentURL.symphony.com/agent/file_ext/v1/allowed_extensions/:extension",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "extension",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Provides a method to create or replace a specific file extension configured for upload\nsupport via an admin. The API treats the file extension in the path case-insensitively\nby converting it to lowecase.\n"
+        },
+        {
+          "info": {
+            "name": "Allows deletion of a specific file extension supported for upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "youragentURL.symphony.com/agent/file_ext/v1/allowed_extensions/:extension",
+            "headers": [
+              {
+                "name": "sessionToken",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "extension",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Provides a method to delete a specific file extension configured for upload\nsupport via an admin. The file extension identifying the resource is treated\ncase-insensitively by the API.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
