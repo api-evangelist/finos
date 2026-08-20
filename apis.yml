@@ -23,6 +23,11 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/finos.png
 tags:
+  - Financial-Services
+  - Fintech
+  - Linux Foundation
+  - Open-Source
+tags_raw:
   - Financial Services
   - Fintech
   - Linux Foundation
@@ -40,6 +45,11 @@ apis:
     API and an App Directory specification.
   humanURL: https://fdc3.finos.org/
   tags:
+  - Desktop Interoperability
+  - FDC3
+  - Financial-Services
+  - Open Standard
+  tags_raw:
   - Desktop Interoperability
   - FDC3
   - Financial Services
@@ -76,6 +86,11 @@ apis:
   tags:
   - Cloud
   - Compliance
+  - Financial-Services
+  - Open Standard
+  tags_raw:
+  - Cloud
+  - Compliance
   - Financial Services
   - Open Standard
   properties:
@@ -91,6 +106,11 @@ apis:
     and runtimes.
   humanURL: https://morphir.finos.org/
   tags:
+  - Business Modeling
+  - Domain Modeling
+  - Morphir
+  - Open-Source
+  tags_raw:
   - Business Modeling
   - Domain Modeling
   - Morphir
@@ -118,6 +138,8 @@ apis:
   description: The AppEntitlement API from FINOS — 2 operation(s) for appentitlement.
   humanURL: https://fdc3.finos.org/
   tags:
+  - App Entitlement
+  tags_raw:
   - AppEntitlement
   properties:
   - type: OpenAPI
@@ -157,6 +179,8 @@ apis:
   description: The AuditTrail API from FINOS — 1 operation(s) for audittrail.
   humanURL: https://fdc3.finos.org/
   tags:
+  - Audit Trail
+  tags_raw:
   - AuditTrail
   properties:
   - type: OpenAPI
@@ -210,6 +234,8 @@ apis:
   description: The Datafeed API from FINOS — 3 operation(s) for datafeed.
   humanURL: https://fdc3.finos.org/
   tags:
+  - Data Feed
+  tags_raw:
   - Datafeed
   properties:
   - type: OpenAPI
@@ -303,6 +329,8 @@ apis:
   description: The Messages API from FINOS — 7 operation(s) for messages.
   humanURL: https://fdc3.finos.org/
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -329,6 +357,8 @@ apis:
   description: The Pod API from FINOS — 3 operation(s) for pod.
   humanURL: https://fdc3.finos.org/
   tags:
+  - POD
+  tags_raw:
   - Pod
   properties:
   - type: OpenAPI
@@ -459,6 +489,8 @@ apis:
   description: The Users API from FINOS — 6 operation(s) for users.
   humanURL: https://fdc3.finos.org/
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
