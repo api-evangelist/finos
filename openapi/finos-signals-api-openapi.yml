@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin Signals API
+  title: Agent Signals API
   description: 'This document refers to Symphony API calls to send and receive messages
 
     and content. They need the on-premise Agent installed to perform
@@ -592,27 +592,62 @@ paths:
                 $ref: '#/components/schemas/V2Error'
 components:
   schemas:
-    BaseSignal:
+    V2Error:
+      required:
+      - code
+      - message
       type: object
       properties:
-        name:
+        code:
+          type: integer
+          format: int32
+        message:
           type: string
-          description: Signal name
-        query:
+        details:
+          type: object
+    ChannelSubscriber:
+      type: object
+      properties:
+        subscriptionId:
           type: string
-          description: 'The query used to define this signal. The query is defined as "field:value" pairs combined by the operators
-
-            "AND" or "OR". Supported fields are (case-insensitive): "author", "hashtag" and "cashtag".
-
-            MUST contain at least one "hashtag" or "cashtag" definition.
-
-            '
-        visibleOnProfile:
+        pushed:
           type: boolean
-          description: Whether the signal is visible on its creator's profile
-        companyWide:
+          description: True if the subscriber is allowed to unsubscribe
+          default: false
+        owner:
           type: boolean
-          description: Whether the signal is a push signal
+          description: True if the subscriber is the creator
+          default: false
+        subscriberName:
+          type: string
+          description: User display name
+        userId:
+          type: integer
+          description: The user ID of the subscriber
+          format: int64
+        timestamp:
+          type: integer
+          description: Timestamp when the signal was subscribed, in milliseconds since Jan 1 1970
+          format: int64
+    ChannelSubscriptionResponse:
+      type: object
+      properties:
+        requestedSubscription:
+          type: integer
+          description: The number of requested userIds to subscribe
+          format: int64
+        successfulSubscription:
+          type: integer
+          description: The number of successful subscriptions done
+          format: int64
+        failedSubscription:
+          type: integer
+          description: The number of subscription failures
+          format: int64
+        subscriptionErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelSubscriptionError'
     AgentInfo:
       type: object
       properties:
@@ -640,59 +675,6 @@ components:
         commitId:
           type: string
           description: The Git commit ID of the running revision.
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-        message:
-          type: string
-    ChannelSubscriptionResponse:
-      type: object
-      properties:
-        requestedSubscription:
-          type: integer
-          description: The number of requested userIds to subscribe
-          format: int64
-        successfulSubscription:
-          type: integer
-          description: The number of successful subscriptions done
-          format: int64
-        failedSubscription:
-          type: integer
-          description: The number of subscription failures
-          format: int64
-        subscriptionErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelSubscriptionError'
-    ChannelSubscriber:
-      type: object
-      properties:
-        subscriptionId:
-          type: string
-        pushed:
-          type: boolean
-          description: True if the subscriber is allowed to unsubscribe
-          default: false
-        owner:
-          type: boolean
-          description: True if the subscriber is the creator
-          default: false
-        subscriberName:
-          type: string
-          description: User display name
-        userId:
-          type: integer
-          description: The user ID of the subscriber
-          format: int64
-        timestamp:
-          type: integer
-          description: Timestamp when the signal was subscribed, in milliseconds since Jan 1 1970
-          format: int64
     Signal:
       allOf:
       - $ref: '#/components/schemas/BaseSignal'
@@ -705,19 +687,44 @@ components:
             type: integer
             description: Timestamp when the signal was created, in milliseconds since Jan 1 1970
             format: int64
-    V2Error:
-      required:
-      - code
-      - message
+    SignalList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Signal'
+    ChannelSubscriptionError:
       type: object
       properties:
-        code:
+        userId:
           type: integer
-          format: int32
+          description: The userId on which failure happened
+          format: int64
+        code:
+          type: string
+          description: subscription failure code
         message:
           type: string
-        details:
-          type: object
+          description: subscription failure message
+    BaseSignal:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Signal name
+        query:
+          type: string
+          description: 'The query used to define this signal. The query is defined as "field:value" pairs combined by the operators
+
+            "AND" or "OR". Supported fields are (case-insensitive): "author", "hashtag" and "cashtag".
+
+            MUST contain at least one "hashtag" or "cashtag" definition.
+
+            '
+        visibleOnProfile:
+          type: boolean
+          description: Whether the signal is visible on its creator's profile
+        companyWide:
+          type: boolean
+          description: Whether the signal is a push signal
     ChannelSubscriberResponse:
       type: object
       properties:
@@ -735,20 +742,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChannelSubscriber'
-    ChannelSubscriptionError:
+    SuccessResponse:
       type: object
       properties:
-        userId:
-          type: integer
-          description: The userId on which failure happened
-          format: int64
-        code:
+        format:
           type: string
-          description: subscription failure code
+          enum:
+          - TEXT
+          - XML
         message:
           type: string
-          description: subscription failure message
-    SignalList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Signal'

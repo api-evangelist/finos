@@ -1,53 +1,11 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin System API
-  description: 'This document refers to Symphony API calls to send and receive messages
-
-    and content. They need the on-premise Agent installed to perform
-
-    decryption/encryption of content.
-
-
-    - sessionToken and keyManagerToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have sent no message to any
-
-    stream even if a request to some subset of the requested streams
-
-    would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
-
-    '
-  version: 25.8.1
+  title: Finos System API
+  version: '1.0'
+  description: 'Operations tagged System across 2 of this provider''s published API definitions: finos-symphony-agent-api-openapi.yml, finos-symphony-pod-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: youragentURL.symphony.com/agent
+- url: https://yourpodURL.symphony.com/pod
 tags:
 - name: System
 paths:
@@ -72,6 +30,8 @@ paths:
                 $ref: '#/components/schemas/V3Health'
               example:
                 status: UP
+    servers:
+    - url: youragentURL.symphony.com/agent
   /v3/health/extended:
     get:
       tags:
@@ -142,261 +102,281 @@ paths:
                     authType: RSA
                     status: UP
                 version: 24.3.2-778
+    servers:
+    - url: youragentURL.symphony.com/agent
   /v1/admin/system/features/list:
     get:
       summary: Get the full set of Symphony features available for this pod
-      consumes:
-      - application/json
-      produces:
-      - application/json
       parameters:
       - name: sessionToken
         description: Session authentication token.
         in: header
         required: true
-        type: string
+        schema:
+          type: string
       tags:
       - System
       responses:
         '200':
           description: The list of valid feature entitlement names.
-          schema:
-            $ref: '#/definitions/StringList'
-          examples:
+          content:
             application/json:
-            - postReadEnabled
-            - canCreatePublicRoom
-            - canJoinMultiLateralRoom
+              schema:
+                $ref: '#/components/schemas/StringList'
+              example:
+              - postReadEnabled
+              - canCreatePublicRoom
+              - canJoinMultiLateralRoom
         '400':
           description: Client error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 400
-              message: // Client error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: // Client error, see response body for further details.
         '401':
           description: 'Unauthorized: Invalid session token.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 401
-              message: Invalid session
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Invalid session
         '403':
           description: 'Forbidden: Caller lacks necessary entitlement.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 403
-              message: The user lacks the required entitlement to perform this operation
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 403
+                message: The user lacks the required entitlement to perform this operation
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 500
-              message: // Server error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: // Server error, see response body for further details.
+    servers:
+    - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols/list:
     get:
       summary: Get a list of all URI protocols supported by the company (pod)
-      consumes:
-      - application/json
-      produces:
-      - application/json
       parameters:
       - name: sessionToken
         description: Session authentication token.
         in: header
         required: true
-        type: string
+        schema:
+          type: string
       tags:
       - System
       responses:
         '200':
           description: Success
-          schema:
-            $ref: '#/definitions/StringList'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StringList'
         '400':
           description: Client error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 400
-              message: // Client error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: // Client error, see response body for further details.
         '401':
           description: 'Unauthorized: Invalid session token.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 401
-              message: Invalid session
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Invalid session
         '403':
           description: 'Forbidden: Caller lacks necessary entitlement.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 403
-              message: The user lacks the required entitlement to perform this operation
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 403
+                message: The user lacks the required entitlement to perform this operation
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 500
-              message: // Server error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: // Server error, see response body for further details.
+    servers:
+    - url: https://yourpodURL.symphony.com/pod
   /v2/system/protocols:
     get:
       summary: Get a list of URI protocols supported by the company (pod)
-      consumes:
-      - application/json
-      produces:
-      - application/json
       parameters:
       - name: sessionToken
         description: Session authentication token.
         in: header
         required: true
-        type: string
+        schema:
+          type: string
       - name: skip
         description: Number of items to skip. Default is 0.
         in: query
-        type: integer
         required: false
+        schema:
+          type: integer
       - name: limit
         description: Maximum number of items to return. Default is 100 and not to exceed 1000.
         in: query
-        type: integer
         required: false
+        schema:
+          type: integer
       tags:
       - System
       responses:
         '200':
           description: Success
-          schema:
-            $ref: '#/definitions/StringList'
-          examples:
+          content:
             application/json:
-            - ftp
-            - mailto
-            - skype
+              schema:
+                $ref: '#/components/schemas/StringList'
+              example:
+              - ftp
+              - mailto
+              - skype
         '400':
           description: Client error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 400
-              message: // Client error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: // Client error, see response body for further details.
         '401':
           description: 'Unauthorized: Invalid session token.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 401
-              message: Invalid session
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Invalid session
         '403':
           description: 'Forbidden: Caller lacks necessary entitlement.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 403
-              message: The user lacks the required entitlement to perform this operation
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 403
+                message: The user lacks the required entitlement to perform this operation
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 500
-              message: // Server error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: // Server error, see response body for further details.
+    servers:
+    - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols:
     post:
       summary: Add an entry to URI protocols supported by the company (pod)
-      consumes:
-      - application/json
-      produces:
-      - application/json
       parameters:
       - name: sessionToken
         description: Session authentication token.
         in: header
         required: true
-        type: string
-      - name: protocol
-        required: true
-        description: the protocol to add
-        in: body
         schema:
-          $ref: '#/definitions/Protocol'
+          type: string
       tags:
       - System
       responses:
         '200':
           description: Success
-          schema:
-            $ref: '#/definitions/Protocol'
-          examples:
+          content:
             application/json:
-              scheme: skype
+              schema:
+                $ref: '#/components/schemas/Protocol'
+              example:
+                scheme: skype
         '400':
           description: Client error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 400
-              message: // Client error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: // Client error, see response body for further details.
         '401':
           description: 'Unauthorized: Invalid session token.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 401
-              message: Invalid session
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Invalid session
         '403':
           description: 'Forbidden: Caller lacks necessary entitlement.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 403
-              message: The user lacks the required entitlement to perform this operation
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 403
+                message: The user lacks the required entitlement to perform this operation
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 500
-              message: // Server error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: // Server error, see response body for further details.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Protocol'
+        description: the protocol to add
+        required: true
+    servers:
+    - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols/{scheme}:
     delete:
       summary: Remove an entry from URI protocols supported by the company (pod)
-      consumes:
-      - application/json
-      produces:
-      - application/json
       parameters:
       - name: sessionToken
         description: Session authentication token.
         in: header
         required: true
-        type: string
+        schema:
+          type: string
       - name: scheme
         required: true
         description: the scheme to remove from the protocols list
         in: path
-        type: string
+        schema:
+          type: string
       tags:
       - System
       responses:
@@ -404,38 +384,56 @@ paths:
           description: 204 response
         '400':
           description: Client error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 400
-              message: // Client error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: // Client error, see response body for further details.
         '401':
           description: 'Unauthorized: Invalid session token.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 401
-              message: Invalid session
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Invalid session
         '403':
           description: 'Forbidden: Caller lacks necessary entitlement.'
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 403
-              message: The user lacks the required entitlement to perform this operation
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 403
+                message: The user lacks the required entitlement to perform this operation
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-          examples:
+          content:
             application/json:
-              code: 500
-              message: // Server error, see response body for further details.
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: // Server error, see response body for further details.
+    servers:
+    - url: https://yourpodURL.symphony.com/pod
 components:
   schemas:
+    V3HealthStatus:
+      type: string
+      description: Application health status.
+      enum:
+      - UP
+      - DOWN
+    V3HealthAuthType:
+      type: string
+      description: Type of authentication
+      enum:
+      - RSA
+      - CERT
     V3HealthComponent:
       type: object
       properties:
@@ -465,44 +463,34 @@ components:
         version:
           type: string
           description: Required Agent verison
-    V3HealthAuthType:
-      type: string
-      description: Type of authentication
-      enum:
-      - RSA
-      - CERT
-    V3HealthStatus:
-      type: string
-      description: Application health status.
-      enum:
-      - UP
-      - DOWN
-definitions:
-  StringList:
-    type: array
-    items:
-      type: string
-    example:
-    - ftp
-    - mailto
-    - fdsup
-    - skype
-  Protocol:
-    type: object
-    required:
-    - scheme
-    properties:
-      scheme:
+    Protocol:
+      type: object
+      required:
+      - scheme
+      properties:
+        scheme:
+          type: string
+          description: 'URI protocol scheme (example: http, https, ftp)'
+          example: skype
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    StringList:
+      type: array
+      items:
         type: string
-        description: 'URI protocol scheme (example: http, https, ftp)'
-        example: skype
-  Error:
-    type: object
-    properties:
-      code:
-        type: integer
-        format: int32
-        example: 401
-      message:
-        type: string
-        example: Invalid session
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
+x-refined-from:
+- finos-symphony-agent-api-openapi.yml
+- finos-symphony-pod-api-openapi.yml

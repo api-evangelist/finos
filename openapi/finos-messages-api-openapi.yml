@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin Messages API
+  title: Agent Messages API
   description: 'This document refers to Symphony API calls to send and receive messages
 
     and content. They need the on-premise Agent installed to perform
@@ -827,52 +827,27 @@ paths:
                 $ref: '#/components/schemas/V2Error'
 components:
   schemas:
-    V4MessageBlastResponse:
+    Error:
       type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    V2Error:
       required:
-      - messages
-      - errors
+      - code
+      - message
+      type: object
       properties:
-        messages:
-          type: array
-          default: []
-          description: List of messages successfully sent
-          items:
-            $ref: '#/components/schemas/V4Message'
-        errors:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
           type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Error'
-          description: List of streams where the messages ingestion has failed
-      description: Wrapper response for a single message sent to multiple streams
-    V4ThumbnailInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The thumbnail ID.
-        dimension:
-          type: string
-          description: The thumbnail pixel size.
-    V4ImportedMessageAttachment:
-      type: object
-      properties:
-        filename:
-          type: string
-          description: Attachment filename
-          example: car.png
-        content:
-          type: string
-          description: Attachment content as Base64 encoded string
-    V4MessageImportList:
-      type: array
-      description: 'An ordered list of historic messages to be imported.
-
-        A list of import responses will be returned in the same order.
-
-        '
-      items:
-        $ref: '#/components/schemas/V4ImportedMessage'
     V4ImportedMessage:
       required:
       - intendedMessageFromUserId
@@ -935,6 +910,40 @@ components:
         By design, imported messages do not stream to datafeed or firehose endpoints.
 
         '
+    V4ImportResponse:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: 'If the message was successfully imported then the message ID in the system
+
+            of the newly created message.
+
+            '
+        originatingSystemId:
+          type: string
+          description: The ID of the system through which the message was originally sent.
+        originalMessageId:
+          type: string
+          description: The ID of the message in the original system.
+        diagnostic:
+          type: string
+          description: 'A diagnostic message containing an error message in the event that the
+
+            message import failed. May also be present in the case of a successful
+
+            call if there is useful narrative to return.
+
+            '
+    V4ThumbnailInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The thumbnail ID.
+        dimension:
+          type: string
+          description: The thumbnail pixel size.
     V4User:
       type: object
       properties:
@@ -957,19 +966,65 @@ components:
         username:
           type: string
           description: Applicable only to internal users
-    V2Error:
+    V4MessageBlastResponse:
+      type: object
       required:
-      - code
-      - message
+      - messages
+      - errors
+      properties:
+        messages:
+          type: array
+          default: []
+          description: List of messages successfully sent
+          items:
+            $ref: '#/components/schemas/V4Message'
+        errors:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Error'
+          description: List of streams where the messages ingestion has failed
+      description: Wrapper response for a single message sent to multiple streams
+    MessageSearchQuery:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        text:
           type: string
-        details:
-          type: object
+          description: Search for messages containing this text. Requires streamId to be specified.
+        streamId:
+          type: string
+          description: Search for messages sent to this stream
+        streamType:
+          type: string
+          description: 'Search for messages sent to this type of streams. Accepted values are CHAT, IM, MIM, ROOM, POST.
+
+            '
+        author:
+          type: integer
+          description: Search for messages sent by this user ID
+          format: int64
+        hashtag:
+          type: string
+          description: Search for messages containing this hashtag
+        cashtag:
+          type: string
+          description: Search for messages containing this cashtag
+        mention:
+          type: integer
+          description: Search for messages mentioning this user ID
+          format: int64
+        signal:
+          type: string
+          description: 'Search for messages matching this signal. Can only be combined with date filtering and paging parameters.
+
+            '
+        fromDate:
+          type: integer
+          description: Search for messages sent on or after this timestamp
+          format: int64
+        toDate:
+          type: integer
+          description: Search for messages sent before this timestamp
+          format: int64
     V4Message:
       type: object
       properties:
@@ -1061,61 +1116,33 @@ components:
           description: When false the user/s will receive the message update as unread (true by default)
           x-since: 20.14
       description: A representation of a message sent by a user of Symphony
+    V4ImportedMessageAttachment:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Attachment filename
+          example: car.png
+        content:
+          type: string
+          description: Attachment content as Base64 encoded string
     V4ImportResponseList:
       type: array
       items:
         $ref: '#/components/schemas/V4ImportResponse'
-    V4AttachmentInfo:
-      required:
-      - id
-      - name
-      - size
-      - images
-      type: object
-      properties:
-        id:
-          type: string
-          description: The attachment ID.
-        name:
-          type: string
-          description: The file name.
-        size:
-          type: integer
-          description: Size in bytes.
-          format: int64
-        images:
-          type: array
-          items:
-            $ref: '#/components/schemas/V4ThumbnailInfo'
+    V4MessageImportList:
+      type: array
+      description: 'An ordered list of historic messages to be imported.
+
+        A list of import responses will be returned in the same order.
+
+        '
+      items:
+        $ref: '#/components/schemas/V4ImportedMessage'
     V4MessageList:
       type: array
       items:
         $ref: '#/components/schemas/V4Message'
-    V4ImportResponse:
-      type: object
-      properties:
-        messageId:
-          type: string
-          description: 'If the message was successfully imported then the message ID in the system
-
-            of the newly created message.
-
-            '
-        originatingSystemId:
-          type: string
-          description: The ID of the system through which the message was originally sent.
-        originalMessageId:
-          type: string
-          description: The ID of the message in the original system.
-        diagnostic:
-          type: string
-          description: 'A diagnostic message containing an error message in the event that the
-
-            message import failed. May also be present in the case of a successful
-
-            call if there is useful narrative to return.
-
-            '
     V4Stream:
       type: object
       properties:
@@ -1148,52 +1175,25 @@ components:
             type: integer
             format: int32
           x-since: 24.2
-    Error:
+    V4AttachmentInfo:
+      required:
+      - id
+      - name
+      - size
+      - images
       type: object
       properties:
-        code:
+        id:
+          type: string
+          description: The attachment ID.
+        name:
+          type: string
+          description: The file name.
+        size:
           type: integer
-          format: int32
-        message:
-          type: string
-    MessageSearchQuery:
-      type: object
-      properties:
-        text:
-          type: string
-          description: Search for messages containing this text. Requires streamId to be specified.
-        streamId:
-          type: string
-          description: Search for messages sent to this stream
-        streamType:
-          type: string
-          description: 'Search for messages sent to this type of streams. Accepted values are CHAT, IM, MIM, ROOM, POST.
-
-            '
-        author:
-          type: integer
-          description: Search for messages sent by this user ID
+          description: Size in bytes.
           format: int64
-        hashtag:
-          type: string
-          description: Search for messages containing this hashtag
-        cashtag:
-          type: string
-          description: Search for messages containing this cashtag
-        mention:
-          type: integer
-          description: Search for messages mentioning this user ID
-          format: int64
-        signal:
-          type: string
-          description: 'Search for messages matching this signal. Can only be combined with date filtering and paging parameters.
-
-            '
-        fromDate:
-          type: integer
-          description: Search for messages sent on or after this timestamp
-          format: int64
-        toDate:
-          type: integer
-          description: Search for messages sent before this timestamp
-          format: int64
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/V4ThumbnailInfo'

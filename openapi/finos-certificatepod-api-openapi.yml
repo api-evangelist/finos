@@ -1,53 +1,34 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin CertificatePod API
-  description: 'This document refers to Symphony API calls to send and receive messages
+  version: 20.14.1
+  title: Authenticator Certificate Pod API
+  description: 'For bots and other on-premise processes to authenticate. Once
 
-    and content. They need the on-premise Agent installed to perform
+    authenticated, the bot will be able to use the methods described in
 
-    decryption/encryption of content.
+    serviceAPI.yaml and agentAPI.yaml.
 
 
-    - sessionToken and keyManagerToken can be obtained by calling the
+    Connections to the servers will be over
 
-    authenticationAPI on the symphony back end and the key manager
+    client authenticated TLS, the servers for this API will perform the
 
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
+    authentication by inspecting the certificate presented by the
 
-    - Actions are defined to be atomic, ie will succeed in their entirety
+    SSLSocketClient.
 
-    or fail and have changed nothing.
 
-    - If it returns a 40X status then it will have sent no message to any
+    There will be two implementations of this API, one on your Pod
 
-    stream even if a request to some subset of the requested streams
+    and one on the Key Manager. In order to fully authenticate,
 
-    would have succeeded.
+    an API client will have to call both of these implementations
 
-    - If this contract cannot be met for any reason then this is an error
+    and pass both of the session tokens returned as headers in all
 
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
+    subsequent requests to the Symphony API.
 
     '
-  version: 25.8.1
-servers:
-- url: youragentURL.symphony.com/agent
 tags:
 - name: CertificatePod
 paths:
@@ -58,35 +39,40 @@ paths:
         through the extension application authentication flow.
 
         '
-      produces:
-      - application/json
       tags:
       - CertificatePod
       responses:
         '200':
           description: OK
-          schema:
-            $ref: '#/definitions/PodCertificate'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PodCertificate'
         '401':
           description: Client is unauthorized to access this resource
-          schema:
-            $ref: '#/definitions/Error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '500':
           description: Server error, see response body for further details.
-          schema:
-            $ref: '#/definitions/Error'
-definitions:
-  Error:
-    type: object
-    properties:
-      code:
-        type: integer
-        format: int32
-      message:
-        type: string
-  PodCertificate:
-    type: object
-    properties:
-      certificate:
-        description: Certificate in PEM format
-        type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    PodCertificate:
+      type: object
+      properties:
+        certificate:
+          description: Certificate in PEM format
+          type: string

@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin Attachments API
+  title: Agent Attachments API
   description: 'This document refers to Symphony API calls to send and receive messages
 
     and content. They need the on-premise Agent installed to perform

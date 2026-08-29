@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin Util API
+  title: Agent Util API
   description: 'This document refers to Symphony API calls to send and receive messages
 
     and content. They need the on-premise Agent installed to perform
@@ -109,12 +109,6 @@ paths:
       x-codegen-request-body-name: echoInput
 components:
   schemas:
-    SimpleMessage:
-      type: object
-      properties:
-        message:
-          type: string
-      description: A string wrapped in a JSON object.
     Error:
       type: object
       properties:
@@ -123,3 +117,9 @@ components:
           format: int32
         message:
           type: string
+    SimpleMessage:
+      type: object
+      properties:
+        message:
+          type: string
+      description: A string wrapped in a JSON object.

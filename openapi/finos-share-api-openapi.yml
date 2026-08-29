@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Agent Admin Share API
+  title: Agent Share API
   description: 'This document refers to Symphony API calls to send and receive messages
 
     and content. They need the on-premise Agent installed to perform
@@ -119,6 +119,22 @@ paths:
       x-codegen-request-body-name: shareContent
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    ShareContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
+        content:
+          $ref: '#/components/schemas/ShareArticle'
     AttachmentInfo:
       required:
       - id
@@ -202,14 +218,6 @@ components:
         appIconUrl:
           type: string
           description: App icon url of the calling application
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
     V2Message:
       description: A representation of a message sent by a user of Symphony.
       allOf:
@@ -232,11 +240,3 @@ components:
             default: []
             items:
               $ref: '#/components/schemas/AttachmentInfo'
-    ShareContent:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
-        content:
-          $ref: '#/components/schemas/ShareArticle'
