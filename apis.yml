@@ -538,6 +538,9 @@ apis:
   - type: GitHubRepository
     url: https://github.com/finos/symphony-api-spec
 common:
+  - type: CapabilityMap
+    url: capabilities/finos-capability-edges.yml
+    name: FINOS Business Capability Map
   - type: IssueTracker
     url: https://github.com/finos/FDC3/issues
   - type: Releases
