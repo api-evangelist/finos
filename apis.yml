@@ -150,7 +150,7 @@ apis:
   description: The AppEntitlement API from FINOS — 2 operation(s) for appentitlement.
   humanURL: https://fdc3.finos.org/
   tags:
-  - App Entitlement
+  - AppEntitlement
   tags_raw:
   - AppEntitlement
   properties:
@@ -191,7 +191,7 @@ apis:
   description: The AuditTrail API from FINOS — 1 operation(s) for audittrail.
   humanURL: https://fdc3.finos.org/
   tags:
-  - Audit Trail
+  - AuditTrail
   tags_raw:
   - AuditTrail
   properties:
@@ -246,7 +246,7 @@ apis:
   description: The Datafeed API from FINOS — 3 operation(s) for datafeed.
   humanURL: https://fdc3.finos.org/
   tags:
-  - Data Feed
+  - Datafeed
   tags_raw:
   - Datafeed
   properties:
