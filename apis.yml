@@ -145,21 +145,6 @@ apis:
     url: https://github.com/finos/symphony-api-spec
   - type: GitHubRepository
     url: https://github.com/finos/symphony-api-spec
-- aid: finos:finos-appentitlement-api
-  name: FINOS AppEntitlement API
-  description: The AppEntitlement API from FINOS — 2 operation(s) for appentitlement.
-  humanURL: https://fdc3.finos.org/
-  tags:
-  - App Entitlement
-  tags_raw:
-  - AppEntitlement
-  properties:
-  - type: OpenAPI
-    url: openapi/finos-appentitlement-api-openapi.yml
-  - type: Documentation
-    url: https://github.com/finos/symphony-api-spec
-  - type: GitHubRepository
-    url: https://github.com/finos/symphony-api-spec
 - aid: finos:finos-application-api
   name: FINOS Application API
   description: The Application API from FINOS — 4 operation(s) for application.
@@ -182,21 +167,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/finos-attachments-api-openapi.yml
-  - type: Documentation
-    url: https://github.com/finos/symphony-api-spec
-  - type: GitHubRepository
-    url: https://github.com/finos/symphony-api-spec
-- aid: finos:finos-audittrail-api
-  name: FINOS AuditTrail API
-  description: The AuditTrail API from FINOS — 1 operation(s) for audittrail.
-  humanURL: https://fdc3.finos.org/
-  tags:
-  - Audit Trail
-  tags_raw:
-  - AuditTrail
-  properties:
-  - type: OpenAPI
-    url: openapi/finos-audittrail-api-openapi.yml
   - type: Documentation
     url: https://github.com/finos/symphony-api-spec
   - type: GitHubRepository
@@ -237,21 +207,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/finos-connection-api-openapi.yml
-  - type: Documentation
-    url: https://github.com/finos/symphony-api-spec
-  - type: GitHubRepository
-    url: https://github.com/finos/symphony-api-spec
-- aid: finos:finos-datafeed-api
-  name: FINOS Datafeed API
-  description: The Datafeed API from FINOS — 3 operation(s) for datafeed.
-  humanURL: https://fdc3.finos.org/
-  tags:
-  - Data Feed
-  tags_raw:
-  - Datafeed
-  properties:
-  - type: OpenAPI
-    url: openapi/finos-datafeed-api-openapi.yml
   - type: Documentation
     url: https://github.com/finos/symphony-api-spec
   - type: GitHubRepository
@@ -533,6 +488,45 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/finos-violations-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-app-entitlement-api
+  name: FINOS App Entitlement API
+  description: The App Entitlement API from FINOS — 2 operation(s) for app entitlement.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - App Entitlement
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-app-entitlement-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-audit-trail-api
+  name: FINOS Audit Trail API
+  description: The Audit Trail API from FINOS — 1 operation(s) for audit trail.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Audit Trail
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-audit-trail-api-openapi.yml
+  - type: Documentation
+    url: https://github.com/finos/symphony-api-spec
+  - type: GitHubRepository
+    url: https://github.com/finos/symphony-api-spec
+- aid: finos:finos-data-feed-api
+  name: FINOS Data Feed API
+  description: The Data Feed API from FINOS — 3 operation(s) for data feed.
+  humanURL: https://fdc3.finos.org/
+  tags:
+  - Data Feed
+  properties:
+  - type: OpenAPI
+    url: openapi/finos-data-feed-api-openapi.yml
   - type: Documentation
     url: https://github.com/finos/symphony-api-spec
   - type: GitHubRepository
