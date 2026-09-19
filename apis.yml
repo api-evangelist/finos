@@ -378,6 +378,8 @@ apis:
   description: The Session API from FINOS — 1 operation(s) for session.
   humanURL: https://fdc3.finos.org/
   tags:
+  - Sessions
+  tags_raw:
   - Session
   properties:
   - type: OpenAPI
