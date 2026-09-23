@@ -4,28 +4,7 @@ info:
   title: Pod User API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -145,6 +124,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2AdminUserList
+      x-operation-id-source: derived
   /v1/admin/user/find:
     post:
       summary: Find a user based on attributes
@@ -260,6 +241,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UserFilter'
         required: true
+      operationId: postV1AdminUserFind
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/roles/add:
     post:
       summary: Add a role to a user
@@ -333,6 +316,8 @@ paths:
             schema:
               $ref: '#/components/schemas/StringId'
         required: true
+      operationId: postV1AdminUserByUidRolesAdd
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/roles/remove:
     post:
       summary: Remove a role from a user
@@ -415,6 +400,8 @@ paths:
             schema:
               $ref: '#/components/schemas/StringId'
         required: true
+      operationId: postV1AdminUserByUidRolesRemove
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/avatar:
     get:
       summary: Get the URL of the avatar of a particular user
@@ -484,6 +471,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidAvatar
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/avatar/update:
     post:
       summary: Update the avatar of a particular user
@@ -557,6 +546,8 @@ paths:
             schema:
               $ref: '#/components/schemas/AvatarUpdate'
         required: true
+      operationId: postV1AdminUserByUidAvatarUpdate
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/disclaimer:
     get:
       summary: Get the disclaimer assigned to a user
@@ -632,6 +623,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidDisclaimer
+      x-operation-id-source: derived
     delete:
       summary: Unassign a disclaimer from a user
       parameters:
@@ -698,6 +691,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: deleteV1AdminUserByUidDisclaimer
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/disclaimer/update:
     post:
       summary: Assign a disclaimer to a user
@@ -771,6 +766,8 @@ paths:
             schema:
               $ref: '#/components/schemas/StringId'
         required: true
+      operationId: postV1AdminUserByUidDisclaimerUpdate
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/delegates:
     get:
       summary: Get the delegates assigned to a user
@@ -837,6 +834,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidDelegates
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/delegates/update:
     post:
       summary: Update the delegates assigned to a user
@@ -910,6 +909,8 @@ paths:
             schema:
               $ref: '#/components/schemas/DelegateAction'
         required: true
+      operationId: postV1AdminUserByUidDelegatesUpdate
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/features:
     get:
       summary: Get the list of Symphony feature entitlements enabled for a particular user
@@ -987,6 +988,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidFeatures
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/features/update:
     post:
       summary: Update the list of Symphony feature entitlements for a particular user
@@ -1060,6 +1063,8 @@ paths:
             schema:
               $ref: '#/components/schemas/FeatureList'
         required: true
+      operationId: postV1AdminUserByUidFeaturesUpdate
+      x-operation-id-source: derived
   /v1/user/{uid}/follow:
     post:
       summary: Make a list of users start following a specific user
@@ -1132,6 +1137,8 @@ paths:
               $ref: '#/components/schemas/FollowersList'
         description: List of (integer) User IDs of the followers
         required: true
+      operationId: postV1UserByUidFollow
+      x-operation-id-source: derived
   /v1/user/{uid}/unfollow:
     post:
       summary: Make a list of users unfollowing a specific user
@@ -1204,6 +1211,8 @@ paths:
               $ref: '#/components/schemas/FollowersList'
         description: List of (integer) User IDs of the followers
         required: true
+      operationId: postV1UserByUidUnfollow
+      x-operation-id-source: derived
   /v1/user/{uid}/followers:
     get:
       summary: Returns the list of followers for a specific user
@@ -1294,6 +1303,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1UserByUidFollowers
+      x-operation-id-source: derived
   /v1/user/{uid}/following:
     get:
       summary: Returns the list of users that a specific user is following
@@ -1382,6 +1393,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1UserByUidFollowing
+      x-operation-id-source: derived
   /v1/user/manifest/own:
     post:
       summary: Update own service account manifest
@@ -1444,6 +1457,8 @@ paths:
               $ref: '#/components/schemas/ServiceAccountManifest'
         description: Service Account Manifest to put in user account
         required: true
+      operationId: postV1UserManifestOwn
+      x-operation-id-source: derived
     get:
       summary: Get own service account manifest
       parameters:
@@ -1498,6 +1513,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1UserManifestOwn
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/status:
     get:
       summary: Get the status, active or inactive, for a particular user
@@ -1564,6 +1581,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidStatus
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/status/update:
     post:
       summary: Update the status of a particular user
@@ -1636,6 +1655,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UserStatus'
         required: true
+      operationId: postV1AdminUserByUidStatusUpdate
+      x-operation-id-source: derived
   /v1/admin/system/roles/list:
     get:
       summary: Get a list of all roles available in the company (pod)
@@ -1708,6 +1729,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminSystemRolesList
+      x-operation-id-source: derived
   /v2/admin/user/create:
     post:
       summary: Create a new V2 User
@@ -1804,6 +1827,8 @@ paths:
             schema:
               $ref: '#/components/schemas/V2UserCreate'
         required: true
+      operationId: postV2AdminUserCreate
+      x-operation-id-source: derived
   /v2/admin/user/{uid}/update:
     post:
       summary: Update an existing V2 User
@@ -1909,6 +1934,8 @@ paths:
             schema:
               $ref: '#/components/schemas/V2UserAttributes'
         required: true
+      operationId: postV2AdminUserByUidUpdate
+      x-operation-id-source: derived
   /v2/admin/user/{uid}:
     get:
       summary: Retrieve V2 User details for a particular user
@@ -2008,6 +2035,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2AdminUserByUid
+      x-operation-id-source: derived
   /v1/admin/user/{userId}/suspension/update:
     put:
       summary: Update the status of suspension of a particular user
@@ -2079,21 +2108,204 @@ paths:
             schema:
               $ref: '#/components/schemas/UserSuspension'
         required: true
+      operationId: putV1AdminUserByUserIdSuspensionUpdate
+      x-operation-id-source: derived
 components:
   schemas:
-    DelegateAction:
+    Pagination:
+      type: object
+      required:
+      - cursors
+      properties:
+        cursors:
+          type: object
+          required:
+          - before
+          properties:
+            before:
+              type: string
+              description: 'This is the opaque url-safe string that points to the start of the page of data
+
+                that has been returned.
+
+                '
+              example: MTAxNTExOTQ1MjAwNzI5NDE=
+            after:
+              type: string
+              description: 'This is the opaque url-safe string that points to the end of the page of data
+
+                that has been returned.
+
+                '
+              example: NDMyNzQyODI3OTQw
+        previous:
+          type: string
+          description: 'API endpoint that will return the previous page of data. If not included, this is
+
+            the first page of data.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
+        next:
+          type: string
+          description: 'API endpoint that will return the next page of data. If not included, this is the
+
+            last page of data. Due to how pagination works with visibility and privacy, it is
+
+            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
+
+            the ''next'' link no longer appears.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
+    FollowingListResponse:
       type: object
       properties:
-        userId:
+        count:
           type: integer
           format: int64
-          example: 7215545078461
-        action:
+          example: 2
+        following:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example:
+          - 13056700579848
+          - 13056700580889
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Avatar:
+      type: object
+      properties:
+        size:
+          description: The Avatar Size
+          type: string
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    UserFilter:
+      type: object
+      properties:
+        role:
+          type: string
+          description: The user role
+          example: INDIVIDUAL
+        feature:
+          type: string
+        status:
           type: string
           enum:
-          - ADD
-          - REMOVE
-          example: ADD
+          - ENABLED
+          - DISABLED
+    Feature:
+      description: Entitlement feature record.
+      type: object
+      properties:
+        entitlment:
+          type: string
+          example: canCreatePublicRoom
+        enabled:
+          type: boolean
+          description: Whether this entitlement is enabled for the user.
+          example: true
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    FollowersListResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          example: 2
+        followers:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example:
+          - 13056700579848
+          - 13056700580889
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Disclaimer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 571d20dae4b042aaf06d2e7c
+        name:
+          type: string
+          example: New Enterprise Disclaimer
+        content:
+          type: string
+          example: This is a second enterprise disclaimer.
+        frequencyInHours:
+          type: integer
+          format: int32
+          example: 168
+        isDefault:
+          type: boolean
+          example: false
+        isActive:
+          type: boolean
+          example: true
+        createdDate:
+          type: integer
+          format: int64
+          example: 1461526746875
+        modifiedDate:
+          type: integer
+          format: int64
+          example: 1461526746875
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+    StringId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+    UserDetail:
+      description: Detailed User record.
+      type: object
+      properties:
+        userAttributes:
+          $ref: '#/components/schemas/UserAttributes'
+        userSystemInfo:
+          $ref: '#/components/schemas/UserSystemInfo'
+        features:
+          $ref: '#/components/schemas/IntegerList'
+        apps:
+          $ref: '#/components/schemas/IntegerList'
+        groups:
+          $ref: '#/components/schemas/IntegerList'
+        roles:
+          $ref: '#/components/schemas/StringList'
+        disclaimers:
+          $ref: '#/components/schemas/IntegerList'
+        avatar:
+          $ref: '#/components/schemas/Avatar'
+    AvatarUpdate:
+      type: object
+      properties:
+        image:
+          description: Base64 encoded image. Original image must be less than 2MB.
+          type: string
+          example: iVBORw0KGgoAAAANSUhEUgAAAJgAAAAoCAMAAAA11sNmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX1QTFRFAAAAVVVVZmZmc8bmd3d3jMyMmZmZ+cxA////VVVVZmZmc8bmd3d3jMyM8oCZ+cxA////VVVVZmZmc8bmd3d3jMyM////VVVVZmZmc8bmd3d3jMyMmZmZ8oCZ+cxA////ZmZmjMyM////VVVVd3d3jMyM+cxA////VVVVZmZmc8bmd3d3jMyMmZmZnMyB8oCZ+cxA////ZmZmc8bmd3d3jMyMmZmZ+cxA////d3d3jMyM8oCZ+cxA////VVVVZmZmdm1RjMyM8oCZ+cxA////ZmZmmZmZ+cxA////W1tbZmZmc8bmdpGcd3d3jMyMmZmZ8oCZ////d3d3jMyMmZmZx3iJ+cxA////VVVVZmZmc8bmd3d3jMyMuIOVyqpG////VVVVZmZmbW1td3d3jMyMmZmZ+cxA////VVVVX1xUZmZmb46ac8bmdZ+vd3d3fnNQjMyMkpeGlqaWmJyYmZmZnYlMp5FLsZhJvJ9Iz3qM0K5F78VB8oCZ+cxA////9laq9wAAAGh0Uk5TABAQEBAQEBAQICAgICAgICAwMDAwMDBAQEBAQEBAQEBQUFBgYGBgYHBwcHBwcHBwcHCAgICAgICAj4+Pj4+fn5+fn5+fr6+vr7+/v7+/v7+/v8/Pz8/Pz9/f39/f39/f7+/v7+/v7+/qia/hAAADQ0lEQVRYw+2Xa1fTQBCGV0WJCBIvxEq10YoEVNQoaLxURKNWUHRRqYgaUSC1QkWsNzT7252Z3W1TWpCjX+I5fT/ksrM782T2Tc4JYy211NL/oJ50Ot2TRLD5FdTkma6kgU2uSB1PGtiY5HqZuK0ckWAjiQNLS7CdiQPrIq6xpGHtGnr0eRXA0gnjGlqoVCoA9kTe9rfXQob1r8ntv1mUmjlGYBUJdhJv2u9FlzWVHwohAt9kBuc+Dfk8zxjnWRnn3GHM4lKuAUM5nsMIjNETOQVM4NJstQpCzKxL10TjpdJ4B5zvEtg8Wj+zGEVRtwxjVpLFckIAA8sKAVWECBGCeUJ40BI9qwCDXHBqkxDYKT8WwVWWDDFMh5QOpWtURwk0dwE8toBgV2HoeoQ6T2GL6rJsAZ7OCBAGjgUqIbAvptBgNggo/XVgMJQ3mZmHk1wVGArMCPEajrxpwwZLpJkUO4JgXax7mriiaaay1xyWRQhPjsgmAoQGk9uCVeJg1bo+TafW6enxdI26U1Ia3X6psjrJ+hcjJQpjRwLOPYf2DZ7blp2iEhxz14FxCRZ4IB/BbLlflMjDVQVsqprOKZ3HNrKY0tzg09Wzt4Ho59r3NThlKO6E0iLkDTNUe4EloLAb4FGCIUuebrg2HIB5ihgXEJgNZI4Ci6XbDKxUevvp9bcvH98Xi8WvVTAo6no5yBbgtSt0B6AEAoRGM/PXOuZUd0qDgUeFxnWFfEGaaX8q9eyH0qsP998USTczmUx7/BPkqlSByOs6NrwY8EJpMPxa+E51P5XHTL1VLj0RDlm0B6w+XVPd+kV6fHRieWrbwHMEO6FjDr5TMTCuLYElctjGOo+x9WC4r0hrh9RyGsrWwPhGDiOdk1js4tJy+Qpjh24Ui/t0LIceJ/PkG8GM0P4jGPqogFYILQ2GxtsS2F7CYoeXAKzcCwO7B2rBrPrCcqMRrOadjcHgCy/NZ8VW+VsDY9cAi+14QWDv2tZHLcfzXP2tsWxTvRK2oS9gxLBjHrZsmm3oKZbreVbdqur0arpNtGeCwMoPk/czcuDUAwArn07gf9IwgpUPJhVsqi2hYLOdiQSb7Uugx3qH+zpZSy211FJNvwFNoXAncdBvawAAAABJRU5ErkJggg==
     V2UserAttributes:
       description: V2 User record.
       type: object
@@ -2204,19 +2416,18 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
-    UserSuspension:
+    SuccessResponse:
       type: object
       properties:
-        suspended:
-          type: boolean
-          example: true
-        suspendedUntil:
-          type: integer
-          format: int64
-          example: 1601546400
-        suspensionReason:
+        format:
           type: string
-          example: The user will be OOO due to a mandatory leave
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     V2UserCreate:
       description: 'V2 User Creation Object.
 
@@ -2236,286 +2447,6 @@ components:
           example:
           - INDIVIDUAL
           - COMPLIANCE_OFFICER
-    AvatarUpdate:
-      type: object
-      properties:
-        image:
-          description: Base64 encoded image. Original image must be less than 2MB.
-          type: string
-          example: iVBORw0KGgoAAAANSUhEUgAAAJgAAAAoCAMAAAA11sNmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX1QTFRFAAAAVVVVZmZmc8bmd3d3jMyMmZmZ+cxA////VVVVZmZmc8bmd3d3jMyM8oCZ+cxA////VVVVZmZmc8bmd3d3jMyM////VVVVZmZmc8bmd3d3jMyMmZmZ8oCZ+cxA////ZmZmjMyM////VVVVd3d3jMyM+cxA////VVVVZmZmc8bmd3d3jMyMmZmZnMyB8oCZ+cxA////ZmZmc8bmd3d3jMyMmZmZ+cxA////d3d3jMyM8oCZ+cxA////VVVVZmZmdm1RjMyM8oCZ+cxA////ZmZmmZmZ+cxA////W1tbZmZmc8bmdpGcd3d3jMyMmZmZ8oCZ////d3d3jMyMmZmZx3iJ+cxA////VVVVZmZmc8bmd3d3jMyMuIOVyqpG////VVVVZmZmbW1td3d3jMyMmZmZ+cxA////VVVVX1xUZmZmb46ac8bmdZ+vd3d3fnNQjMyMkpeGlqaWmJyYmZmZnYlMp5FLsZhJvJ9Iz3qM0K5F78VB8oCZ+cxA////9laq9wAAAGh0Uk5TABAQEBAQEBAQICAgICAgICAwMDAwMDBAQEBAQEBAQEBQUFBgYGBgYHBwcHBwcHBwcHCAgICAgICAj4+Pj4+fn5+fn5+fr6+vr7+/v7+/v7+/v8/Pz8/Pz9/f39/f39/f7+/v7+/v7+/qia/hAAADQ0lEQVRYw+2Xa1fTQBCGV0WJCBIvxEq10YoEVNQoaLxURKNWUHRRqYgaUSC1QkWsNzT7252Z3W1TWpCjX+I5fT/ksrM782T2Tc4JYy211NL/oJ50Ot2TRLD5FdTkma6kgU2uSB1PGtiY5HqZuK0ckWAjiQNLS7CdiQPrIq6xpGHtGnr0eRXA0gnjGlqoVCoA9kTe9rfXQob1r8ntv1mUmjlGYBUJdhJv2u9FlzWVHwohAt9kBuc+Dfk8zxjnWRnn3GHM4lKuAUM5nsMIjNETOQVM4NJstQpCzKxL10TjpdJ4B5zvEtg8Wj+zGEVRtwxjVpLFckIAA8sKAVWECBGCeUJ40BI9qwCDXHBqkxDYKT8WwVWWDDFMh5QOpWtURwk0dwE8toBgV2HoeoQ6T2GL6rJsAZ7OCBAGjgUqIbAvptBgNggo/XVgMJQ3mZmHk1wVGArMCPEajrxpwwZLpJkUO4JgXax7mriiaaay1xyWRQhPjsgmAoQGk9uCVeJg1bo+TafW6enxdI26U1Ia3X6psjrJ+hcjJQpjRwLOPYf2DZ7blp2iEhxz14FxCRZ4IB/BbLlflMjDVQVsqprOKZ3HNrKY0tzg09Wzt4Ho59r3NThlKO6E0iLkDTNUe4EloLAb4FGCIUuebrg2HIB5ihgXEJgNZI4Ci6XbDKxUevvp9bcvH98Xi8WvVTAo6no5yBbgtSt0B6AEAoRGM/PXOuZUd0qDgUeFxnWFfEGaaX8q9eyH0qsP998USTczmUx7/BPkqlSByOs6NrwY8EJpMPxa+E51P5XHTL1VLj0RDlm0B6w+XVPd+kV6fHRieWrbwHMEO6FjDr5TMTCuLYElctjGOo+x9WC4r0hrh9RyGsrWwPhGDiOdk1js4tJy+Qpjh24Ui/t0LIceJ/PkG8GM0P4jGPqogFYILQ2GxtsS2F7CYoeXAKzcCwO7B2rBrPrCcqMRrOadjcHgCy/NZ8VW+VsDY9cAi+14QWDv2tZHLcfzXP2tsWxTvRK2oS9gxLBjHrZsmm3oKZbreVbdqur0arpNtGeCwMoPk/czcuDUAwArn07gf9IwgpUPJhVsqi2hYLOdiQSb7Uugx3qH+zpZSy211FJNvwFNoXAncdBvawAAAABJRU5ErkJggg==
-    V2UserKeyRequest:
-      description: User RSA key information.
-      type: object
-      properties:
-        key:
-          description: User RSA public key.
-          type: string
-          example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
-        expirationDate:
-          description: RSA key expiration date. This value is set just for rotated keys.
-          type: integer
-          format: int64
-          example: 1467562406219
-        action:
-          description: "Action to be performed on the RSA key.\nThe following actions can be performed onto the user's active RSA key:\n  - SAVE\n  - REVOKE\nThe following actions can be performed onto the user's rotated RSA key:\n  - REVOKE\n  - EXTEND\n"
-          type: string
-          example: SAVE
-    Password:
-      description: Password. Stored as derived password in both the Pod and the Key Manager using PBKDF2 function. Number of iterations should be 10000 and desired length 256 bits.
-      type: object
-      properties:
-        hSalt:
-          description: Pod password salt used for PBKDF2 derivation.
-          type: string
-          example: hsalt
-        hPassword:
-          description: Pod password derived with PBKDF2.
-          type: string
-          example: hpassword
-        khSalt:
-          description: Key Manager password salt used for PBKDF2 derivation.
-          type: string
-          example: khsalt
-        khPassword:
-          description: Key Manager password derived with PBKDF2.
-          type: string
-          example: khpassword
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    UserDetail:
-      description: Detailed User record.
-      type: object
-      properties:
-        userAttributes:
-          $ref: '#/components/schemas/UserAttributes'
-        userSystemInfo:
-          $ref: '#/components/schemas/UserSystemInfo'
-        features:
-          $ref: '#/components/schemas/IntegerList'
-        apps:
-          $ref: '#/components/schemas/IntegerList'
-        groups:
-          $ref: '#/components/schemas/IntegerList'
-        roles:
-          $ref: '#/components/schemas/StringList'
-        disclaimers:
-          $ref: '#/components/schemas/IntegerList'
-        avatar:
-          $ref: '#/components/schemas/Avatar'
-    IntegerList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 1461508270000
-      - 7215545057281
-    FollowingListResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          example: 2
-        following:
-          type: array
-          items:
-            type: integer
-            format: int64
-          example:
-          - 13056700579848
-          - 13056700580889
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    RoleDetailList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RoleDetail'
-      example:
-      - id: CONTENT_MANAGEMENT
-        name: Content Management
-        userTypes:
-        - SYSTEM
-        - NORMAL
-        optionalActions:
-        - MONITOR_ROOMS
-      - id: COMPLIANCE_OFFICER
-        name: Compliance Officer
-        userTypes:
-        - NORMAL
-        optionalActions:
-        - BAN_AND_UNBAN_ROOM_MEMBER
-        - LOCK_AND_UNLOCK_ROOM
-        - MONITOR_ROOMS
-        - MONITOR_WALL_POSTS
-    FollowersListResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          example: 2
-        followers:
-          type: array
-          items:
-            type: integer
-            format: int64
-          example:
-          - 13056700579848
-          - 13056700580889
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Pagination:
-      type: object
-      required:
-      - cursors
-      properties:
-        cursors:
-          type: object
-          required:
-          - before
-          properties:
-            before:
-              type: string
-              description: 'This is the opaque url-safe string that points to the start of the page of data
-
-                that has been returned.
-
-                '
-              example: MTAxNTExOTQ1MjAwNzI5NDE=
-            after:
-              type: string
-              description: 'This is the opaque url-safe string that points to the end of the page of data
-
-                that has been returned.
-
-                '
-              example: NDMyNzQyODI3OTQw
-        previous:
-          type: string
-          description: 'API endpoint that will return the previous page of data. If not included, this is
-
-            the first page of data.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
-        next:
-          type: string
-          description: 'API endpoint that will return the next page of data. If not included, this is the
-
-            last page of data. Due to how pagination works with visibility and privacy, it is
-
-            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
-
-            the ''next'' link no longer appears.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
-    StringId:
-      type: object
-      properties:
-        id:
-          type: string
-          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
-    Feature:
-      description: Entitlement feature record.
-      type: object
-      properties:
-        entitlment:
-          type: string
-          example: canCreatePublicRoom
-        enabled:
-          type: boolean
-          description: Whether this entitlement is enabled for the user.
-          example: true
-    UserAttributes:
-      description: User record.
-      type: object
-      properties:
-        emailAddress:
-          type: string
-          example: janedoe@symphony.com
-        firstName:
-          type: string
-          example: Jane
-        lastName:
-          type: string
-          example: Doe
-        userName:
-          type: string
-          example: jane.doe
-        displayName:
-          type: string
-          example: Jane Doe
-        companyName:
-          type: string
-          example: Company
-        department:
-          type: string
-          example: Department
-        division:
-          type: string
-          example: Division
-        title:
-          type: string
-          example: Trader
-        workPhoneNumber:
-          type: string
-          example: '+12349999999'
-        mobilePhoneNumber:
-          type: string
-          example: '+12349999999'
-        smsNumber:
-          type: string
-          example: '+12349999999'
-        accountType:
-          type: string
-          enum:
-          - NORMAL
-          - SYSTEM
-          - SDL
-          example: NORMAL
-        location:
-          type: string
-          example: New York
-        jobFunction:
-          type: string
-          example: Trader
-        assetClasses:
-          type: array
-          items:
-            type: string
-          example:
-          - Commodities
-        industries:
-          type: array
-          items:
-            type: string
-          example:
-          - Financials
-          - Services
-    UserFilter:
-      type: object
-      properties:
-        role:
-          type: string
-          description: The user role
-          example: INDIVIDUAL
-        feature:
-          type: string
-        status:
-          type: string
-          enum:
-          - ENABLED
-          - DISABLED
     UserDetailList:
       type: array
       items:
@@ -2613,6 +2544,39 @@ components:
         - SUPER_COMPLIANCE_OFFICER
         - INDIVIDUAL
         - SUPER_ADMINISTRATOR
+    UserSuspension:
+      type: object
+      properties:
+        suspended:
+          type: boolean
+          example: true
+        suspendedUntil:
+          type: integer
+          format: int64
+          example: 1601546400
+        suspensionReason:
+          type: string
+          example: The user will be OOO due to a mandatory leave
+    Password:
+      description: Password. Stored as derived password in both the Pod and the Key Manager using PBKDF2 function. Number of iterations should be 10000 and desired length 256 bits.
+      type: object
+      properties:
+        hSalt:
+          description: Pod password salt used for PBKDF2 derivation.
+          type: string
+          example: hsalt
+        hPassword:
+          description: Pod password derived with PBKDF2.
+          type: string
+          example: hpassword
+        khSalt:
+          description: Key Manager password salt used for PBKDF2 derivation.
+          type: string
+          example: khsalt
+        khPassword:
+          description: Key Manager password derived with PBKDF2.
+          type: string
+          example: khpassword
     UserStatus:
       type: object
       properties:
@@ -2638,6 +2602,72 @@ components:
           description: An optional description of the suspension reason. Since SBE 20.14.
           x-since: 20.14
           example: The user will be OOO due to a mandatory leave
+    UserAttributes:
+      description: User record.
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          example: janedoe@symphony.com
+        firstName:
+          type: string
+          example: Jane
+        lastName:
+          type: string
+          example: Doe
+        userName:
+          type: string
+          example: jane.doe
+        displayName:
+          type: string
+          example: Jane Doe
+        companyName:
+          type: string
+          example: Company
+        department:
+          type: string
+          example: Department
+        division:
+          type: string
+          example: Division
+        title:
+          type: string
+          example: Trader
+        workPhoneNumber:
+          type: string
+          example: '+12349999999'
+        mobilePhoneNumber:
+          type: string
+          example: '+12349999999'
+        smsNumber:
+          type: string
+          example: '+12349999999'
+        accountType:
+          type: string
+          enum:
+          - NORMAL
+          - SYSTEM
+          - SDL
+          example: NORMAL
+        location:
+          type: string
+          example: New York
+        jobFunction:
+          type: string
+          example: Trader
+        assetClasses:
+          type: array
+          items:
+            type: string
+          example:
+          - Commodities
+        industries:
+          type: array
+          items:
+            type: string
+          example:
+          - Financials
+          - Services
     UserIdList:
       type: array
       items:
@@ -2646,51 +2676,100 @@ components:
       example:
       - 7215545058313
       - 7215545078461
-    AvatarList:
+    V2UserDetail:
+      description: V2 Detailed User record.
+      type: object
+      properties:
+        userAttributes:
+          $ref: '#/components/schemas/V2UserAttributes'
+        userSystemInfo:
+          $ref: '#/components/schemas/UserSystemInfo'
+        features:
+          $ref: '#/components/schemas/IntegerList'
+        apps:
+          $ref: '#/components/schemas/IntegerList'
+        groups:
+          $ref: '#/components/schemas/IntegerList'
+        roles:
+          $ref: '#/components/schemas/StringList'
+        disclaimers:
+          $ref: '#/components/schemas/IntegerList'
+        avatar:
+          $ref: '#/components/schemas/Avatar'
+    FeatureList:
       type: array
       items:
-        $ref: '#/components/schemas/Avatar'
+        $ref: '#/components/schemas/Feature'
       example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
-    Disclaimer:
+      - entitlment: canCreatePublicRoom
+        enabled: true
+      - entitlment: isExternalRoomEnabled
+        enabled: false
+      - entitlment: canUpdateAvatar
+        enabled: true
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
+    RoleDetailList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RoleDetail'
+      example:
+      - id: CONTENT_MANAGEMENT
+        name: Content Management
+        userTypes:
+        - SYSTEM
+        - NORMAL
+        optionalActions:
+        - MONITOR_ROOMS
+      - id: COMPLIANCE_OFFICER
+        name: Compliance Officer
+        userTypes:
+        - NORMAL
+        optionalActions:
+        - BAN_AND_UNBAN_ROOM_MEMBER
+        - LOCK_AND_UNLOCK_ROOM
+        - MONITOR_ROOMS
+        - MONITOR_WALL_POSTS
+    ServiceAccountManifest:
+      type: object
+      properties:
+        manifest:
+          type: string
+          maxLength: 6144
+          description: Manifest containing commands supported by the service account. Must be valid JSON.
+      required:
+      - manifest
+    RoleDetail:
+      description: Role detailed.
       type: object
       properties:
         id:
           type: string
-          example: 571d20dae4b042aaf06d2e7c
+          example: CONTENT_MANAGEMENT
         name:
           type: string
-          example: New Enterprise Disclaimer
-        content:
-          type: string
-          example: This is a second enterprise disclaimer.
-        frequencyInHours:
-          type: integer
-          format: int32
-          example: 168
-        isDefault:
-          type: boolean
-          example: false
-        isActive:
-          type: boolean
-          example: true
-        createdDate:
-          type: integer
-          format: int64
-          example: 1461526746875
-        modifiedDate:
-          type: integer
-          format: int64
-          example: 1461526746875
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
+          example: Content Management
+        userTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - NORMAL
+          - SYSTEM
+        optionalActions:
+          type: array
+          items:
+            type: string
+          example:
+          - MONITOR_ROOMS
+          - MONITOR_WALL_POSTS
     UserSystemInfo:
       description: User Status Information.
       type: object
@@ -2744,104 +2823,56 @@ components:
           type: integer
           format: int64
           example: 1461508270000
-    FeatureList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Feature'
-      example:
-      - entitlment: canCreatePublicRoom
-        enabled: true
-      - entitlment: isExternalRoomEnabled
-        enabled: false
-      - entitlment: canUpdateAvatar
-        enabled: true
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    ServiceAccountManifest:
-      type: object
-      properties:
-        manifest:
-          type: string
-          maxLength: 6144
-          description: Manifest containing commands supported by the service account. Must be valid JSON.
-      required:
-      - manifest
-    V2UserDetail:
-      description: V2 Detailed User record.
-      type: object
-      properties:
-        userAttributes:
-          $ref: '#/components/schemas/V2UserAttributes'
-        userSystemInfo:
-          $ref: '#/components/schemas/UserSystemInfo'
-        features:
-          $ref: '#/components/schemas/IntegerList'
-        apps:
-          $ref: '#/components/schemas/IntegerList'
-        groups:
-          $ref: '#/components/schemas/IntegerList'
-        roles:
-          $ref: '#/components/schemas/StringList'
-        disclaimers:
-          $ref: '#/components/schemas/IntegerList'
-        avatar:
-          $ref: '#/components/schemas/Avatar'
     FollowersList:
       type: object
       properties:
         followers:
           $ref: '#/components/schemas/UserIdList'
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    RoleDetail:
-      description: Role detailed.
+    Error:
       type: object
       properties:
-        id:
-          type: string
-          example: CONTENT_MANAGEMENT
-        name:
-          type: string
-          example: Content Management
-        userTypes:
-          type: array
-          items:
-            type: string
-          example:
-          - NORMAL
-          - SYSTEM
-        optionalActions:
-          type: array
-          items:
-            type: string
-          example:
-          - MONITOR_ROOMS
-          - MONITOR_WALL_POSTS
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
+        code:
+          type: integer
+          format: int32
+          example: 401
         message:
           type: string
-          example: Success
+          example: Invalid session
+    IntegerList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 1461508270000
+      - 7215545057281
+    V2UserKeyRequest:
+      description: User RSA key information.
+      type: object
+      properties:
+        key:
+          description: User RSA public key.
+          type: string
+          example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+        expirationDate:
+          description: RSA key expiration date. This value is set just for rotated keys.
+          type: integer
+          format: int64
+          example: 1467562406219
+        action:
+          description: "Action to be performed on the RSA key.\nThe following actions can be performed onto the user's active RSA key:\n  - SAVE\n  - REVOKE\nThe following actions can be performed onto the user's rotated RSA key:\n  - REVOKE\n  - EXTEND\n"
+          type: string
+          example: SAVE
+    DelegateAction:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+          example: 7215545078461
+        action:
+          type: string
+          enum:
+          - ADD
+          - REMOVE
+          example: ADD

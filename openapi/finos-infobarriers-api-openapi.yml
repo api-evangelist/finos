@@ -4,28 +4,7 @@ info:
   title: Pod Info Barriers API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -103,6 +82,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminGroupList
+      x-operation-id-source: derived
   /v1/admin/group/{gid}/membership/list:
     get:
       summary: Get the list of userids in this Information Barrier Group
@@ -189,9 +170,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminGroupByGidMembershipList
+      x-operation-id-source: derived
   /v1/admin/group/{gid}/membership/add:
     post:
-      summary: Add members to an Information Barrier group.
+      summary: Add members to an Information Barrier group
       parameters:
       - name: gid
         description: URL-Safe encoded Group ID
@@ -260,6 +243,8 @@ paths:
             schema:
               $ref: '#/components/schemas/IntegerList'
         required: true
+      operationId: postV1AdminGroupByGidMembershipAdd
+      x-operation-id-source: derived
   /v1/admin/group/{gid}/membership/remove:
     post:
       summary: Remove members from an Information Barrier group
@@ -331,6 +316,8 @@ paths:
             schema:
               $ref: '#/components/schemas/IntegerList'
         required: true
+      operationId: postV1AdminGroupByGidMembershipRemove
+      x-operation-id-source: derived
   /v1/admin/policy/list:
     get:
       summary: Get all Information Policies
@@ -403,68 +390,10 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminPolicyList
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    IntegerList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 1461508270000
-      - 7215545057281
-    PolicyList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Policy'
-      example:
-      - id: 56e9df05e4b00737e3d3b82d
-        policyType: BLOCK
-        active: true
-        groups:
-        - 56e9def8e4b0b406041812e6
-        - 56e9deffe4b0b406041812e7
-        createdDate: 1458167557358
-        modifiedDate: 1458330606752
-      - id: 571cd64de4b042aaf06d2d8b
-        policyType: BLOCK
-        active: true
-        groups:
-        - 571cd646e4b042aaf06d2d84
-        - 571cd64ce4b042aaf06d2d8a
-        createdDate: 1461507661146
-        modifiedDate: 1461507661146
-    GroupList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Group'
-      example:
-      - id: 571db1f2e4b027c4f055a594
-        name: Group 1
-        active: true
-        memberCount: 1
-        policies:
-        - 571db2e4e4b012df6341f393
-        createdDate: 1461563890135
-        modifiedDate: 1461563926812
-      - id: 571db20ae4b012df6341f391
-        name: Group 2
-        active: true
-        memberCount: 1
-        policies:
-        - 571db2e4e4b012df6341f393
-        createdDate: 1461563914581
-        modifiedDate: 1461564112286
     Policy:
       description: Information Barrier Policy record.
       type: object
@@ -500,27 +429,27 @@ components:
           type: integer
           format: int64
           example: 1458330606752
-    BulkActionResult:
-      description: 'The results of list based bulk action. The list contains the result messages
-
-        in the same order as submitted. The message will be an empty string if the action
-
-        was successful for item in that index.
-
-        '
-      properties:
-        overallResult:
-          type: string
-          enum:
-          - SUCCESS
-          - FAIL
-          example: SUCCESS
-        results:
-          type: array
-          items:
-            type: string
-          example:
-          - ''
+    GroupList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Group'
+      example:
+      - id: 571db1f2e4b027c4f055a594
+        name: Group 1
+        active: true
+        memberCount: 1
+        policies:
+        - 571db2e4e4b012df6341f393
+        createdDate: 1461563890135
+        modifiedDate: 1461563926812
+      - id: 571db20ae4b012df6341f391
+        name: Group 2
+        active: true
+        memberCount: 1
+        policies:
+        - 571db2e4e4b012df6341f393
+        createdDate: 1461563914581
+        modifiedDate: 1461564112286
     Group:
       description: Information Barrier Group record.
       type: object
@@ -552,3 +481,63 @@ components:
           type: integer
           format: int64
           example: 1461563926812
+    PolicyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Policy'
+      example:
+      - id: 56e9df05e4b00737e3d3b82d
+        policyType: BLOCK
+        active: true
+        groups:
+        - 56e9def8e4b0b406041812e6
+        - 56e9deffe4b0b406041812e7
+        createdDate: 1458167557358
+        modifiedDate: 1458330606752
+      - id: 571cd64de4b042aaf06d2d8b
+        policyType: BLOCK
+        active: true
+        groups:
+        - 571cd646e4b042aaf06d2d84
+        - 571cd64ce4b042aaf06d2d8a
+        createdDate: 1461507661146
+        modifiedDate: 1461507661146
+    BulkActionResult:
+      description: 'The results of list based bulk action. The list contains the result messages
+
+        in the same order as submitted. The message will be an empty string if the action
+
+        was successful for item in that index.
+
+        '
+      properties:
+        overallResult:
+          type: string
+          enum:
+          - SUCCESS
+          - FAIL
+          example: SUCCESS
+        results:
+          type: array
+          items:
+            type: string
+          example:
+          - ''
+    IntegerList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 1461508270000
+      - 7215545057281
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session

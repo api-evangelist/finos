@@ -4,28 +4,7 @@ info:
   title: Pod Admin API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -111,9 +90,11 @@ paths:
         required: true
       tags:
       - Admin
+      operationId: postV1AdminMessages
+      x-operation-id-source: derived
   /v1/admin/messages/{messageId}/receipts:
     get:
-      summary: Fetch receipts details from a specific message.
+      summary: Fetch receipts details from a specific message
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -221,6 +202,8 @@ paths:
                 message: // Server error, see response body for further details.
       tags:
       - Admin
+      operationId: getV1AdminMessagesByMessageIdReceipts
+      x-operation-id-source: derived
   /v1/admin/messages/{messageId}/metadata/relationships:
     get:
       summary: Get the message metadata relationship
@@ -288,40 +271,56 @@ paths:
                 message: // Server error, see response body for further details.
       tags:
       - Admin
+      operationId: getV1AdminMessagesByMessageIdMetadataRelationships
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
+    Pagination:
       type: object
+      required:
+      - cursors
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
+        cursors:
+          type: object
+          required:
+          - before
+          properties:
+            before:
+              type: string
+              description: 'This is the opaque url-safe string that points to the start of the page of data
+
+                that has been returned.
+
+                '
+              example: MTAxNTExOTQ1MjAwNzI5NDE=
+            after:
+              type: string
+              description: 'This is the opaque url-safe string that points to the end of the page of data
+
+                that has been returned.
+
+                '
+              example: NDMyNzQyODI3OTQw
+        previous:
           type: string
-          example: Invalid session
-    MessageStream:
-      type: object
-      properties:
-        id:
+          description: 'API endpoint that will return the previous page of data. If not included, this is
+
+            the first page of data.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
+        next:
           type: string
-          example: lFpyw0ATFmji+Cc/cSzbk3///pZkWpe1dA==
-        name:
-          type: string
-          example: Test Room
-        streamType:
-          type: string
-          example: ROOM
-    DownloadReceiptCount:
-      type: object
-      properties:
-        fileName:
-          type: string
-          example: Untitled Document.txt
-        timestamp:
-          type: integer
-          format: int64
-          example: 1552999335740
+          description: 'API endpoint that will return the next page of data. If not included, this is the
+
+            last page of data. Due to how pagination works with visibility and privacy, it is
+
+            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
+
+            the ''next'' link no longer appears.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
     MessageReceiptDetailResponse:
       description: List of Message receipt details
       type: object
@@ -371,6 +370,48 @@ components:
               timestamp: 1552999335740
         pagination:
           $ref: '#/components/schemas/Pagination'
+    MessageIds:
+      type: object
+      properties:
+        messageIds:
+          $ref: '#/components/schemas/StringList'
+    MessageReceiptDetail:
+      description: Message receipt details response object
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserCompp'
+        deliveryReceiptTimestamp:
+          description: Timestamp of message delivery receipts
+          type: integer
+          format: int64
+          example: 1552999333784
+        readReceiptTimestamp:
+          description: Timestamp of message read receipts
+          type: integer
+          format: int64
+          example: 1552999335114
+        emailNotificationTimestamp:
+          description: Timestamp of message email notifications
+          type: integer
+          format: int64
+          example: 1552999335114
+        downloadReceiptCounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownloadReceiptCount'
+          example:
+          - fileName: Untitled Document.txt
+            timestamp: 1552999335740
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
     UserCompp:
       description: Basic user information to include in other models
       type: object
@@ -396,36 +437,21 @@ components:
           type: string
           description: User email addressIntegrationUserManagerTest
           example: dpayet@om.fr
-    MessageMetadataResponse:
-      description: Message metadata
+    MessageDetails:
+      description: Message details
+      type: array
+      items:
+        $ref: '#/components/schemas/MessageDetail'
+    Error:
       type: object
       properties:
-        messageId:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
           type: string
-        parent:
-          type: object
-          properties:
-            messageId:
-              type: string
-              description: Id of the parent message queried
-            relationshipType:
-              type: string
-              enum:
-              - REPLY_FORM
-              - REPLY
-              - FORWARD
-        replies:
-          type: array
-          items:
-            type: string
-        forwards:
-          type: array
-          items:
-            type: string
-        formReplies:
-          type: array
-          items:
-            type: string
+          example: Invalid session
     MessageUser:
       type: object
       properties:
@@ -465,6 +491,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/MessageDownloadReceiptCount'
+    MessageMetadataResponse:
+      description: Message metadata
+      type: object
+      properties:
+        messageId:
+          type: string
+        parent:
+          type: object
+          properties:
+            messageId:
+              type: string
+              description: Id of the parent message queried
+            relationshipType:
+              type: string
+              enum:
+              - REPLY_FORM
+              - REPLY
+              - FORWARD
+        replies:
+          type: array
+          items:
+            type: string
+        forwards:
+          type: array
+          items:
+            type: string
+        formReplies:
+          type: array
+          items:
+            type: string
+    DownloadReceiptCount:
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: Untitled Document.txt
+        timestamp:
+          type: integer
+          format: int64
+          example: 1552999335740
     MessageDownloadReceiptCount:
       type: object
       properties:
@@ -475,96 +541,15 @@ components:
           type: integer
           format: int64
           example: 1
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    MessageReceiptDetail:
-      description: Message receipt details response object
+    MessageStream:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/UserCompp'
-        deliveryReceiptTimestamp:
-          description: Timestamp of message delivery receipts
-          type: integer
-          format: int64
-          example: 1552999333784
-        readReceiptTimestamp:
-          description: Timestamp of message read receipts
-          type: integer
-          format: int64
-          example: 1552999335114
-        emailNotificationTimestamp:
-          description: Timestamp of message email notifications
-          type: integer
-          format: int64
-          example: 1552999335114
-        downloadReceiptCounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/DownloadReceiptCount'
-          example:
-          - fileName: Untitled Document.txt
-            timestamp: 1552999335740
-    Pagination:
-      type: object
-      required:
-      - cursors
-      properties:
-        cursors:
-          type: object
-          required:
-          - before
-          properties:
-            before:
-              type: string
-              description: 'This is the opaque url-safe string that points to the start of the page of data
-
-                that has been returned.
-
-                '
-              example: MTAxNTExOTQ1MjAwNzI5NDE=
-            after:
-              type: string
-              description: 'This is the opaque url-safe string that points to the end of the page of data
-
-                that has been returned.
-
-                '
-              example: NDMyNzQyODI3OTQw
-        previous:
+        id:
           type: string
-          description: 'API endpoint that will return the previous page of data. If not included, this is
-
-            the first page of data.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
-        next:
+          example: lFpyw0ATFmji+Cc/cSzbk3///pZkWpe1dA==
+        name:
           type: string
-          description: 'API endpoint that will return the next page of data. If not included, this is the
-
-            last page of data. Due to how pagination works with visibility and privacy, it is
-
-            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
-
-            the ''next'' link no longer appears.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
-    MessageDetails:
-      description: Message details
-      type: array
-      items:
-        $ref: '#/components/schemas/MessageDetail'
-    MessageIds:
-      type: object
-      properties:
-        messageIds:
-          $ref: '#/components/schemas/StringList'
+          example: Test Room
+        streamType:
+          type: string
+          example: ROOM

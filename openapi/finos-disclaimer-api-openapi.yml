@@ -4,28 +4,7 @@ info:
   title: Pod Disclaimer API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -101,6 +80,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminDisclaimerByDid
+      x-operation-id-source: derived
   /v1/admin/disclaimer/list:
     get:
       summary: List all disclaimers for the company (pod)
@@ -173,6 +154,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminDisclaimerList
+      x-operation-id-source: derived
   /v1/admin/disclaimer/{did}/users:
     get:
       summary: List all users assigned to this disclaimer
@@ -236,6 +219,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminDisclaimerByDidUsers
+      x-operation-id-source: derived
 components:
   schemas:
     Error:
@@ -248,14 +233,6 @@ components:
         message:
           type: string
           example: Invalid session
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
     DisclaimerList:
       type: array
       items:
@@ -277,6 +254,14 @@ components:
         isActive: true
         createdDate: 1461526746875
         modifiedDate: 1461526746875
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
     Disclaimer:
       type: object
       properties:

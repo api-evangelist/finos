@@ -4,28 +4,7 @@ info:
   title: Pod Session API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -33,7 +12,7 @@ tags:
 paths:
   /v2/sessioninfo:
     get:
-      summary: Get information about the current user's session.
+      summary: Get information about the current user's session
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -86,47 +65,10 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2Sessioninfo
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
     UserV2:
       description: User record version 2
       type: object
@@ -204,3 +146,42 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
+    Avatar:
+      type: object
+      properties:
+        size:
+          description: The Avatar Size
+          type: string
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype

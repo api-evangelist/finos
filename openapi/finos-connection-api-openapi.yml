@@ -4,28 +4,7 @@ info:
   title: Pod Connection API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -44,9 +23,7 @@ paths:
 
         users will not be returned in the response if you don''t specify the connection status as "accepted" (default is "pending")
 
-        and the explicit userIds in the request.
-
-        '
+        and the explicit userIds in the request.'
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -141,6 +118,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1ConnectionList
+      x-operation-id-source: derived
   /v1/connection/create:
     post:
       summary: Sends an invitation to connect with another user
@@ -217,6 +196,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UserConnectionRequest'
         required: true
+      operationId: postV1ConnectionCreate
+      x-operation-id-source: derived
   /v1/connection/accept:
     post:
       summary: Accept the connection request for the requesting user
@@ -293,14 +274,14 @@ paths:
             schema:
               $ref: '#/components/schemas/UserConnectionRequest'
         required: true
+      operationId: postV1ConnectionAccept
+      x-operation-id-source: derived
   /v1/connection/reject:
     post:
-      summary: Reject the connection request for the requesting user.
+      summary: Reject the connection request for the requesting user
       description: 'Reject the connection between the requesting user and request sender. If both users are in the same private pod,
 
-        an error will be returned because both users have an implicit connection which cannot be rejected.
-
-        '
+        an error will be returned because both users have an implicit connection which cannot be rejected.'
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -374,9 +355,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserConnectionRequest'
         required: true
+      operationId: postV1ConnectionReject
+      x-operation-id-source: derived
   /v1/connection/user/{userId}/info:
     get:
-      summary: The status of the connection invitation to another user.
+      summary: The status of the connection invitation to another user
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -447,9 +430,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1ConnectionUserByUserIdInfo
+      x-operation-id-source: derived
   /v1/connection/user/{uid}/remove:
     post:
-      summary: Removes a connection with a user.
+      summary: Removes a connection with a user
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -523,6 +508,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: postV1ConnectionUserByUidRemove
+      x-operation-id-source: derived
 components:
   schemas:
     UserConnection:
@@ -558,16 +545,15 @@ components:
           format: int32
           description: number of requests made
           example: 1
-    Error:
+    UserConnectionRequest:
       type: object
+      description: Request body for the Connection APIs
       properties:
-        code:
+        userId:
           type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
+          format: int64
+          description: user id
+          example: 769658112378
     UserConnectionList:
       type: array
       items:
@@ -580,15 +566,16 @@ components:
         requestCounter: 1
       - userId: 7078106103809
         status: ACCEPTED
-    UserConnectionRequest:
+    Error:
       type: object
-      description: Request body for the Connection APIs
       properties:
-        userId:
+        code:
           type: integer
-          format: int64
-          description: user id
-          example: 769658112378
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     SuccessResponse:
       type: object
       properties:

@@ -17,9 +17,7 @@ paths:
       description: '_Available on Agent 2.57.0 and above._
 
 
-        Returns the connectivity status of your Agent server. If your Agent server is started and running, the status value will be `UP`
-
-        '
+        Returns the connectivity status of your Agent server. If your Agent server is started and running, the status value will be `UP`'
       operationId: v3Health
       responses:
         200:
@@ -45,9 +43,7 @@ paths:
         connectivity (**agentservice** and **ceservice**).
 
 
-        The global status will be set to `DOWN` if at least one of the sub-status is also `DOWN`.
-
-        '
+        The global status will be set to `DOWN` if at least one of the sub-status is also `DOWN`.'
       operationId: v3ExtendedHealth
       responses:
         200:
@@ -163,6 +159,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminSystemFeaturesList
+      x-operation-id-source: derived
     servers:
     - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols/list:
@@ -220,6 +218,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminSystemProtocolsList
+      x-operation-id-source: derived
     servers:
     - url: https://yourpodURL.symphony.com/pod
   /v2/system/protocols:
@@ -293,6 +293,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2SystemProtocols
+      x-operation-id-source: derived
     servers:
     - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols:
@@ -359,6 +361,8 @@ paths:
               $ref: '#/components/schemas/Protocol'
         description: the protocol to add
         required: true
+      operationId: postV1AdminSystemProtocols
+      x-operation-id-source: derived
     servers:
     - url: https://yourpodURL.symphony.com/pod
   /v1/admin/system/protocols/{scheme}:
@@ -418,22 +422,12 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: deleteV1AdminSystemProtocolsByScheme
+      x-operation-id-source: derived
     servers:
     - url: https://yourpodURL.symphony.com/pod
 components:
   schemas:
-    V3HealthStatus:
-      type: string
-      description: Application health status.
-      enum:
-      - UP
-      - DOWN
-    V3HealthAuthType:
-      type: string
-      description: Type of authentication
-      enum:
-      - RSA
-      - CERT
     V3HealthComponent:
       type: object
       properties:
@@ -447,6 +441,12 @@ components:
         version:
           type: string
           description: Optional component version
+    V3HealthAuthType:
+      type: string
+      description: Type of authentication
+      enum:
+      - RSA
+      - CERT
     V3Health:
       type: object
       properties:
@@ -463,15 +463,12 @@ components:
         version:
           type: string
           description: Required Agent verison
-    Protocol:
-      type: object
-      required:
-      - scheme
-      properties:
-        scheme:
-          type: string
-          description: 'URI protocol scheme (example: http, https, ftp)'
-          example: skype
+    V3HealthStatus:
+      type: string
+      description: Application health status.
+      enum:
+      - UP
+      - DOWN
     Error:
       type: object
       properties:
@@ -491,6 +488,15 @@ components:
       - mailto
       - fdsup
       - skype
+    Protocol:
+      type: object
+      required:
+      - scheme
+      properties:
+        scheme:
+          type: string
+          description: 'URI protocol scheme (example: http, https, ftp)'
+          example: skype
 x-refined-from:
 - finos-symphony-agent-api-openapi.yml
 - finos-symphony-pod-api-openapi.yml

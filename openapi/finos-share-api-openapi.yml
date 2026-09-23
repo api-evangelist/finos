@@ -3,48 +3,7 @@ info:
   title: Agent Share API
   description: 'This document refers to Symphony API calls to send and receive messages
 
-    and content. They need the on-premise Agent installed to perform
-
-    decryption/encryption of content.
-
-
-    - sessionToken and keyManagerToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have sent no message to any
-
-    stream even if a request to some subset of the requested streams
-
-    would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
-
-    '
+    and content.'
   version: 25.8.1
 servers:
 - url: youragentURL.symphony.com/agent
@@ -55,12 +14,10 @@ paths:
     post:
       tags:
       - Share
-      summary: PROVISIONAL -  Share a piece of content into Symphony
+      summary: PROVISIONAL - Share a piece of content into Symphony
       description: 'Given a 3rd party content (eg. news article), it can share to the given stream.
 
-        The stream can be a chatroom, an IM or a multiparty IM.
-
-        '
+        The stream can be a chatroom, an IM or a multiparty IM.'
       parameters:
       - name: sid
         in: path
@@ -117,16 +74,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: shareContent
+      operationId: postV3StreamBySidShare
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
     ShareContent:
       type: object
       properties:
@@ -135,41 +86,6 @@ components:
           description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
         content:
           $ref: '#/components/schemas/ShareArticle'
-    AttachmentInfo:
-      required:
-      - id
-      - name
-      - size
-      type: object
-      properties:
-        id:
-          type: string
-          description: The attachment ID.
-        name:
-          type: string
-          description: The file name.
-        size:
-          type: integer
-          description: Size in bytes.
-          format: int64
-    V2BaseMessage:
-      required:
-      - streamId
-      - timestamp
-      - v2messageType
-      type: object
-      properties:
-        id:
-          type: string
-          description: The messageId is assigned by the ingestor service when a message is sent.
-        timestamp:
-          type: string
-        v2messageType:
-          type: string
-        streamId:
-          type: string
-      discriminator:
-        propertyName: v2messageType
     ShareArticle:
       required:
       - appId
@@ -218,6 +134,41 @@ components:
         appIconUrl:
           type: string
           description: App icon url of the calling application
+    AttachmentInfo:
+      required:
+      - id
+      - name
+      - size
+      type: object
+      properties:
+        id:
+          type: string
+          description: The attachment ID.
+        name:
+          type: string
+          description: The file name.
+        size:
+          type: integer
+          description: Size in bytes.
+          format: int64
+    V2BaseMessage:
+      required:
+      - streamId
+      - timestamp
+      - v2messageType
+      type: object
+      properties:
+        id:
+          type: string
+          description: The messageId is assigned by the ingestor service when a message is sent.
+        timestamp:
+          type: string
+        v2messageType:
+          type: string
+        streamId:
+          type: string
+      discriminator:
+        propertyName: v2messageType
     V2Message:
       description: A representation of a message sent by a user of Symphony.
       allOf:
@@ -240,3 +191,11 @@ components:
             default: []
             items:
               $ref: '#/components/schemas/AttachmentInfo'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string

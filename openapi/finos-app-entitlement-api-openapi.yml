@@ -4,32 +4,11 @@ info:
   title: Pod App Entitlement API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
-- name: AppEntitlement
+- name: App Entitlement
 paths:
   /v1/admin/app/entitlement/list:
     get:
@@ -42,7 +21,7 @@ paths:
         schema:
           type: string
       tags:
-      - AppEntitlement
+      - App Entitlement
       responses:
         '200':
           description: Success
@@ -92,6 +71,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminAppEntitlementList
+      x-operation-id-source: derived
     post:
       summary: Update the application entitlements for the company
       parameters:
@@ -102,7 +83,7 @@ paths:
         schema:
           type: string
       tags:
-      - AppEntitlement
+      - App Entitlement
       responses:
         '200':
           description: Success
@@ -168,6 +149,8 @@ paths:
             schema:
               $ref: '#/components/schemas/PodAppEntitlementList'
         required: true
+      operationId: postV1AdminAppEntitlementList
+      x-operation-id-source: derived
   /v1/admin/user/{uid}/app/entitlement/list:
     get:
       summary: Get the list of application entitlements for this user
@@ -186,7 +169,7 @@ paths:
           type: integer
           format: int64
       tags:
-      - AppEntitlement
+      - App Entitlement
       responses:
         '200':
           description: Success
@@ -249,6 +232,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminUserByUidAppEntitlementList
+      x-operation-id-source: derived
     post:
       summary: Update the application entitlements for this user
       parameters:
@@ -266,7 +251,7 @@ paths:
           type: integer
           format: int64
       tags:
-      - AppEntitlement
+      - App Entitlement
       responses:
         '200':
           description: Success
@@ -335,8 +320,10 @@ paths:
             schema:
               $ref: '#/components/schemas/UserAppEntitlementList'
         required: true
+      operationId: postV1AdminUserByUidAppEntitlementList
+      x-operation-id-source: derived
     patch:
-      summary: Update unique entitlement of an app for this user. Entitlement can be installation, visibility or product
+      summary: Update unique entitlement of an app for this user.
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -352,7 +339,7 @@ paths:
           type: integer
           format: int64
       tags:
-      - AppEntitlement
+      - App Entitlement
       responses:
         '200':
           description: Success
@@ -421,18 +408,100 @@ paths:
             schema:
               $ref: '#/components/schemas/UserAppEntitlementsPatchList'
         required: true
+      operationId: patchV1AdminUserByUidAppEntitlementList
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
+    UserAppEntitlementList:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserAppEntitlement'
+      example:
+      - appId: djApp
+        appName: Dow Jones
+        listed: true
+        install: false
+      - appId: selerity
+        appName: Selerity Context
+        listed: true
+        install: true
+        products:
+        - appId: selerity
+          name: Standard
+          subscribed: true
+          type: default
+        - appId: selerity
+          name: Premium
+          sku: AcDccU53SsY
+          subscribed: false
+          type: premium
+    UserAppEntitlementPatch:
+      description: Application Entitlements to patch for the user
       type: object
+      required:
+      - appId
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
+        appId:
           type: string
-          example: Invalid session
+          description: Unique ID for the Application
+          maxLength: 256
+          minLength: 1
+          example: selerity
+        listed:
+          type: string
+          enum:
+          - 'TRUE'
+          - 'FALSE'
+          - KEEP
+          - REMOVE
+          default: KEEP
+          description: If "TRUE", this application will be listed in the appstore for this user. If "FALSE", this application will be hidden in the appstore. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
+          example: KEEP
+        install:
+          type: string
+          enum:
+          - 'TRUE'
+          - 'FALSE'
+          - KEEP
+          - REMOVE
+          default: KEEP
+          description: If "TRUE", this application will be installed for this user. If "FALSE", this application will not be installed for this user. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
+          example: true
+        product:
+          $ref: '#/components/schemas/Product'
+    PodAppEntitlement:
+      description: Application Entitlements for the company
+      type: object
+      required:
+      - appId
+      - appName
+      - enable
+      - listed
+      - install
+      properties:
+        appId:
+          type: string
+          description: Unique ID for the Application
+          maxLength: 256
+          minLength: 1
+          example: djApp
+        appName:
+          type: string
+          description: Name for this Application
+          maxLength: 50
+          minLength: 1
+          example: Dow Jones
+        enable:
+          type: boolean
+          example: true
+        listed:
+          type: boolean
+          description: if true, this application will be listed in the appstore for everyone.  Otherwise, this application will be hidden in the appstore.
+          example: true
+        install:
+          type: boolean
+          description: if true, the entitlement is set to automatic for the company.  Otherwise, it is set to manual.
+          example: true
     ProductList:
       type: array
       items:
@@ -477,116 +546,6 @@ components:
           example: true
         products:
           $ref: '#/components/schemas/ProductList'
-    PodAppEntitlementList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PodAppEntitlement'
-      example:
-      - appId: djApp
-        appName: Dow Jones
-        enable: true
-        listed: true
-        install: false
-      - appId: selerity
-        appName: Selerity Context
-        enable: false
-        listed: true
-        install: true
-    PodAppEntitlement:
-      description: Application Entitlements for the company
-      type: object
-      required:
-      - appId
-      - appName
-      - enable
-      - listed
-      - install
-      properties:
-        appId:
-          type: string
-          description: Unique ID for the Application
-          maxLength: 256
-          minLength: 1
-          example: djApp
-        appName:
-          type: string
-          description: Name for this Application
-          maxLength: 50
-          minLength: 1
-          example: Dow Jones
-        enable:
-          type: boolean
-          example: true
-        listed:
-          type: boolean
-          description: if true, this application will be listed in the appstore for everyone.  Otherwise, this application will be hidden in the appstore.
-          example: true
-        install:
-          type: boolean
-          description: if true, the entitlement is set to automatic for the company.  Otherwise, it is set to manual.
-          example: true
-    UserAppEntitlementList:
-      type: array
-      items:
-        $ref: '#/components/schemas/UserAppEntitlement'
-      example:
-      - appId: djApp
-        appName: Dow Jones
-        listed: true
-        install: false
-      - appId: selerity
-        appName: Selerity Context
-        listed: true
-        install: true
-        products:
-        - appId: selerity
-          name: Standard
-          subscribed: true
-          type: default
-        - appId: selerity
-          name: Premium
-          sku: AcDccU53SsY
-          subscribed: false
-          type: premium
-    UserAppEntitlementsPatchList:
-      description: Array of app entitlements to patch for a user
-      type: array
-      items:
-        $ref: '#/components/schemas/UserAppEntitlementPatch'
-    UserAppEntitlementPatch:
-      description: Application Entitlements to patch for the user
-      type: object
-      required:
-      - appId
-      properties:
-        appId:
-          type: string
-          description: Unique ID for the Application
-          maxLength: 256
-          minLength: 1
-          example: selerity
-        listed:
-          type: string
-          enum:
-          - 'TRUE'
-          - 'FALSE'
-          - KEEP
-          - REMOVE
-          default: KEEP
-          description: If "TRUE", this application will be listed in the appstore for this user. If "FALSE", this application will be hidden in the appstore. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
-          example: KEEP
-        install:
-          type: string
-          enum:
-          - 'TRUE'
-          - 'FALSE'
-          - KEEP
-          - REMOVE
-          default: KEEP
-          description: If "TRUE", this application will be installed for this user. If "FALSE", this application will not be installed for this user. If "KEEP" or not set, the current value is kept. If "REMOVE", it will be removed from user settings and the pod level setting's value will be used.
-          example: true
-        product:
-          $ref: '#/components/schemas/Product'
     Product:
       description: Application Product
       type: object
@@ -621,3 +580,33 @@ components:
           type: string
           description: Product Type (default or premium)
           example: premium
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    PodAppEntitlementList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PodAppEntitlement'
+      example:
+      - appId: djApp
+        appName: Dow Jones
+        enable: true
+        listed: true
+        install: false
+      - appId: selerity
+        appName: Selerity Context
+        enable: false
+        listed: true
+        install: true
+    UserAppEntitlementsPatchList:
+      description: Array of app entitlements to patch for a user
+      type: array
+      items:
+        $ref: '#/components/schemas/UserAppEntitlementPatch'

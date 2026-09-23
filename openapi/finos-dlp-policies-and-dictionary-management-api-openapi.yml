@@ -3,48 +3,7 @@ info:
   title: Agent DLP Policies and Dictionary Management API
   description: 'This document refers to Symphony API calls to send and receive messages
 
-    and content. They need the on-premise Agent installed to perform
-
-    decryption/encryption of content.
-
-
-    - sessionToken and keyManagerToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have sent no message to any
-
-    stream even if a request to some subset of the requested streams
-
-    would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
-
-    '
+    and content.'
   version: 25.8.1
 servers:
 - url: youragentURL.symphony.com/agent
@@ -56,7 +15,6 @@ paths:
       tags:
       - DLP Policies and Dictionary Management
       summary: Get all policies
-      description: Get all policies
       parameters:
       - name: sessionToken
         in: header
@@ -114,6 +72,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1DlpPolicies
+      x-operation-id-source: derived
     post:
       tags:
       - DLP Policies and Dictionary Management
@@ -124,9 +84,7 @@ paths:
         At the time of policy creation, the caller should only provide - contentTypes, name, scopes and type. The rest of the information is populated automatically.
 
 
-        Note - You need to enable the policy after creation to start enforcing the policy.
-
-        '
+        Note - You need to enable the policy after creation to start enforcing the policy.'
       parameters:
       - name: sessionToken
         in: header
@@ -178,12 +136,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: postV1DlpPolicies
+      x-operation-id-source: derived
   /v1/dlp/policies/{policyId}:
     get:
       tags:
       - DLP Policies and Dictionary Management
       summary: Get a policy
-      description: Get a policy
       parameters:
       - name: sessionToken
         in: header
@@ -238,19 +197,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1DlpPoliciesByPolicyId
+      x-operation-id-source: derived
     put:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Updates a policy. Cannot be used for creation.
+      summary: Updates a policy. Cannot be used for creation
       description: 'Update the policy (name, type, contentTypes, scopes) and also the dictionaries for a policy.
 
         Warning: If you send empty list of dictionaries during the update operation, then all the
 
         dictionaries for this policy are deleted and policy is automatically disabled.
 
-        Note: The policy should already exist.
-
-        '
+        Note: The policy should already exist.'
       parameters:
       - name: sessionToken
         in: header
@@ -307,15 +266,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: putV1DlpPoliciesByPolicyId
+      x-operation-id-source: derived
     delete:
       tags:
       - DLP Policies and Dictionary Management
       summary: Delete a policy
       description: 'Delete a policy.
 
-        Note: Only disabled policy can be deleted
-
-        '
+        Note: Only disabled policy can be deleted'
       parameters:
       - name: sessionToken
         in: header
@@ -365,11 +324,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: deleteV1DlpPoliciesByPolicyId
+      x-operation-id-source: derived
   /v1/dlp/policies/{policyId}/enable:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Enables a policy.
+      summary: Enables a policy
       description: Enables a policy.
       parameters:
       - name: sessionToken
@@ -419,11 +380,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV1DlpPoliciesByPolicyIdEnable
+      x-operation-id-source: derived
   /v1/dlp/policies/{policyId}/disable:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Disables a policy.
+      summary: Disables a policy
       description: Disables a policy.
       parameters:
       - name: sessionToken
@@ -473,14 +436,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV1DlpPoliciesByPolicyIdDisable
+      x-operation-id-source: derived
   /v1/dlp/dictionaries:
     get:
       tags:
       - DLP Policies and Dictionary Management
       summary: Get all dictionary metadatas
-      description: 'Get all dictionary metadatas with the latest version. Each dictionary object will only contain meta data of the content.
-
-        '
+      description: Get all dictionary metadatas with the latest version. Each dictionary object will only contain meta data of the content.
       parameters:
       - name: sessionToken
         in: header
@@ -538,13 +501,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1DlpDictionaries
+      x-operation-id-source: derived
     post:
       tags:
       - DLP Policies and Dictionary Management
       summary: Create a dictionary
-      description: 'Creates a dictionary with basic metadata and no content. Only "name" and "type" field is used to create a new dictionary entry.
-
-        '
+      description: Creates a dictionary with basic metadata and no content. Only "name" and "type" field is used to create a new dictionary entry.
       parameters:
       - name: sessionToken
         in: header
@@ -595,6 +558,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: postV1DlpDictionaries
+      x-operation-id-source: derived
   /v1/dlp/dictionaries/{dictId}:
     get:
       tags:
@@ -655,6 +620,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1DlpDictionariesByDictId
+      x-operation-id-source: derived
     put:
       tags:
       - DLP Policies and Dictionary Management
@@ -665,9 +632,7 @@ paths:
 
         In case of update only "name" can be changed.
 
-        Note: All related policies will also have versions updated.
-
-        '
+        Note: All related policies will also have versions updated.'
       parameters:
       - name: sessionToken
         in: header
@@ -724,15 +689,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: putV1DlpDictionariesByDictId
+      x-operation-id-source: derived
     delete:
       tags:
       - DLP Policies and Dictionary Management
       summary: Delete a dictionary
       description: 'Deletes a dictionary.
 
-        Note: All related policies will be affected.
-
-        '
+        Note: All related policies will be affected.'
       parameters:
       - name: sessionToken
         in: header
@@ -782,11 +747,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: deleteV1DlpDictionariesByDictId
+      x-operation-id-source: derived
   /v1/dlp/dictionaries/{dictId}/data/download:
     get:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Downloads Base 64 encoded dictionary content.
+      summary: Downloads Base 64 encoded dictionary content
       description: Downloads Base 64 encoded dictionary content.
       parameters:
       - name: sessionToken
@@ -843,11 +810,13 @@ paths:
             application/octet-stream:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1DlpDictionariesByDictIdDataDownload
+      x-operation-id-source: derived
   /v1/dlp/dictionaries/{dictId}/data/upload:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Override dictionary content with provided content.
+      summary: Override dictionary content with provided content
       description: Override dictionary content with provided content.
       parameters:
       - name: sessionToken
@@ -909,12 +878,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV1DlpDictionariesByDictIdDataUpload
+      x-operation-id-source: derived
   /v3/dlp/policies:
     get:
       tags:
       - DLP Policies and Dictionary Management
       summary: Get all policies
-      description: Get all policies
       parameters:
       - name: sessionToken
         in: header
@@ -972,6 +942,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV3DlpPolicies
+      x-operation-id-source: derived
     post:
       tags:
       - DLP Policies and Dictionary Management
@@ -982,9 +954,7 @@ paths:
 
         The rest of the information is populated automatically.
 
-        Note - You need to enable the policy after creation to start enforcing the policy.
-
-        '
+        Note - You need to enable the policy after creation to start enforcing the policy.'
       parameters:
       - name: sessionToken
         in: header
@@ -1036,12 +1006,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: postV3DlpPolicies
+      x-operation-id-source: derived
   /v3/dlp/policies/{policyId}:
     get:
       tags:
       - DLP Policies and Dictionary Management
       summary: Get a policy
-      description: Get a policy
       parameters:
       - name: sessionToken
         in: header
@@ -1096,20 +1067,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV3DlpPoliciesByPolicyId
+      x-operation-id-source: derived
   /v3/dlp/policies/{policyId}/update:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Updates a policy. Cannot be used for creation.
+      summary: Updates a policy. Cannot be used for creation
       description: 'Update the policy (name, type, contentTypes, scopes) and also the dictionaries for a policy.
 
         Warning: If you send empty list of dictionaries during the update operation, then all the
 
         dictionaries for this policy are deleted and policy is automatically disabled.
 
-        Note: The policy should already exist.
-
-        '
+        Note: The policy should already exist.'
       parameters:
       - name: sessionToken
         in: header
@@ -1166,6 +1137,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-codegen-request-body-name: body
+      operationId: postV3DlpPoliciesByPolicyIdUpdate
+      x-operation-id-source: derived
   /v3/dlp/policies/{policyId}/delete:
     post:
       tags:
@@ -1173,9 +1146,7 @@ paths:
       summary: Delete a policy
       description: 'Delete a policy.
 
-        Note: Only disabled policy can be deleted
-
-        '
+        Note: Only disabled policy can be deleted'
       parameters:
       - name: sessionToken
         in: header
@@ -1225,11 +1196,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV3DlpPoliciesByPolicyIdDelete
+      x-operation-id-source: derived
   /v3/dlp/policies/{policyId}/enable:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Enables a policy.
+      summary: Enables a policy
       description: Enables a policy.
       parameters:
       - name: sessionToken
@@ -1279,11 +1252,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV3DlpPoliciesByPolicyIdEnable
+      x-operation-id-source: derived
   /v3/dlp/policies/{policyId}/disable:
     post:
       tags:
       - DLP Policies and Dictionary Management
-      summary: Disables a policy.
+      summary: Disables a policy
       description: Disables a policy.
       parameters:
       - name: sessionToken
@@ -1333,8 +1308,168 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV3DlpPoliciesByPolicyIdDisable
+      x-operation-id-source: derived
 components:
   schemas:
+    V3DLPDictionaryMeta:
+      required:
+      - dictId
+      - name
+      - version
+      type: object
+      properties:
+        dictId:
+          type: string
+        version:
+          type: string
+        name:
+          type: string
+      description: Identity of a dictionary.
+    V3DLPFileSizeConfig:
+      type: object
+      properties:
+        sizeLimit:
+          type: integer
+          format: int32
+      description: File size config defines maximum allowed size of file. Default max size limit is 20 MB.
+    V3DLPPolicyResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/V3DLPPolicy'
+      description: Policy Response.
+    V1DLPPolicyResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/V1DLPPolicy'
+      description: Policy Response
+    V1DLPDictionaryMetadataCollectionResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          description: List of dictionary metadata
+          items:
+            $ref: '#/components/schemas/V1DLPDictionaryMetadata'
+        page:
+          type: integer
+          description: Page number of current page
+          format: int32
+        pageCount:
+          type: integer
+          description: Total number of pages available
+          format: int32
+      description: List of dictionary metadata.
+    V3DLPRule:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          description: Type of a rule used by policy. Can be ["UNKNOWN", "TEXT_MATCH", "FILE_EXTENSION", "FILE_SIZE", "FILE_PASSWORD", "FILE_CLASSIFIER"].
+        name:
+          type: string
+          description: Name for rule.
+        textMatchConfig:
+          $ref: '#/components/schemas/V3DLPTextMatchConfig'
+        fileSizeConfig:
+          $ref: '#/components/schemas/V3DLPFileSizeConfig'
+        fileExtensionConfig:
+          $ref: '#/components/schemas/V3DLPFileExtensionConfig'
+        filePasswordConfig:
+          $ref: '#/components/schemas/V3DLPFilePasswordConfig'
+        fileClassifierConfig:
+          $ref: '#/components/schemas/V3DLPFileClassifierConfig'
+      description: 'A Rule defines the actual matching specification for policies. It holds a type and a configuration
+
+        for the rule, these properties should be used to build the corresponding matching implementation.
+
+        Only one of the configuration property should be set [textMatchConfig, fileSizeConfig, fileExtensionConfig, filePasswordConfig, fileClassifierConfig].
+
+        '
+    V3DLPTextMatchConfig:
+      type: object
+      required:
+      - dictionaries
+      - applicableFileTypes
+      properties:
+        dictionaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/V3DLPDictionaryMeta'
+        countUniqueOccurrences:
+          type: integer
+          format: int32
+        applicableFileTypes:
+          type: array
+          description: 'File types must be applied only for rule type "FileContent", otherwise must be empty.
+
+            Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
+
+            '
+          items:
+            type: string
+      description: 'This is a configuration that can be used to match text or regex.
+
+        Configuration that can be used by a rule. This is a configuration that can be used to match text or regex.
+
+        This configuration also corresponds to V2 TextMatch/RegexMatch of dictionaries.
+
+        '
+    V1DLPDictionaryRef:
+      required:
+      - name
+      type: object
+      properties:
+        dictId:
+          type: string
+          description: Unique dictionary id
+        name:
+          type: string
+          description: Unique name of a dictionary, max 30 characters, with trimmed leading and trailing blank spaces.
+        version:
+          type: string
+          description: 'The version of a dictionary, in format "major.minor".
+
+            Initial value will set by backend as "1.0" when created.
+
+            Whenever the dictionary version needs to be changed, the minor version by 1 unless minor == 999, then the major version is increased by 1 until it reaches 999.
+
+            '
+      description: Basic information needed to identify a dictionary
+    V3DLPPolicyAppliesTo:
+      required:
+      - action
+      - dataType
+      - rules
+      type: object
+      properties:
+        dataType:
+          type: string
+          description: 'The list of data types that policy should apply to. Can''t be empty.
+
+            Can be ["Messages","RoomMeta", "SignalMeta", "FileContent", "FileMeta"].
+
+            '
+        action:
+          type: string
+          description: 'Action to be taken on violation detection.
+
+            Can be ["Block", "Warn", "LogOnly"]. The default is "LogOnly".
+
+            '
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/V3DLPRule'
     V1DLPPolicy:
       required:
       - contentTypes
@@ -1402,29 +1537,6 @@ components:
 
             '
       description: The policy object for expression filter, one policy can have multiple dictionaries
-    V3DLPFileExtensionConfig:
-      required:
-      - allowLists
-      - blockLists
-      type: object
-      properties:
-        allowLists:
-          type: array
-          description: File extensions that are allowed.
-          items:
-            type: string
-        blockLists:
-          type: array
-          description: File extensions that are blocked.
-          items:
-            type: string
-      description: Extension detection config for allowed and blocked types of file extensions.
-    V3DLPPolicyResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/V3DLPPolicy'
-      description: Policy Response.
     V1DLPDictionaryMetadataResponse:
       required:
       - data
@@ -1457,54 +1569,6 @@ components:
           description: File types that can be applied. Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
           items:
             type: string
-    V1DLPPoliciesCollectionResponse:
-      type: object
-      required:
-      - policies
-      properties:
-        policies:
-          type: array
-          description: List of policies
-          items:
-            $ref: '#/components/schemas/V1DLPPolicy'
-        page:
-          type: integer
-          description: Page number of current page
-          format: int32
-        pageCount:
-          type: integer
-          description: Total number of pages available
-          format: int32
-      description: List of policies
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-    V1DLPDictionaryRef:
-      required:
-      - name
-      type: object
-      properties:
-        dictId:
-          type: string
-          description: Unique dictionary id
-        name:
-          type: string
-          description: Unique name of a dictionary, max 30 characters, with trimmed leading and trailing blank spaces.
-        version:
-          type: string
-          description: 'The version of a dictionary, in format "major.minor".
-
-            Initial value will set by backend as "1.0" when created.
-
-            Whenever the dictionary version needs to be changed, the minor version by 1 unless minor == 999, then the major version is increased by 1 until it reaches 999.
-
-            '
-      description: Basic information needed to identify a dictionary
     V3DLPPolicy:
       type: object
       required:
@@ -1570,37 +1634,6 @@ components:
       description: 'A policy is the main entity of V3 policy/rule system. It is responsible to define rules and add scope constraints to the engine.
 
         '
-    V3DLPRule:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        id:
-          type: string
-        type:
-          type: string
-          description: Type of a rule used by policy. Can be ["UNKNOWN", "TEXT_MATCH", "FILE_EXTENSION", "FILE_SIZE", "FILE_PASSWORD", "FILE_CLASSIFIER"].
-        name:
-          type: string
-          description: Name for rule.
-        textMatchConfig:
-          $ref: '#/components/schemas/V3DLPTextMatchConfig'
-        fileSizeConfig:
-          $ref: '#/components/schemas/V3DLPFileSizeConfig'
-        fileExtensionConfig:
-          $ref: '#/components/schemas/V3DLPFileExtensionConfig'
-        filePasswordConfig:
-          $ref: '#/components/schemas/V3DLPFilePasswordConfig'
-        fileClassifierConfig:
-          $ref: '#/components/schemas/V3DLPFileClassifierConfig'
-      description: 'A Rule defines the actual matching specification for policies. It holds a type and a configuration
-
-        for the rule, these properties should be used to build the corresponding matching implementation.
-
-        Only one of the configuration property should be set [textMatchConfig, fileSizeConfig, fileExtensionConfig, filePasswordConfig, fileClassifierConfig].
-
-        '
     V3DLPFilePasswordConfig:
       required:
       - applicableFileTypes
@@ -1620,68 +1653,33 @@ components:
 
             '
       description: Password protected detection config for files that are password protected or not.
-    V1DLPDictionaryMetadata:
+    V3DLPFileExtensionConfig:
       required:
-      - dictRef
-      - type
+      - allowLists
+      - blockLists
       type: object
       properties:
-        creationDate:
-          type: integer
-          description: Creation time of the dictionary in milliseconds elapsed as of epoch time.
-          format: int64
-        creatorId:
-          type: string
-          description: Numeric userId of the creator
-        dictRef:
-          $ref: '#/components/schemas/V1DLPDictionaryRef'
-        lastUpdatedDate:
-          type: integer
-          description: The recent update time of the dictionary in milliseconds
-          format: int64
-        type:
-          type: string
-          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
-
-            By default set to "Word" if not specified. Possible values - Word, Regex
-
-            '
-      description: Dictionary's metadata (excluding content)
-    V1DLPPolicyResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/V1DLPPolicy'
-      description: Policy Response
-    V1DLPDictionaryMetadataCreateRequest:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'The name of dictionary
-
-            '
-        type:
-          type: string
-          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
-
-            By default set to "Word" if not specified. Possible values - Word, Regex
-
-            '
-      description: Dictionary's metadata (excluding content) to use for dictionary create operations.
-    V1DLPDictionaryMetadataCollectionResponse:
-      type: object
-      required:
-      - items
-      properties:
-        items:
+        allowLists:
           type: array
-          description: List of dictionary metadata
+          description: File extensions that are allowed.
           items:
-            $ref: '#/components/schemas/V1DLPDictionaryMetadata'
+            type: string
+        blockLists:
+          type: array
+          description: File extensions that are blocked.
+          items:
+            type: string
+      description: Extension detection config for allowed and blocked types of file extensions.
+    V1DLPPoliciesCollectionResponse:
+      type: object
+      required:
+      - policies
+      properties:
+        policies:
+          type: array
+          description: List of policies
+          items:
+            $ref: '#/components/schemas/V1DLPPolicy'
         page:
           type: integer
           description: Page number of current page
@@ -1690,131 +1688,7 @@ components:
           type: integer
           description: Total number of pages available
           format: int32
-      description: List of dictionary metadata.
-    V3DLPPolicyRequest:
-      required:
-      - appliesTo
-      - name
-      - scopes
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'Unique name of a policy, max 30 characters. Cannot be empty. All the leading and trailing blank spaces are trimmed.
-
-            '
-        scopes:
-          type: array
-          description: 'List of communication scopes. Possible values are "Internal" (for Internal conversations) or "External" (for External conversations).
-
-            You can apply both scopes if you set it to ["Internal", "External"].
-
-            '
-          items:
-            type: string
-        appliesTo:
-          type: array
-          items:
-            $ref: '#/components/schemas/V3DLPPolicyAppliesTo'
-      description: Request to be used to get policies.
-    V3DLPFileSizeConfig:
-      type: object
-      properties:
-        sizeLimit:
-          type: integer
-          format: int32
-      description: File size config defines maximum allowed size of file. Default max size limit is 20 MB.
-    V3DLPPolicyAppliesTo:
-      required:
-      - action
-      - dataType
-      - rules
-      type: object
-      properties:
-        dataType:
-          type: string
-          description: 'The list of data types that policy should apply to. Can''t be empty.
-
-            Can be ["Messages","RoomMeta", "SignalMeta", "FileContent", "FileMeta"].
-
-            '
-        action:
-          type: string
-          description: 'Action to be taken on violation detection.
-
-            Can be ["Block", "Warn", "LogOnly"]. The default is "LogOnly".
-
-            '
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/V3DLPRule'
-    V3DLPPoliciesCollectionResponse:
-      type: object
-      required:
-      - policies
-      properties:
-        policies:
-          type: array
-          description: List of policies.
-          items:
-            $ref: '#/components/schemas/V3DLPPolicy'
-        page:
-          type: integer
-          description: The starting page for pagination.
-          format: int32
-        size:
-          type: integer
-          description: Size of policies displayed per page.
-          format: int32
-        pageCount:
-          type: integer
-          description: Total number of pages available.
-          format: int32
-      description: List of policies.
-    V3DLPDictionaryMeta:
-      required:
-      - dictId
-      - name
-      - version
-      type: object
-      properties:
-        dictId:
-          type: string
-        version:
-          type: string
-        name:
-          type: string
-      description: Identity of a dictionary.
-    V3DLPTextMatchConfig:
-      type: object
-      required:
-      - dictionaries
-      - applicableFileTypes
-      properties:
-        dictionaries:
-          type: array
-          items:
-            $ref: '#/components/schemas/V3DLPDictionaryMeta'
-        countUniqueOccurrences:
-          type: integer
-          format: int32
-        applicableFileTypes:
-          type: array
-          description: 'File types must be applied only for rule type "FileContent", otherwise must be empty.
-
-            Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
-
-            '
-          items:
-            type: string
-      description: 'This is a configuration that can be used to match text or regex.
-
-        Configuration that can be used by a rule. This is a configuration that can be used to match text or regex.
-
-        This configuration also corresponds to V2 TextMatch/RegexMatch of dictionaries.
-
-        '
+      description: List of policies
     V1DLPPolicyRequest:
       required:
       - contentTypes
@@ -1854,6 +1728,82 @@ components:
           type: string
           description: Type of policy. Possible values "Block" or "Warn".
       description: The policy object to use for creating/updating a policy.
+    V1DLPDictionaryMetadata:
+      required:
+      - dictRef
+      - type
+      type: object
+      properties:
+        creationDate:
+          type: integer
+          description: Creation time of the dictionary in milliseconds elapsed as of epoch time.
+          format: int64
+        creatorId:
+          type: string
+          description: Numeric userId of the creator
+        dictRef:
+          $ref: '#/components/schemas/V1DLPDictionaryRef'
+        lastUpdatedDate:
+          type: integer
+          description: The recent update time of the dictionary in milliseconds
+          format: int64
+        type:
+          type: string
+          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
+
+            By default set to "Word" if not specified. Possible values - Word, Regex
+
+            '
+      description: Dictionary's metadata (excluding content)
+    V3DLPPolicyRequest:
+      required:
+      - appliesTo
+      - name
+      - scopes
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Unique name of a policy, max 30 characters. Cannot be empty. All the leading and trailing blank spaces are trimmed.
+
+            '
+        scopes:
+          type: array
+          description: 'List of communication scopes. Possible values are "Internal" (for Internal conversations) or "External" (for External conversations).
+
+            You can apply both scopes if you set it to ["Internal", "External"].
+
+            '
+          items:
+            type: string
+        appliesTo:
+          type: array
+          items:
+            $ref: '#/components/schemas/V3DLPPolicyAppliesTo'
+      description: Request to be used to get policies.
+    V3DLPPoliciesCollectionResponse:
+      type: object
+      required:
+      - policies
+      properties:
+        policies:
+          type: array
+          description: List of policies.
+          items:
+            $ref: '#/components/schemas/V3DLPPolicy'
+        page:
+          type: integer
+          description: The starting page for pagination.
+          format: int32
+        size:
+          type: integer
+          description: Size of policies displayed per page.
+          format: int32
+        pageCount:
+          type: integer
+          description: Total number of pages available.
+          format: int32
+      description: List of policies.
     V1DLPDictionaryMetadataUpdateRequest:
       required:
       - name
@@ -1863,3 +1813,30 @@ components:
           type: string
           description: The name of dictionary
       description: Dictionary's metadata (excluding content) to use for dictionary update operations.
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    V1DLPDictionaryMetadataCreateRequest:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'The name of dictionary
+
+            '
+        type:
+          type: string
+          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
+
+            By default set to "Word" if not specified. Possible values - Word, Regex
+
+            '
+      description: Dictionary's metadata (excluding content) to use for dictionary create operations.

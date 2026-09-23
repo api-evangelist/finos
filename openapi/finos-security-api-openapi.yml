@@ -4,28 +4,7 @@ info:
   title: Pod Security API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -112,9 +91,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1CompanycertList
+      x-operation-id-source: derived
   /v2/companycert/create:
     post:
-      summary: Create a company trusted or untrusted certificate. Different from V1 in that we reject expired certificates.
+      summary: Create a company trusted or untrusted certificate.
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -209,6 +190,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CompanyCert'
         required: true
+      operationId: postV2CompanycertCreate
+      x-operation-id-source: derived
   /v1/companycert/delete:
     post:
       summary: Delete a company certificate
@@ -273,6 +256,8 @@ paths:
             schema:
               $ref: '#/components/schemas/StringId'
         required: true
+      operationId: postV1CompanycertDelete
+      x-operation-id-source: derived
   /v1/companycert/{fingerPrint}/get:
     get:
       summary: Get the details of a company certificate
@@ -370,6 +355,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1CompanycertByFingerPrintGet
+      x-operation-id-source: derived
   /v1/companycert/{fingerPrint}/update:
     post:
       summary: Update a company certificate
@@ -440,13 +427,11 @@ paths:
             schema:
               $ref: '#/components/schemas/CompanyCertAttributes'
         required: true
+      operationId: postV1CompanycertByFingerPrintUpdate
+      x-operation-id-source: derived
   /v1/companycert/{fingerPrint}/issuedBy:
     get:
-      summary: 'Return a list of all certificates which were verified to the cert whose
-
-        fingerprint is passed.
-
-        '
+      summary: Return a list of all certificates which were verified to the cert whose…
       parameters:
       - name: fingerPrint
         description: Certificate fingerPrint (ID)
@@ -519,6 +504,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1CompanycertByFingerPrintIssuedBy
+      x-operation-id-source: derived
   /v1/companycert/podmanaged/list:
     get:
       summary: List all trusted certs
@@ -600,6 +587,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1CompanycertPodmanagedList
+      x-operation-id-source: derived
   /v1/companycert/type/list:
     post:
       summary: List all certs of the given types
@@ -688,51 +677,21 @@ paths:
               $ref: '#/components/schemas/CompanyCertTypeList'
         description: Certificate type list
         required: true
+      operationId: postV1CompanycertTypeList
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    CompanyCertDetail:
-      type: object
-      properties:
-        companyCertAttributes:
-          $ref: '#/components/schemas/CompanyCertAttributes'
-        companyCertInfo:
-          $ref: '#/components/schemas/CompanyCertInfo'
-        certInfo:
-          $ref: '#/components/schemas/CertInfo'
-    CertInfoItem:
+    CompanyCertAttributes:
       type: object
       properties:
         name:
           type: string
-          example: Public Key
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NameValuePair'
-          example:
-          - name: Algorithm
-            value: RSA
-          - name: Format
-            value: X.509
-    NameValuePair:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Algorithm
-        value:
-          type: string
-          example: RSA
+          description: Friendly name assigned by administrator
+          example: agentservice
+        type:
+          $ref: '#/components/schemas/CompanyCertType'
+        status:
+          $ref: '#/components/schemas/CompanyCertStatus'
     CompanyCert:
       type: object
       properties:
@@ -742,38 +701,6 @@ components:
           example: '-----BEGIN CERTIFICATE-----MIIH/TC...p9DBiB/-----END CERTIFICATE-----'
         attributes:
           $ref: '#/components/schemas/CompanyCertAttributes'
-    CertInfo:
-      type: array
-      items:
-        $ref: '#/components/schemas/CertInfoItem'
-      example:
-      - name: Validity
-        attributes:
-        - name: Not Before
-          value: Mon Jan 15 20:56:05 UTC 2018
-        - name: Not After
-          value: Thu Jan 15 20:56:05 UTC 2026
-      - name: Public Key
-        attributes:
-        - name: Algorithm
-          value: RSA
-        - name: Format
-          value: X.509
-    CompanyCertTypeList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CompanyCertType'
-    CompanyCertStatus:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - TRUSTED
-          - KNOWN
-          - REVOKED
-          - DISABLED
-          example: TRUSTED
     CompanyCertInfo:
       type: object
       properties:
@@ -809,6 +736,110 @@ components:
           format: int64
           description: Expiry date of this cert
           example: 1781886755000
+    CertInfoItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Public Key
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NameValuePair'
+          example:
+          - name: Algorithm
+            value: RSA
+          - name: Format
+            value: X.509
+    StringId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+    CompanyCertType:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - USERSIGNING
+          - USER
+          - OPERATIONSSIGNING
+          - OPERATIONSUSER
+          example: USER
+    CompanyCertDetail:
+      type: object
+      properties:
+        companyCertAttributes:
+          $ref: '#/components/schemas/CompanyCertAttributes'
+        companyCertInfo:
+          $ref: '#/components/schemas/CompanyCertInfo'
+        certInfo:
+          $ref: '#/components/schemas/CertInfo'
+    CompanyCertTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CompanyCertType'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    CompanyCertStatus:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - TRUSTED
+          - KNOWN
+          - REVOKED
+          - DISABLED
+          example: TRUSTED
+    CertInfo:
+      type: array
+      items:
+        $ref: '#/components/schemas/CertInfoItem'
+      example:
+      - name: Validity
+        attributes:
+        - name: Not Before
+          value: Mon Jan 15 20:56:05 UTC 2018
+        - name: Not After
+          value: Thu Jan 15 20:56:05 UTC 2026
+      - name: Public Key
+        attributes:
+        - name: Algorithm
+          value: RSA
+        - name: Format
+          value: X.509
+    NameValuePair:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Algorithm
+        value:
+          type: string
+          example: RSA
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     CompanyCertInfoList:
       type: array
       items:
@@ -832,43 +863,3 @@ components:
             updatedBy: 0
             commonName: agentservice
             expiryDate: 1781886755000
-    CompanyCertType:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - USERSIGNING
-          - USER
-          - OPERATIONSSIGNING
-          - OPERATIONSUSER
-          example: USER
-    CompanyCertAttributes:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Friendly name assigned by administrator
-          example: agentservice
-        type:
-          $ref: '#/components/schemas/CompanyCertType'
-        status:
-          $ref: '#/components/schemas/CompanyCertStatus'
-    StringId:
-      type: object
-      properties:
-        id:
-          type: string
-          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success

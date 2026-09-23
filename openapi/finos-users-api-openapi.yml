@@ -4,28 +4,7 @@ info:
   title: Pod Users API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -122,15 +101,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2User
+      x-operation-id-source: derived
   /v3/users:
     get:
-      summary: 'Search users by emails or ids.
-
-        Only one of the search lists should be informed at a time.
-
-        Search lists may containt up to 100 elements.
-
-        '
+      summary: Search users by emails or ids.
       parameters:
       - name: uid
         description: User IDs as a list of decimal integers separated by comma
@@ -266,11 +241,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV3Users
+      x-operation-id-source: derived
   /v1/users/{uid}/sessions/{sid}/logout:
     post:
-      summary: 'Ends the session identified by {sid} for the user with the identifier {uid}.
-
-        '
+      summary: Ends the session identified by {sid} for the user with the identifier {uid}
       parameters:
       - name: uid
         description: The identifier of the user who owns the session to be terminated.
@@ -323,11 +298,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV1UsersByUidSessionsBySidLogout
+      x-operation-id-source: derived
   /v1/users/{uid}/sessions/logout:
     post:
-      summary: 'Ends all sessions for the user identified by {uid}.
-
-        '
+      summary: Ends all sessions for the user identified by {uid}
       parameters:
       - name: uid
         description: The identifier of the user whose sessions are to be terminated.
@@ -374,11 +349,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: postV1UsersByUidSessionsLogout
+      x-operation-id-source: derived
   /v1/users/{uid}/sessions:
     get:
-      summary: 'Lists all sessions for the user identified by {uid}.
-
-        '
+      summary: Lists all sessions for the user identified by {uid}
       parameters:
       - name: uid
         description: The identifier of the user whose sessions are to be listed.
@@ -427,6 +402,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1UsersByUidSessions
+      x-operation-id-source: derived
   /v1/user/search:
     post:
       summary: Search for users by name or email address
@@ -544,8 +521,203 @@ paths:
               $ref: '#/components/schemas/UserSearchQuery'
         description: search criteria
         required: true
+      operationId: postV1UserSearch
+      x-operation-id-source: derived
 components:
   schemas:
+    UserV2:
+      description: User record version 2
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7696581394433
+        emailAddress:
+          type: string
+          format: email
+          example: admin@symphony.com
+        firstName:
+          type: string
+          example: Symphony
+        lastName:
+          type: string
+          example: Admin
+        displayName:
+          type: string
+          example: Symphony Admin
+        title:
+          type: string
+          example: Administrator
+        company:
+          type: string
+          example: Acme
+        username:
+          type: string
+          example: admin@symphony.com
+        location:
+          type: string
+          example: California
+        accountType:
+          type: string
+          enum:
+          - NORMAL
+          - SYSTEM
+          - SDL
+          example: NORMAL
+        avatars:
+          $ref: '#/components/schemas/AvatarList'
+        workPhoneNumber:
+          type: string
+          description: 'Note: only available if the application has the extended user or contact permission'
+          example: '+33901020304'
+        mobilePhoneNumber:
+          type: string
+          description: 'Note: only available if the application has the extended user or contact permission'
+          example: '+33601020304'
+        jobFunction:
+          type: string
+          description: 'Note: only available if the application has the extended user or contact permission'
+          example: Sales
+        department:
+          type: string
+          description: 'Note: only available if the application has the extended user or contact permission'
+          example: APIs
+        division:
+          type: string
+          description: 'Note: only available if the application has the extended user or contact permission'
+          example: Partnerships
+        roles:
+          $ref: '#/components/schemas/StringList'
+          example:
+          - INDIVIDUAL
+          - SUPER_ADMINISTRATOR
+        userMetadata:
+          type: object
+          description: Metadata map of key/values
+          additionalProperties:
+            type: object
+          example:
+            com_symphony_metadataKey1: value
+            com_symphony_metadataKey2:
+            - value1
+            - value2
+    V1UserSessions:
+      description: V1 Detailed Sessions Record.
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Session'
+    Avatar:
+      type: object
+      properties:
+        size:
+          description: The Avatar Size
+          type: string
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    UserSearchQuery:
+      type: object
+      properties:
+        query:
+          type: string
+          description: search / query term.  This can be firstname, lastname, displayname or email
+          example: jane
+        filters:
+          $ref: '#/components/schemas/UserSearchFilter'
+    UserSearchFilter:
+      type: object
+      properties:
+        accountTypes:
+          $ref: '#/components/schemas/StringList'
+          description: type of user used to search
+          example: NORMAL
+        title:
+          type: string
+          description: user's job title
+          example: Sales Manager
+        company:
+          type: string
+          description: company name
+          example: Symphony
+        location:
+          type: string
+          description: city of the user's job location
+          example: Marseille
+        marketCoverage:
+          type: string
+          description: geographic area the user works with
+          example: EMEA
+        responsibility:
+          type: string
+          description: user's responsibility
+          example: BAU
+        function:
+          type: string
+          description: user's function
+          example: Trade Management
+        instrument:
+          type: string
+          description: higher level instrument for the Asset Classes
+          example: Securities
+    V1Session:
+      description: V1 Detailed Session record.
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: The id of the user session
+        clientIp:
+          type: string
+          description: The ip address of the session initiator
+        userId:
+          type: integer
+          format: int64
+          description: The user id of the session initiator
+        userAgent:
+          type: string
+          description: The user agent of the session
+        browser:
+          type: string
+          description: The browser section of the user agent
+        os:
+          type: string
+          description: The os section of the user agent
+        device:
+          type: string
+          description: The device section of the user agent
+        deviceHash:
+          type: string
+          description: A hash uniquely identifying the device of the requester
+        creationTime:
+          type: integer
+          format: int64
+          description: The timestamp of the creation time the user session
+        expirationDelay:
+          type: integer
+          format: int64
+          description: The timestamp of the expiry time of the user session
+    UserError:
+      description: User error information
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error code informing what is wrong
+          example: invalid.format
+        email:
+          type: string
+          description: 'Email with error. Only one of the following fields should be present: email or id'
+          example: notavalidemail
+        id:
+          type: string
+          description: 'Id with error. Only one of the following fields should be present: email or id'
+          example: notavalidid
     Error:
       type: object
       properties:
@@ -636,85 +808,6 @@ components:
             email: notavalidemail
           - error: invalid.format
             id: 654321
-    UserError:
-      description: User error information
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error code informing what is wrong
-          example: invalid.format
-        email:
-          type: string
-          description: 'Email with error. Only one of the following fields should be present: email or id'
-          example: notavalidemail
-        id:
-          type: string
-          description: 'Id with error. Only one of the following fields should be present: email or id'
-          example: notavalidid
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    UserSearchFilter:
-      type: object
-      properties:
-        accountTypes:
-          $ref: '#/components/schemas/StringList'
-          description: type of user used to search
-          example: NORMAL
-        title:
-          type: string
-          description: user's job title
-          example: Sales Manager
-        company:
-          type: string
-          description: company name
-          example: Symphony
-        location:
-          type: string
-          description: city of the user's job location
-          example: Marseille
-        marketCoverage:
-          type: string
-          description: geographic area the user works with
-          example: EMEA
-        responsibility:
-          type: string
-          description: user's responsibility
-          example: BAU
-        function:
-          type: string
-          description: user's function
-          example: Trade Management
-        instrument:
-          type: string
-          description: higher level instrument for the Asset Classes
-          example: Securities
-    V1UserSessions:
-      description: V1 Detailed Sessions Record.
-      type: object
-      properties:
-        sessions:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1Session'
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
     AvatarList:
       type: array
       items:
@@ -724,129 +817,15 @@ components:
         url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
       - size: small
         url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
-    UserSearchQuery:
-      type: object
-      properties:
-        query:
-          type: string
-          description: search / query term.  This can be firstname, lastname, displayname or email
-          example: jane
-        filters:
-          $ref: '#/components/schemas/UserSearchFilter'
-    UserV2:
-      description: User record version 2
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 7696581394433
-        emailAddress:
-          type: string
-          format: email
-          example: admin@symphony.com
-        firstName:
-          type: string
-          example: Symphony
-        lastName:
-          type: string
-          example: Admin
-        displayName:
-          type: string
-          example: Symphony Admin
-        title:
-          type: string
-          example: Administrator
-        company:
-          type: string
-          example: Acme
-        username:
-          type: string
-          example: admin@symphony.com
-        location:
-          type: string
-          example: California
-        accountType:
-          type: string
-          enum:
-          - NORMAL
-          - SYSTEM
-          - SDL
-          example: NORMAL
-        avatars:
-          $ref: '#/components/schemas/AvatarList'
-        workPhoneNumber:
-          type: string
-          description: 'Note: only available if the application has the extended user or contact permission'
-          example: '+33901020304'
-        mobilePhoneNumber:
-          type: string
-          description: 'Note: only available if the application has the extended user or contact permission'
-          example: '+33601020304'
-        jobFunction:
-          type: string
-          description: 'Note: only available if the application has the extended user or contact permission'
-          example: Sales
-        department:
-          type: string
-          description: 'Note: only available if the application has the extended user or contact permission'
-          example: APIs
-        division:
-          type: string
-          description: 'Note: only available if the application has the extended user or contact permission'
-          example: Partnerships
-        roles:
-          $ref: '#/components/schemas/StringList'
-          example:
-          - INDIVIDUAL
-          - SUPER_ADMINISTRATOR
-        userMetadata:
-          type: object
-          description: Metadata map of key/values
-          additionalProperties:
-            type: object
-          example:
-            com_symphony_metadataKey1: value
-            com_symphony_metadataKey2:
-            - value1
-            - value2
-    V1Session:
-      description: V1 Detailed Session record.
-      type: object
-      properties:
-        sessionId:
-          type: string
-          description: The id of the user session
-        clientIp:
-          type: string
-          description: The ip address of the session initiator
-        userId:
-          type: integer
-          format: int64
-          description: The user id of the session initiator
-        userAgent:
-          type: string
-          description: The user agent of the session
-        browser:
-          type: string
-          description: The browser section of the user agent
-        os:
-          type: string
-          description: The os section of the user agent
-        device:
-          type: string
-          description: The device section of the user agent
-        deviceHash:
-          type: string
-          description: A hash uniquely identifying the device of the requester
-        creationTime:
-          type: integer
-          format: int64
-          description: The timestamp of the creation time the user session
-        expirationDelay:
-          type: integer
-          format: int64
-          description: The timestamp of the expiry time of the user session
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
     SuccessResponse:
       type: object
       properties:

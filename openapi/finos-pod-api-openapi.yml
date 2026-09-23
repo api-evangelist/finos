@@ -4,28 +4,7 @@ info:
   title: Pod API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -33,9 +12,7 @@ tags:
 paths:
   /v1/podcert:
     get:
-      summary: 'Retrieve the pod certificate that can be use to validate signed JWT tokens generated from the pod
-
-        '
+      summary: Retrieve the pod certificate that can be use to validate signed JWT tokens…
       tags:
       - Pod
       responses:
@@ -56,6 +33,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1Podcert
+      x-operation-id-source: derived
   /v1/files/allowedTypes:
     get:
       summary: Get supported attachment types for the pod
@@ -116,9 +95,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1FilesAllowedTypes
+      x-operation-id-source: derived
   /v1/languages:
     get:
-      summary: Lists available languages for the pod.
+      summary: Lists available languages for the pod
       tags:
       - Pod
       responses:
@@ -134,8 +115,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1Languages
+      x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     PodCertificate:
       type: object
       properties:
@@ -158,13 +151,3 @@ components:
       properties:
         languages:
           $ref: '#/components/schemas/StringList'
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session

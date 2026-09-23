@@ -4,28 +4,7 @@ info:
   title: Pod Room Membership API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -33,7 +12,7 @@ tags:
 paths:
   /v1/room/{id}/membership/add:
     post:
-      summary: Adds new member to an existing room.
+      summary: Adds new member to an existing room
       parameters:
       - name: id
         description: Room streamId
@@ -101,9 +80,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1RoomByIdMembershipAdd
+      x-operation-id-source: derived
   /v1/room/{id}/membership/remove:
     post:
-      summary: Removes member from an existing room.
+      summary: Removes member from an existing room
       parameters:
       - name: id
         description: Room streamId
@@ -171,9 +152,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1RoomByIdMembershipRemove
+      x-operation-id-source: derived
   /v1/room/{id}/membership/promoteOwner:
     post:
-      summary: Promotes user to owner.
+      summary: Promotes user to owner
       parameters:
       - name: id
         description: Room streamId
@@ -241,9 +224,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1RoomByIdMembershipPromoteOwner
+      x-operation-id-source: derived
   /v1/room/{id}/membership/demoteOwner:
     post:
-      summary: Demotes room owner.
+      summary: Demotes room owner
       parameters:
       - name: id
         description: Room streamId
@@ -311,9 +296,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1RoomByIdMembershipDemoteOwner
+      x-operation-id-source: derived
   /v2/room/{id}/membership/list:
     get:
-      summary: Lists current members of an existing room.
+      summary: Lists current members of an existing room
       parameters:
       - name: id
         description: Room streamId
@@ -384,9 +371,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2RoomByIdMembershipList
+      x-operation-id-source: derived
   /v1/admin/room/{id}/membership/list:
     get:
-      summary: Lists current and previous members of an existing room.
+      summary: Lists current and previous members of an existing room
       parameters:
       - name: id
         description: Room streamId
@@ -463,9 +452,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1AdminRoomByIdMembershipList
+      x-operation-id-source: derived
   /v1/admin/room/{id}/membership/add:
     post:
-      summary: Add a member to an existing room.
+      summary: Add a member to an existing room
       parameters:
       - name: id
         description: Room streamId
@@ -530,9 +521,11 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1AdminRoomByIdMembershipAdd
+      x-operation-id-source: derived
   /v1/admin/room/{id}/membership/remove:
     post:
-      summary: Remove a member from a room.
+      summary: Remove a member from a room
       parameters:
       - name: id
         description: Room streamId
@@ -597,18 +590,17 @@ paths:
             schema:
               $ref: '#/components/schemas/UserId'
         required: true
+      operationId: postV1AdminRoomByIdMembershipRemove
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
+    UserId:
       type: object
       properties:
-        code:
+        id:
           type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
+          format: int64
+          example: 7215545058313
     MembershipList:
       description: List of members in a room.
       type: array
@@ -626,13 +618,6 @@ components:
         joinDate: 1461426797833
         addedThroughGroups:
         - 68719476744
-    UserId:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 7215545058313
     MemberInfo:
       description: Detailed membership record.
       type: object
@@ -657,6 +642,16 @@ components:
             format: int64
           example:
           - 68719476744
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     SuccessResponse:
       type: object
       properties:

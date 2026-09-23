@@ -4,28 +4,7 @@ info:
   title: Pod Presence API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -33,7 +12,7 @@ tags:
 paths:
   /v1/presence/feed/create:
     post:
-      summary: Create Presence status feed.
+      summary: Create Presence status feed
       description: 'Create a new stream capturing presence status changes ("presence feed").
 
         When read from, the feed will return the current presence status of company (pod) users
@@ -41,9 +20,7 @@ paths:
         if it has changed since the last read.
 
 
-        Returns the ID of the presence feed to be used in subsequent read operations.
-
-        '
+        Returns the ID of the presence feed to be used in subsequent read operations.'
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -98,14 +75,14 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: postV1PresenceFeedCreate
+      x-operation-id-source: derived
   /v1/presence/feed/{feedId}/read:
     get:
-      summary: Read a presence status feed.
+      summary: Read a presence status feed
       description: 'Returns the current presence status of company (pod) users
 
-        if it has changed since the last read. Returns up to 500 records at a time.
-
-        '
+        if it has changed since the last read. Returns up to 500 records at a time.'
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -171,12 +148,12 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV1PresenceFeedByFeedIdRead
+      x-operation-id-source: derived
   /v1/presence/feed/{feedId}/delete:
     post:
-      summary: Delete a presence status feed.
-      description: 'Returns the ID of the deleted feed.
-
-        '
+      summary: Delete a presence status feed
+      description: Returns the ID of the deleted feed.
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -237,6 +214,8 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: postV1PresenceFeedByFeedIdDelete
+      x-operation-id-source: derived
   /v1/user/presence/register:
     post:
       summary: Register interest in a user's presence status
@@ -311,9 +290,11 @@ paths:
               $ref: '#/components/schemas/UserIdList'
         description: List of (integer) User IDs of users whose presence to query
         required: true
+      operationId: postV1UserPresenceRegister
+      x-operation-id-source: derived
   /v2/user/presence:
     get:
-      summary: Get presence information about the requesting user.
+      summary: Get presence information about the requesting user
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -361,8 +342,10 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2UserPresence
+      x-operation-id-source: derived
     post:
-      summary: Set the presence of the requesting user.
+      summary: Set the presence of the requesting user
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -432,9 +415,11 @@ paths:
             schema:
               $ref: '#/components/schemas/V2PresenceStatus'
         required: true
+      operationId: postV2UserPresence
+      x-operation-id-source: derived
   /v3/user/{uid}/presence:
     get:
-      summary: Get presence information about a particular user.
+      summary: Get presence information about a particular user
       parameters:
       - name: uid
         description: 'User ID as a decimal integer
@@ -531,9 +516,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV3UserByUidPresence
+      x-operation-id-source: derived
   /v2/users/presence:
     get:
-      summary: Get presence information about all company (pod) users.
+      summary: Get presence information about all company (pod) users
       description: 'The returned data is taken from the in-memory cache for performance
 
         reasons which means inactive users may be omitted from the response.
@@ -560,9 +547,7 @@ paths:
 
         To avoid this situation, a presence feed should be created (and optionally read from)
 
-        first to capture presence changes of users who get reactivated during a paged call to this endpoint.
-
-        '
+        first to capture presence changes of users who get reactivated during a paged call to this endpoint.'
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -635,9 +620,11 @@ paths:
               example:
                 code: 500
                 message: // Server error, see response body for further details.
+      operationId: getV2UsersPresence
+      x-operation-id-source: derived
   /v3/user/presence:
     post:
-      summary: Set presence information for a particular user.
+      summary: Set presence information for a particular user
       parameters:
       - name: sessionToken
         description: Session authentication token.
@@ -725,18 +712,20 @@ paths:
             schema:
               $ref: '#/components/schemas/V2UserPresence'
         required: true
+      operationId: postV3UserPresence
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
+    V2Presence:
+      allOf:
+      - $ref: '#/components/schemas/V2UserPresence'
+      - type: object
+        properties:
+          timestamp:
+            type: integer
+            format: int64
+            description: The time, in milliseconds since Jan 1 1970, when the presence state was set.
+            example: 1533928483800
     V2PresenceList:
       type: array
       items:
@@ -748,43 +737,6 @@ components:
       - category: OFFLINE
         userId: 974217539631
         timestamp: 1503286226030
-    V2PresenceStatus:
-      type: object
-      properties:
-        category:
-          type: string
-          description: "Presence status. Possible values are:\n  - UNDEFINED\n  - AVAILABLE\n  - BUSY\n  - DO_NOT_DISTURB\n  - ON_THE_PHONE\n  - BE_RIGHT_BACK\n  - IN_A_MEETING\n  - AWAY\n  - OUT_OF_OFFICE\n  - OFF_WORK\n  - OFFLINE\n"
-          example: AWAY
-      required:
-      - category
-    V2Presence:
-      allOf:
-      - $ref: '#/components/schemas/V2UserPresence'
-      - type: object
-        properties:
-          timestamp:
-            type: integer
-            format: int64
-            description: The time, in milliseconds since Jan 1 1970, when the presence state was set.
-            example: 1533928483800
-    V2UserPresence:
-      allOf:
-      - $ref: '#/components/schemas/V2PresenceStatus'
-      - type: object
-        properties:
-          userId:
-            type: integer
-            format: int64
-            description: The ID of the user to whom the presence state relates.
-            example: 14568529068038
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
     StringId:
       type: object
       properties:
@@ -803,3 +755,40 @@ components:
         message:
           type: string
           example: Success
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
+    V2UserPresence:
+      allOf:
+      - $ref: '#/components/schemas/V2PresenceStatus'
+      - type: object
+        properties:
+          userId:
+            type: integer
+            format: int64
+            description: The ID of the user to whom the presence state relates.
+            example: 14568529068038
+    V2PresenceStatus:
+      type: object
+      properties:
+        category:
+          type: string
+          description: "Presence status. Possible values are:\n  - UNDEFINED\n  - AVAILABLE\n  - BUSY\n  - DO_NOT_DISTURB\n  - ON_THE_PHONE\n  - BE_RIGHT_BACK\n  - IN_A_MEETING\n  - AWAY\n  - OUT_OF_OFFICE\n  - OFF_WORK\n  - OFFLINE\n"
+          example: AWAY
+      required:
+      - category

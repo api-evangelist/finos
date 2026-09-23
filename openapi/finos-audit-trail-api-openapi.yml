@@ -3,59 +3,18 @@ info:
   title: Agent Audit Trail API
   description: 'This document refers to Symphony API calls to send and receive messages
 
-    and content. They need the on-premise Agent installed to perform
-
-    decryption/encryption of content.
-
-
-    - sessionToken and keyManagerToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have sent no message to any
-
-    stream even if a request to some subset of the requested streams
-
-    would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
-
-    '
+    and content.'
   version: 25.8.1
 servers:
 - url: youragentURL.symphony.com/agent
 tags:
-- name: AuditTrail
+- name: Audit Trail
 paths:
   /v1/audittrail/privilegeduser:
     get:
       tags:
-      - AuditTrail
-      summary: Get a list of  actions performed by a privileged account acting as privileged user given a period of time.
+      - Audit Trail
+      summary: Get a list of actions performed by a privileged account acting as privileged…
       description: Get a list of actions performed by a privileged account acting as privileged user given a period of time.
       parameters:
       - name: sessionToken
@@ -174,16 +133,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getV1AudittrailPrivilegeduser
+      x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
     V1AuditTrailInitiatorList:
       type: object
       properties:
@@ -221,6 +174,14 @@ components:
         There are different types of action and each action could have specific attributes.
 
         '
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
     Pagination:
       required:
       - cursors

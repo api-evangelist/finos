@@ -3,48 +3,7 @@ info:
   title: Agent Signals API
   description: 'This document refers to Symphony API calls to send and receive messages
 
-    and content. They need the on-premise Agent installed to perform
-
-    decryption/encryption of content.
-
-
-    - sessionToken and keyManagerToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have sent no message to any
-
-    stream even if a request to some subset of the requested streams
-
-    would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    - MessageML is a markup language for messages. See reference here:
-
-    https://rest-api.symphony.com/docs/messagemlv2
-
-    - **Real Time Events**: The following events are returned when reading
-
-    from a real time messages and events stream ("datafeed"). These
-
-    events will be returned for datafeeds created with the v5 endpoints.
-
-    To know more about the endpoints, refer to Create Messages/Events
-
-    Stream and Read Messages/Events Stream. Unless otherwise specified,
-
-    all events were added in 1.46.
-
-    '
+    and content.'
   version: 25.8.1
 servers:
 - url: youragentURL.symphony.com/agent
@@ -55,11 +14,7 @@ paths:
     get:
       tags:
       - Signals
-      summary: 'List signals for the requesting user. This includes signals that the user has created and public signals
-
-        to which they subscribed.
-
-        '
+      summary: List signals for the requesting user.
       parameters:
       - name: sessionToken
         in: header
@@ -115,11 +70,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/V2Error'
+      operationId: getV1SignalsList
+      x-operation-id-source: derived
   /v1/signals/{id}/get:
     get:
       tags:
       - Signals
-      summary: Get details of the requested signal.
+      summary: Get details of the requested signal
       parameters:
       - name: sessionToken
         in: header
@@ -169,11 +126,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/V2Error'
+      operationId: getV1SignalsByIdGet
+      x-operation-id-source: derived
   /v1/signals/create:
     post:
       tags:
       - Signals
-      summary: Create a signal.
+      summary: Create a signal
       parameters:
       - name: sessionToken
         in: header
@@ -231,11 +190,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/V2Error'
       x-codegen-request-body-name: signal
+      operationId: postV1SignalsCreate
+      x-operation-id-source: derived
   /v1/signals/{id}/update:
     post:
       tags:
       - Signals
-      summary: Update a signal.
+      summary: Update a signal
       parameters:
       - name: sessionToken
         in: header
@@ -299,11 +260,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/V2Error'
       x-codegen-request-body-name: signal
+      operationId: postV1SignalsByIdUpdate
+      x-operation-id-source: derived
   /v1/signals/{id}/delete:
     post:
       tags:
       - Signals
-      summary: Delete a signal.
+      summary: Delete a signal
       parameters:
       - name: sessionToken
         in: header
@@ -353,11 +316,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/V2Error'
+      operationId: postV1SignalsByIdDelete
+      x-operation-id-source: derived
   /v1/signals/{id}/subscribe:
     post:
       tags:
       - Signals
-      summary: Subscribe to a Signal.
+      summary: Subscribe to a Signal
       parameters:
       - name: sessionToken
         in: header
@@ -423,11 +388,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/V2Error'
       x-codegen-request-body-name: users
+      operationId: postV1SignalsByIdSubscribe
+      x-operation-id-source: derived
   /v1/signals/{id}/unsubscribe:
     post:
       tags:
       - Signals
-      summary: Unsubscribe to a Signal.
+      summary: Unsubscribe to a Signal
       parameters:
       - name: sessionToken
         in: header
@@ -488,6 +455,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/V2Error'
       x-codegen-request-body-name: users
+      operationId: postV1SignalsByIdUnsubscribe
+      x-operation-id-source: derived
   /v1/signals/{id}/subscribers:
     get:
       tags:
@@ -554,6 +523,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/V2Error'
+      operationId: getV1SignalsByIdSubscribers
+      x-operation-id-source: derived
   /v1/info:
     get:
       tags:
@@ -590,8 +561,62 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/V2Error'
+      operationId: getV1Info
+      x-operation-id-source: derived
 components:
   schemas:
+    Signal:
+      allOf:
+      - $ref: '#/components/schemas/BaseSignal'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Signal ID
+          timestamp:
+            type: integer
+            description: Timestamp when the signal was created, in milliseconds since Jan 1 1970
+            format: int64
+    BaseSignal:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Signal name
+        query:
+          type: string
+          description: 'The query used to define this signal. The query is defined as "field:value" pairs combined by the operators
+
+            "AND" or "OR". Supported fields are (case-insensitive): "author", "hashtag" and "cashtag".
+
+            MUST contain at least one "hashtag" or "cashtag" definition.
+
+            '
+        visibleOnProfile:
+          type: boolean
+          description: Whether the signal is visible on its creator's profile
+        companyWide:
+          type: boolean
+          description: Whether the signal is a push signal
+    ChannelSubscriptionResponse:
+      type: object
+      properties:
+        requestedSubscription:
+          type: integer
+          description: The number of requested userIds to subscribe
+          format: int64
+        successfulSubscription:
+          type: integer
+          description: The number of successful subscriptions done
+          format: int64
+        failedSubscription:
+          type: integer
+          description: The number of subscription failures
+          format: int64
+        subscriptionErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelSubscriptionError'
     V2Error:
       required:
       - code
@@ -629,25 +654,6 @@ components:
           type: integer
           description: Timestamp when the signal was subscribed, in milliseconds since Jan 1 1970
           format: int64
-    ChannelSubscriptionResponse:
-      type: object
-      properties:
-        requestedSubscription:
-          type: integer
-          description: The number of requested userIds to subscribe
-          format: int64
-        successfulSubscription:
-          type: integer
-          description: The number of successful subscriptions done
-          format: int64
-        failedSubscription:
-          type: integer
-          description: The number of subscription failures
-          format: int64
-        subscriptionErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelSubscriptionError'
     AgentInfo:
       type: object
       properties:
@@ -675,22 +681,6 @@ components:
         commitId:
           type: string
           description: The Git commit ID of the running revision.
-    Signal:
-      allOf:
-      - $ref: '#/components/schemas/BaseSignal'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: Signal ID
-          timestamp:
-            type: integer
-            description: Timestamp when the signal was created, in milliseconds since Jan 1 1970
-            format: int64
-    SignalList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Signal'
     ChannelSubscriptionError:
       type: object
       properties:
@@ -704,27 +694,6 @@ components:
         message:
           type: string
           description: subscription failure message
-    BaseSignal:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Signal name
-        query:
-          type: string
-          description: 'The query used to define this signal. The query is defined as "field:value" pairs combined by the operators
-
-            "AND" or "OR". Supported fields are (case-insensitive): "author", "hashtag" and "cashtag".
-
-            MUST contain at least one "hashtag" or "cashtag" definition.
-
-            '
-        visibleOnProfile:
-          type: boolean
-          description: Whether the signal is visible on its creator's profile
-        companyWide:
-          type: boolean
-          description: Whether the signal is a push signal
     ChannelSubscriberResponse:
       type: object
       properties:
@@ -742,6 +711,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ChannelSubscriber'
+    SignalList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Signal'
     SuccessResponse:
       type: object
       properties:

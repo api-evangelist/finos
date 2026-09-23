@@ -37,7 +37,9 @@
     "finos-user-api-openapi.yml",
     "finos-users-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -82,18 +84,20 @@
     "finos-symphony-pod-api-openapi.yml: declared missing tag: System",
     "finos-symphony-pod-api-openapi.yml: declared missing tag: User",
     "finos-symphony-pod-api-openapi.yml: declared missing tag: Users",
-    "tag 'System' spans 2 source specs (finos-symphony-agent-api-openapi.yml, finos-symphony-pod-api-openapi.yml): per-path servers applied"
+    "tag 'System' spans 2 source specs (finos-symphony-agent-api-openapi.yml, finos-symphony-pod-api-openapi.yml): per-path servers applied",
+    "superseded outputs removed: finos-app-entitlement-api-openapi.yml, finos-audit-trail-api-openapi.yml, finos-data-feed-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 34 total)"
   ],
   "skipped": [
     "finos-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "finos-appentitlement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "finos-app-entitlement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-application-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "finos-audittrail-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "finos-audit-trail-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-certificateauthentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-certificatepod-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-connection-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "finos-datafeed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "finos-data-feed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-datahose-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-disclaimer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "finos-dlp-policies-and-dictionary-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",

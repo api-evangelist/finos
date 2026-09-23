@@ -4,28 +4,7 @@ info:
   title: Pod File Ext API
   description: 'This document refers to Symphony API calls that do not need
 
-    encryption or decryption of content.
-
-
-    - sessionToken can be obtained by calling the
-
-    authenticationAPI on the symphony back end and the key manager
-
-    respectively. Refer to the methods described in authenticatorAPI.yaml.
-
-    - Actions are defined to be atomic, ie will succeed in their entirety
-
-    or fail and have changed nothing.
-
-    - If it returns a 40X status then it will have made no change to the
-
-    system even if ome subset of the request would have succeeded.
-
-    - If this contract cannot be met for any reason then this is an error
-
-    and the response code will be 50X.
-
-    '
+    encryption or decryption of content.'
 servers:
 - url: https://yourpodURL.symphony.com/pod
 tags:
@@ -36,7 +15,7 @@ paths:
       summary: Allows iteration of all file extensions supported for upload
       description: 'Provides a RESTful API to iterate all file extensions configured by the tenant admin
 
-        that are allowed for the upload.  Pagination of this list is managed through a
+        that are allowed for the upload. Pagination of this list is managed through a
 
         combination of the optional request parameters and service-side managed maximums.
 
@@ -45,14 +24,12 @@ paths:
 
         and presented through the opaque cursor values provided as output from a previous
 
-        response.  Only one of before or after or neither may be provided.
+        response. Only one of before or after or neither may be provided.
 
 
         DO NOT store cursors. Cursors can quickly become invalid if items are added or deleted.
 
-        Use them only during a short-period of time that you are traversing the list.
-
-        '
+        Use them only during a short-period of time that you are traversing the list.'
       operationId: listAllowedFileExtensions
       parameters:
       - name: limit
@@ -155,9 +132,7 @@ paths:
 
         support via an admin. The API treats the file extension in the path case-insensitively
 
-        by converting it to lowecase.
-
-        '
+        by converting it to lowecase.'
       operationId: putAllowedFileExtension
       parameters:
       - name: sessionToken
@@ -224,9 +199,7 @@ paths:
 
         support via an admin. The file extension identifying the resource is treated
 
-        case-insensitively by the API.
-
-        '
+        case-insensitively by the API.'
       operationId: deleteAllowedFileExtension
       parameters:
       - name: sessionToken
