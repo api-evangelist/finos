@@ -34,12 +34,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PodCertificate:
-      type: object
-      properties:
-        certificate:
-          description: Certificate in PEM format
-          type: string
     Error:
       type: object
       properties:
@@ -47,4 +41,10 @@ components:
           type: integer
           format: int32
         message:
+          type: string
+    PodCertificate:
+      type: object
+      properties:
+        certificate:
+          description: Certificate in PEM format
           type: string

@@ -69,6 +69,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     UserV2:
       description: User record version 2
       type: object
@@ -157,25 +167,6 @@ components:
           description: Url of the image
           type: string
           example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
     StringList:
       type: array
       items:
@@ -185,3 +176,12 @@ components:
       - mailto
       - fdsup
       - skype
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png

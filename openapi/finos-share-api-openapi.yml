@@ -78,14 +78,49 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ShareContent:
+    Error:
       type: object
       properties:
-        type:
+        code:
+          type: integer
+          format: int32
+        message:
           type: string
-          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
-        content:
-          $ref: '#/components/schemas/ShareArticle'
+    V2BaseMessage:
+      required:
+      - streamId
+      - timestamp
+      - v2messageType
+      type: object
+      properties:
+        id:
+          type: string
+          description: The messageId is assigned by the ingestor service when a message is sent.
+        timestamp:
+          type: string
+        v2messageType:
+          type: string
+        streamId:
+          type: string
+      discriminator:
+        propertyName: v2messageType
+    AttachmentInfo:
+      required:
+      - id
+      - name
+      - size
+      type: object
+      properties:
+        id:
+          type: string
+          description: The attachment ID.
+        name:
+          type: string
+          description: The file name.
+        size:
+          type: integer
+          description: Size in bytes.
+          format: int64
     ShareArticle:
       required:
       - appId
@@ -134,41 +169,6 @@ components:
         appIconUrl:
           type: string
           description: App icon url of the calling application
-    AttachmentInfo:
-      required:
-      - id
-      - name
-      - size
-      type: object
-      properties:
-        id:
-          type: string
-          description: The attachment ID.
-        name:
-          type: string
-          description: The file name.
-        size:
-          type: integer
-          description: Size in bytes.
-          format: int64
-    V2BaseMessage:
-      required:
-      - streamId
-      - timestamp
-      - v2messageType
-      type: object
-      properties:
-        id:
-          type: string
-          description: The messageId is assigned by the ingestor service when a message is sent.
-        timestamp:
-          type: string
-        v2messageType:
-          type: string
-        streamId:
-          type: string
-      discriminator:
-        propertyName: v2messageType
     V2Message:
       description: A representation of a message sent by a user of Symphony.
       allOf:
@@ -191,11 +191,11 @@ components:
             default: []
             items:
               $ref: '#/components/schemas/AttachmentInfo'
-    Error:
+    ShareContent:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        type:
           type: string
+          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
+        content:
+          $ref: '#/components/schemas/ShareArticle'

@@ -75,16 +75,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
     MessageSuppressionResponse:
       description: The suppression state of a message
       type: object
@@ -100,3 +90,13 @@ components:
           format: int64
           description: The date when this message was suppressed.
           example: 1461565603191
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session

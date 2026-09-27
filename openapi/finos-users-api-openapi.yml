@@ -525,6 +525,45 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V1UserSessions:
+      description: V1 Detailed Sessions Record.
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1Session'
+    UserSearchQuery:
+      type: object
+      properties:
+        query:
+          type: string
+          description: search / query term.  This can be firstname, lastname, displayname or email
+          example: jane
+        filters:
+          $ref: '#/components/schemas/UserSearchFilter'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     UserV2:
       description: User record version 2
       type: object
@@ -602,69 +641,49 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
-    V1UserSessions:
-      description: V1 Detailed Sessions Record.
+    UserError:
+      description: User error information
       type: object
       properties:
-        sessions:
+        error:
+          type: string
+          description: Error code informing what is wrong
+          example: invalid.format
+        email:
+          type: string
+          description: 'Email with error. Only one of the following fields should be present: email or id'
+          example: notavalidemail
+        id:
+          type: string
+          description: 'Id with error. Only one of the following fields should be present: email or id'
+          example: notavalidid
+    UserSearchResults:
+      type: object
+      properties:
+        count:
+          description: The total number of users which matched the search criteria.
+          type: integer
+          format: int64
+          example: 1
+        skip:
+          description: The number of skipped results.
+          type: integer
+          format: int64
+          example: 0
+        limit:
+          description: The number of returned results.
+          type: integer
+          format: int64
+          example: 1
+        searchQuery:
+          $ref: '#/components/schemas/UserSearchQuery'
+        users:
+          description: A list of users which matched by the search criteria.
           type: array
           items:
-            $ref: '#/components/schemas/V1Session'
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    UserSearchQuery:
-      type: object
-      properties:
-        query:
-          type: string
-          description: search / query term.  This can be firstname, lastname, displayname or email
-          example: jane
-        filters:
-          $ref: '#/components/schemas/UserSearchFilter'
-    UserSearchFilter:
-      type: object
-      properties:
-        accountTypes:
-          $ref: '#/components/schemas/StringList'
-          description: type of user used to search
-          example: NORMAL
-        title:
-          type: string
-          description: user's job title
-          example: Sales Manager
-        company:
-          type: string
-          description: company name
-          example: Symphony
-        location:
-          type: string
-          description: city of the user's job location
-          example: Marseille
-        marketCoverage:
-          type: string
-          description: geographic area the user works with
-          example: EMEA
-        responsibility:
-          type: string
-          description: user's responsibility
-          example: BAU
-        function:
-          type: string
-          description: user's function
-          example: Trade Management
-        instrument:
-          type: string
-          description: higher level instrument for the Asset Classes
-          example: Securities
+            $ref: '#/components/schemas/UserV2'
+          example:
+          - null
     V1Session:
       description: V1 Detailed Session record.
       type: object
@@ -702,59 +721,41 @@ components:
           type: integer
           format: int64
           description: The timestamp of the expiry time of the user session
-    UserError:
-      description: User error information
+    UserSearchFilter:
       type: object
       properties:
-        error:
+        accountTypes:
+          $ref: '#/components/schemas/StringList'
+          description: type of user used to search
+          example: NORMAL
+        title:
           type: string
-          description: Error code informing what is wrong
-          example: invalid.format
-        email:
+          description: user's job title
+          example: Sales Manager
+        company:
           type: string
-          description: 'Email with error. Only one of the following fields should be present: email or id'
-          example: notavalidemail
-        id:
+          description: company name
+          example: Symphony
+        location:
           type: string
-          description: 'Id with error. Only one of the following fields should be present: email or id'
-          example: notavalidid
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
+          description: city of the user's job location
+          example: Marseille
+        marketCoverage:
           type: string
-          example: Invalid session
-    UserSearchResults:
-      type: object
-      properties:
-        count:
-          description: The total number of users which matched the search criteria.
-          type: integer
-          format: int64
-          example: 1
-        skip:
-          description: The number of skipped results.
-          type: integer
-          format: int64
-          example: 0
-        limit:
-          description: The number of returned results.
-          type: integer
-          format: int64
-          example: 1
-        searchQuery:
-          $ref: '#/components/schemas/UserSearchQuery'
-        users:
-          description: A list of users which matched by the search criteria.
-          type: array
-          items:
-            $ref: '#/components/schemas/UserV2'
-          example:
-          - null
+          description: geographic area the user works with
+          example: EMEA
+        responsibility:
+          type: string
+          description: user's responsibility
+          example: BAU
+        function:
+          type: string
+          description: user's function
+          example: Trade Management
+        instrument:
+          type: string
+          description: higher level instrument for the Asset Classes
+          example: Securities
     V2UserList:
       description: List of User record version 2
       type: object
@@ -808,15 +809,17 @@ components:
             email: notavalidemail
           - error: invalid.format
             id: 654321
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    Avatar:
+      type: object
+      properties:
+        size:
+          description: The Avatar Size
+          type: string
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
     StringList:
       type: array
       items:
@@ -826,15 +829,12 @@ components:
       - mailto
       - fdsup
       - skype
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png

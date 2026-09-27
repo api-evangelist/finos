@@ -594,30 +594,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UserId:
+    Error:
       type: object
       properties:
-        id:
+        code:
           type: integer
-          format: int64
-          example: 7215545058313
-    MembershipList:
-      description: List of members in a room.
-      type: array
-      items:
-        $ref: '#/components/schemas/MemberInfo'
-      example:
-      - id: 7078106103900
-        owner: false
-        joinDate: 1461430710531
-      - id: 7078106103809
-        owner: true
-        joinDate: 1461426797875
-      - id: 7078106103810
-        owner: true
-        joinDate: 1461426797833
-        addedThroughGroups:
-        - 68719476744
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     MemberInfo:
       description: Detailed membership record.
       type: object
@@ -642,25 +640,27 @@ components:
             format: int64
           example:
           - 68719476744
-    Error:
+    MembershipList:
+      description: List of members in a room.
+      type: array
+      items:
+        $ref: '#/components/schemas/MemberInfo'
+      example:
+      - id: 7078106103900
+        owner: false
+        joinDate: 1461430710531
+      - id: 7078106103809
+        owner: true
+        joinDate: 1461426797875
+      - id: 7078106103810
+        owner: true
+        joinDate: 1461426797833
+        addedThroughGroups:
+        - 68719476744
+    UserId:
       type: object
       properties:
-        code:
+        id:
           type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success
+          format: int64
+          example: 7215545058313

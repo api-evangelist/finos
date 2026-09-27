@@ -1568,62 +1568,256 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    StreamAttachmentResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/StreamAttachmentItem'
-    V2ConversationSpecificStreamAttributes:
-      type: object
-      properties:
-        members:
-          $ref: '#/components/schemas/UserIdList'
-    V2MemberInfoList:
-      type: array
-      items:
-        $ref: '#/components/schemas/V2MemberInfo'
-      example:
-      - user:
-          userId: 13537736917000
-          email: john.doe@symphony.com
-          firstName: John
-          lastName: Doe
-          displayName: John Doe
-          company: pod197
-          companyId: 197
-          isExternal: false
-        isOwner: true
-        isCreator: true
-        joinDate: 1604494574047
-      - user:
-          userId: 13537736917001
-          email: bot@symphony.com
-          displayName: User Provisioning Bot
-          company: pod197
-          companyId: 197
-          isExternal: false
-        isOwner: false
-        isCreator: false
-        joinDate: 1604494605272
-        addedThroughGroups:
-        - 68719476744
-    Stream:
+    RoomSystemInfo:
       type: object
       properties:
         id:
           type: string
-          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+          example: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
+        creationDate:
+          type: integer
+          format: int64
+          description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
+          example: 1547661232368
+        createdByUserId:
+          type: integer
+          format: int64
+          example: 14362370637825
+        active:
+          type: boolean
+          description: If false, no messages can be sent in this stream, and membership is locked.
+          example: true
+    AttachmentPreview:
+      description: Preview file for image attachments
+      type: object
+      properties:
+        fileId:
+          type: string
+          description: The preview file ID
+          example: internal_14362
+        width:
+          type: integer
+          description: The preview image width
+          example: 600
+    V2MembershipList:
+      description: List of members in the stream.
+      type: object
+      properties:
+        count:
+          type: integer
+          description: total members count
+          example: null
+        skip:
+          type: integer
+          description: number of items to skip from the request
+          example: null
+        limit:
+          type: integer
+          description: maximum number of items to return
+          example: null
+        members:
+          $ref: '#/components/schemas/V2MemberInfoList'
+    UserId:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7215545058313
+    StreamAttachmentResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StreamAttachmentItem'
+    IMSystemInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          example: usnBKBkH_BVrGOiVpaupEH___okFfE7QdA
+        creationDate:
+          type: integer
+          format: int64
+          description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
+          example: 1610520703317
+        active:
+          type: boolean
+          description: If false, no messages can be sent in this stream, and membership is locked.
+          example: true
+    V3RoomDetail:
+      type: object
+      properties:
+        roomAttributes:
+          $ref: '#/components/schemas/V3RoomAttributes'
+        roomSystemInfo:
+          $ref: '#/components/schemas/RoomSystemInfo'
+        groups:
+          description: List of groups (aka SDLs) that were added to the room.
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupItem'
+          example:
+          - id: 68719476744
+            addedBy: 68719476743
     RoomSpecificStreamAttributes:
       type: object
       properties:
         name:
           type: string
           description: Room name.
-    V2AdminStreamType:
+    V2RoomSpecificStreamAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Room name.
+          example: API room
+        groups:
+          description: List of groups (aka SDLs) that were added to the room. Since SBE 20.14.
+          x-since: 20.14
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupItem'
+          example:
+          - id: 68719476744
+            addedBy: 68719476743
+    V2StreamType:
       type: object
       properties:
         type:
           type: string
           example: ROOM
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
+    V1IMDetail:
+      type: object
+      properties:
+        V1IMAttributes:
+          $ref: '#/components/schemas/V1IMAttributes'
+        IMSystemInfo:
+          $ref: '#/components/schemas/IMSystemInfo'
+    ImmutableRoomAttributes:
+      type: object
+      description: These attributes cannot be changed once the room has been created
+      properties:
+        public:
+          type: boolean
+          description: If true, this is a public chatroom. IF false, a private chatroom.
+        readOnly:
+          type: boolean
+          description: If true, only stream owners can send messages.
+        copyProtected:
+          type: boolean
+          description: If true, clients disable the clipboard copy for content in this stream.
+    V2AdminStreamAttributes:
+      description: additional optional properties for the stream
+      type: object
+      properties:
+        roomName:
+          type: string
+          description: room name (room only)
+          example: API room
+        roomDescription:
+          type: string
+          description: description of the room (room only)
+          example: Room created via API
+        members:
+          type: array
+          description: list of userid who is member of the stream - im or mim only
+          items:
+            type: integer
+            format: int64
+          example:
+          - 8933531975686
+          - 8933531975689
+        createdByUserId:
+          type: integer
+          format: int64
+          description: creator user id
+          example: 8933531975689
+        createdDate:
+          type: integer
+          format: int64
+          description: created date
+          example: 1481575056047
+        lastModifiedDate:
+          type: integer
+          format: int64
+          description: last modified date
+          example: 1481575056047
+        originCompany:
+          type: string
+          description: company name of the creator
+          example: Symphony
+        originCompanyId:
+          type: integer
+          description: company id of the creator
+          example: 130
+        membersCount:
+          type: integer
+          description: total number of members in the stream
+          example: 1
+        lastMessageDate:
+          type: integer
+          format: int64
+          description: last date a message was sent in this stream
+          example: 1516699467959
+        groupChat:
+          type: boolean
+          description: whether a stream is a group chat or not. Since SBE 20.16.
+          x-since: 20.16
+          example: false
+    V2AdminStreamInfoList:
+      type: array
+      description: list of stream info
+      items:
+        $ref: '#/components/schemas/V2AdminStreamInfo'
+      example:
+      - id: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
+        isExternal: false
+        isActive: true
+        isPublic: false
+        type: ROOM
+        attributes:
+          roomName: Active Internal Private Room
+          roomDescription: Active Internal Private Room
+          createdByUserId: 8933531975689
+          createdDate: 1481575056047
+          lastModifiedDate: 1481575056047
+          originCompany: Symphony
+          originCompanyId: 130
+          membersCount: 1
+          lastMessageDate: 1516699467959
+      - id: _KnoYrMkhEn3H2_8vE0kl3___qb5SANQdA
+        isExternal: true
+        isActive: false
+        isPublic: false
+        type: ROOM
+        attributes:
+          roomName: Inactive External Room
+          roomDescription: Inactive External Room
+          createdByUserId: 8933531975686
+          createdDate: 1481876438194
+          lastModifiedDate: 1481876438194
+          originCompany: Symphony
+          originCompanyId: 130
+          membersCount: 2
+          lastMessageDate: 1516699467959
     V3RoomAttributes:
       type: object
       properties:
@@ -1693,6 +1887,98 @@ components:
           description: 'If true, this room is a group chat. Note: this parameter is ignored for creating rooms. Since SBE 20.16.'
           x-since: 20.16
           example: false
+    GroupItem:
+      type: object
+      properties:
+        id:
+          description: The ID of the added group (aka SDL).
+          type: integer
+          format: int64
+          example: 68719476744
+        addedBy:
+          description: The user ID who added the group to the room.
+          type: integer
+          format: int64
+          example: 68719476743
+    RoomTag:
+      description: Room Tag object. A key:value pair describing additional properties of the room.
+      properties:
+        key:
+          description: A unique label of the Tag.
+          type: string
+          example: region
+        value:
+          description: The value of this Tag's label.
+          type: string
+          example: EMEA
+      required:
+      - key
+      - value
+    V2StreamAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The stream ID.
+          example: BZQYepoT0Zf4vL_jpeMPqn___oEWvVy3dA
+        crossPod:
+          type: boolean
+          description: If true, this is a cross-pod stream.
+          example: false
+        origin:
+          type: string
+          description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
+          example: INTERNAL
+        active:
+          type: boolean
+          description: If true, this stream is active.
+          example: true
+        lastMessageDate:
+          type: integer
+          format: int64
+          description: unix timestamp of the last message sent in the stream
+          example: 1644590972696
+        streamType:
+          description: The type of the stream (IM = IM, multi-IM = MIM, chat room = ROOM, user wall = POST).
+          $ref: '#/components/schemas/V2StreamType'
+        streamAttributes:
+          $ref: '#/components/schemas/V2ConversationSpecificStreamAttributes'
+        roomAttributes:
+          $ref: '#/components/schemas/V2RoomSpecificStreamAttributes'
+    V2MemberInfoList:
+      type: array
+      items:
+        $ref: '#/components/schemas/V2MemberInfo'
+      example:
+      - user:
+          userId: 13537736917000
+          email: john.doe@symphony.com
+          firstName: John
+          lastName: Doe
+          displayName: John Doe
+          company: pod197
+          companyId: 197
+          isExternal: false
+        isOwner: true
+        isCreator: true
+        joinDate: 1604494574047
+      - user:
+          userId: 13537736917001
+          email: bot@symphony.com
+          displayName: User Provisioning Bot
+          company: pod197
+          companyId: 197
+          isExternal: false
+        isOwner: false
+        isCreator: false
+        joinDate: 1604494605272
+        addedThroughGroups:
+        - 68719476744
+    StreamList:
+      description: A list of streams of which the requesting user is a member.
+      type: array
+      items:
+        $ref: '#/components/schemas/StreamAttributes'
     V2MemberInfo:
       description: Detailed membership record.
       type: object
@@ -1721,41 +2007,51 @@ components:
             format: int64
           example:
           - 68719476744
-    StreamAttachmentItem:
-      description: File attachments for a message in a stream
+    V1IMAttributes:
       type: object
       properties:
-        messageId:
+        pinnedMessageId:
           type: string
-          example: PYLHNm/1K6p...peOpj+FbQ
-        ingestionDate:
-          type: integer
-          format: int64
-          example: 1548089933946
-        userId:
-          type: integer
-          format: int64
-          example: 14568529068038
-        fileId:
-          type: string
-          description: The attachment File ID.
-          example: internal_14362
+          description: UrlSafe message id of the pinned message inside the IM. To perform unpin operation, send an empty string.
+          example: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
+    RoomAttributes:
+      type: object
+      properties:
         name:
           type: string
-          description: The file name.
-          example: butterfly.jpg
-        size:
-          type: integer
-          format: int64
-          description: Size in bytes.
-          example: 70186
-        content-type:
+          description: Room name.
+        description:
           type: string
-          example: image/jpeg
-        previews:
-          type: array
-          items:
-            $ref: '#/components/schemas/AttachmentPreview'
+          description: Room description.
+        membersCanInvite:
+          type: boolean
+          description: If true, any chatroom participant can add new participants. If false, only owners can add new participants.
+        discoverable:
+          type: boolean
+          description: If true, this chatroom (name, description and messages) can be searched and listed by non-participants. If false, only participants can search this room.
+    StreamAttributes:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The stream ID.
+        crossPod:
+          type: boolean
+          description: If true, this is a cross-pod stream.
+        active:
+          type: boolean
+          description: If true, this stream is active.
+        streamType:
+          $ref: '#/components/schemas/StreamType'
+        streamAttributes:
+          $ref: '#/components/schemas/ConversationSpecificStreamAttributes'
+        roomAttributes:
+          $ref: '#/components/schemas/RoomSpecificStreamAttributes'
+    ConversationSpecificStreamAttributes:
+      type: object
+      properties:
+        members:
+          $ref: '#/components/schemas/UserIdList'
     V2MemberUserDetail:
       description: User detail information for stream membership
       type: object
@@ -1789,19 +2085,136 @@ components:
           type: boolean
           description: true indicate that this user belong to another company
           example: true
-    ImmutableRoomAttributes:
+    V2AdminStreamFilter:
+      description: stream filter criteria
       type: object
-      description: These attributes cannot be changed once the room has been created
       properties:
-        public:
+        streamTypes:
+          description: type of streams to search for
+          type: array
+          items:
+            description: Valid values are IM, MIM or ROOM
+            $ref: '#/components/schemas/V2AdminStreamType'
+          example:
+          - type: IM
+          - type: ROOM
+        scope:
+          description: 'Scope of the room. Valid values are INTERNAL or EXTERNAL.
+
+            If not specified, it will include both Internal and External scope
+
+            '
+          type: string
+          example: INTERNAL
+        origin:
+          description: 'Origin of the room. It indicates whether the room was created by a user within the company by another company.
+
+            Valid values are INTERNAL or EXTERNAL.
+
+            If not specified, it will include both Internal and External origin
+
+            '
+          type: string
+          example: INTERNAL
+        status:
+          description: 'Status of the room.
+
+            Valid values are ACTIVE or INACTIVE.
+
+            If not specified, it will include both Active and Inactive status
+
+            '
+          type: string
+          example: ACTIVE
+        privacy:
+          description: 'Privacy setting of the stream.
+
+            Valid values are PUBLIC or PRIVATE.
+
+            If not specified, it will include both public and private streams
+
+            '
+          type: string
+          example: PRIVATE
+        startDate:
+          description: Start date in unix timestamp in millseconds
+          type: integer
+          format: int64
+          example: 1481575056047
+        endDate:
+          description: End date in unix timestamp in millseconds.  If not specified, it assume to be current time.
+          type: integer
+          format: int64
+          example: 1483038089833
+    V2AdminStreamList:
+      description: list of streams info
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: total number of streams which match the filter criteria
+          example: 4
+        skip:
+          type: integer
+          description: number of streams skipped
+          example: 0
+        limit:
+          type: integer
+          description: maximum number of streams return
+          example: 50
+        filter:
+          $ref: '#/components/schemas/V2AdminStreamFilter'
+        streams:
+          $ref: '#/components/schemas/V2AdminStreamInfoList'
+    V2ConversationSpecificStreamAttributes:
+      type: object
+      properties:
+        members:
+          $ref: '#/components/schemas/UserIdList'
+    V2AdminStreamInfo:
+      description: Stream information
+      type: object
+      properties:
+        id:
+          type: string
+          description: stream id
+          example: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
+        isExternal:
           type: boolean
-          description: If true, this is a public chatroom. IF false, a private chatroom.
-        readOnly:
+          description: true indicate this stream has the scope of external and false indictate this stream has the scope of internal. Deprecated, use origin
+          example: false
+        isActive:
           type: boolean
-          description: If true, only stream owners can send messages.
-        copyProtected:
+          description: true indicate that this stream has the status of active and false indicate this stream has the scope of inactive
+          example: true
+        isPublic:
           type: boolean
-          description: If true, clients disable the clipboard copy for content in this stream.
+          description: true indicate that this stream has a privacy setting of public.  This only apply a ROOM stream type.
+          example: false
+        type:
+          type: string
+          description: type of stream (IM, MIM, ROOM)
+          example: ROOM
+        crossPod:
+          type: boolean
+          description: If true, this is a cross-pod stream.
+          example: false
+        origin:
+          type: string
+          description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
+          example: INTERNAL
+        attributes:
+          $ref: '#/components/schemas/V2AdminStreamAttributes'
+    RoomDetail:
+      type: object
+      properties:
+        roomAttributes:
+          $ref: '#/components/schemas/RoomAttributes'
+        roomSystemInfo:
+          $ref: '#/components/schemas/RoomSystemInfo'
+        immutableRoomAttributes:
+          $ref: '#/components/schemas/ImmutableRoomAttributes'
     RoomSearchCriteria:
       description: Room Query Object. Used to specify the parameters for room search.
       properties:
@@ -1853,321 +2266,22 @@ components:
           example: RELEVANCE
       required:
       - query
-    V2RoomSpecificStreamAttributes:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Room name.
-          example: API room
-        groups:
-          description: List of groups (aka SDLs) that were added to the room. Since SBE 20.14.
-          x-since: 20.14
-          type: array
-          items:
-            $ref: '#/components/schemas/GroupItem'
-          example:
-          - id: 68719476744
-            addedBy: 68719476743
-    V2StreamAttributes:
+    Stream:
       type: object
       properties:
         id:
           type: string
-          description: The stream ID.
-          example: BZQYepoT0Zf4vL_jpeMPqn___oEWvVy3dA
-        crossPod:
-          type: boolean
-          description: If true, this is a cross-pod stream.
-          example: false
-        origin:
-          type: string
-          description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
-          example: INTERNAL
-        active:
-          type: boolean
-          description: If true, this stream is active.
-          example: true
-        lastMessageDate:
-          type: integer
-          format: int64
-          description: unix timestamp of the last message sent in the stream
-          example: 1644590972696
-        streamType:
-          description: The type of the stream (IM = IM, multi-IM = MIM, chat room = ROOM, user wall = POST).
-          $ref: '#/components/schemas/V2StreamType'
-        streamAttributes:
-          $ref: '#/components/schemas/V2ConversationSpecificStreamAttributes'
-        roomAttributes:
-          $ref: '#/components/schemas/V2RoomSpecificStreamAttributes'
-    RoomDetail:
-      type: object
-      properties:
-        roomAttributes:
-          $ref: '#/components/schemas/RoomAttributes'
-        roomSystemInfo:
-          $ref: '#/components/schemas/RoomSystemInfo'
-        immutableRoomAttributes:
-          $ref: '#/components/schemas/ImmutableRoomAttributes'
-    AttachmentPreview:
-      description: Preview file for image attachments
-      type: object
-      properties:
-        fileId:
-          type: string
-          description: The preview file ID
-          example: internal_14362
-        width:
-          type: integer
-          description: The preview image width
-          example: 600
-    V2AdminStreamInfoList:
-      type: array
-      description: list of stream info
-      items:
-        $ref: '#/components/schemas/V2AdminStreamInfo'
-      example:
-      - id: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
-        isExternal: false
-        isActive: true
-        isPublic: false
-        type: ROOM
-        attributes:
-          roomName: Active Internal Private Room
-          roomDescription: Active Internal Private Room
-          createdByUserId: 8933531975689
-          createdDate: 1481575056047
-          lastModifiedDate: 1481575056047
-          originCompany: Symphony
-          originCompanyId: 130
-          membersCount: 1
-          lastMessageDate: 1516699467959
-      - id: _KnoYrMkhEn3H2_8vE0kl3___qb5SANQdA
-        isExternal: true
-        isActive: false
-        isPublic: false
-        type: ROOM
-        attributes:
-          roomName: Inactive External Room
-          roomDescription: Inactive External Room
-          createdByUserId: 8933531975686
-          createdDate: 1481876438194
-          lastModifiedDate: 1481876438194
-          originCompany: Symphony
-          originCompanyId: 130
-          membersCount: 2
-          lastMessageDate: 1516699467959
-    RoomAttributes:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Room name.
-        description:
-          type: string
-          description: Room description.
-        membersCanInvite:
-          type: boolean
-          description: If true, any chatroom participant can add new participants. If false, only owners can add new participants.
-        discoverable:
-          type: boolean
-          description: If true, this chatroom (name, description and messages) can be searched and listed by non-participants. If false, only participants can search this room.
-    V2AdminStreamList:
-      description: list of streams info
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: total number of streams which match the filter criteria
-          example: 4
-        skip:
-          type: integer
-          description: number of streams skipped
-          example: 0
-        limit:
-          type: integer
-          description: maximum number of streams return
-          example: 50
-        filter:
-          $ref: '#/components/schemas/V2AdminStreamFilter'
-        streams:
-          $ref: '#/components/schemas/V2AdminStreamInfoList'
-    StreamFilter:
-      description: Stream filtering parameters.
-      properties:
-        streamTypes:
-          description: Types of streams to search for.
-          type: array
-          items:
-            $ref: '#/components/schemas/StreamType'
-          example:
-          - type: IM
-          - type: ROOM
-        includeInactiveStreams:
-          description: Whether to include inactive streams in the list of results.
-          type: boolean
-          example: 'false'
-    V1IMAttributes:
-      type: object
-      properties:
-        pinnedMessageId:
-          type: string
-          description: UrlSafe message id of the pinned message inside the IM. To perform unpin operation, send an empty string.
-          example: vd7qwNb6hLoUV0BfXXPC43___oPIvkwJbQ
-    StreamType:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - IM
-          - MIM
-          - ROOM
-          - POST
-          example: ROOM
-    RoomSystemInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          example: bjHSiY4iz3ar4iIh6-VzCX___peoM7cPdA
-        creationDate:
-          type: integer
-          format: int64
-          description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
-          example: 1547661232368
-        createdByUserId:
-          type: integer
-          format: int64
-          example: 14362370637825
-        active:
-          type: boolean
-          description: If false, no messages can be sent in this stream, and membership is locked.
-          example: true
-    ConversationSpecificStreamAttributes:
-      type: object
-      properties:
-        members:
-          $ref: '#/components/schemas/UserIdList'
-    UserId:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 7215545058313
-    FacetedMatchCount:
-      description: An object respresenting the result count of faceted search.
-      properties:
-        facet:
-          description: The matched query.
-          type: string
-        count:
-          description: The result count.
-          type: integer
-    V2MembershipList:
-      description: List of members in the stream.
-      type: object
-      properties:
-        count:
-          type: integer
-          description: total members count
-          example: null
-        skip:
-          type: integer
-          description: number of items to skip from the request
-          example: null
-        limit:
-          type: integer
-          description: maximum number of items to return
-          example: null
-        members:
-          $ref: '#/components/schemas/V2MemberInfoList'
-    V2AdminStreamAttributes:
-      description: additional optional properties for the stream
-      type: object
-      properties:
-        roomName:
-          type: string
-          description: room name (room only)
-          example: API room
-        roomDescription:
-          type: string
-          description: description of the room (room only)
-          example: Room created via API
-        members:
-          type: array
-          description: list of userid who is member of the stream - im or mim only
-          items:
-            type: integer
-            format: int64
-          example:
-          - 8933531975686
-          - 8933531975689
-        createdByUserId:
-          type: integer
-          format: int64
-          description: creator user id
-          example: 8933531975689
-        createdDate:
-          type: integer
-          format: int64
-          description: created date
-          example: 1481575056047
-        lastModifiedDate:
-          type: integer
-          format: int64
-          description: last modified date
-          example: 1481575056047
-        originCompany:
-          type: string
-          description: company name of the creator
-          example: Symphony
-        originCompanyId:
-          type: integer
-          description: company id of the creator
-          example: 130
-        membersCount:
-          type: integer
-          description: total number of members in the stream
-          example: 1
-        lastMessageDate:
-          type: integer
-          format: int64
-          description: last date a message was sent in this stream
-          example: 1516699467959
-        groupChat:
-          type: boolean
-          description: whether a stream is a group chat or not. Since SBE 20.16.
-          x-since: 20.16
-          example: false
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
-    V1IMDetail:
-      type: object
-      properties:
-        V1IMAttributes:
-          $ref: '#/components/schemas/V1IMAttributes'
-        IMSystemInfo:
-          $ref: '#/components/schemas/IMSystemInfo'
-    StreamList:
-      description: A list of streams of which the requesting user is a member.
-      type: array
-      items:
-        $ref: '#/components/schemas/StreamAttributes'
-    V2StreamType:
-      type: object
-      properties:
-        type:
-          type: string
-          example: ROOM
+          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+    V2RoomSearchCriteria:
+      description: Room Query Object. Used to specify the parameters for room search.
+      allOf:
+      - $ref: '#/components/schemas/RoomSearchCriteria'
+      - type: object
+        properties:
+          subType:
+            description: 'Restrict the search to the specific room subtype. Valid values are: EMAIL'
+            type: string
+            example: EMAIL
     V3RoomSearchResults:
       description: A list of search results and counts per search parameter.
       properties:
@@ -2233,193 +2347,79 @@ components:
           example:
           - facet: industry
             count: 1
-    StreamAttributes:
+    V2AdminStreamType:
       type: object
       properties:
-        id:
-          type: string
-          description: The stream ID.
-        crossPod:
-          type: boolean
-          description: If true, this is a cross-pod stream.
-        active:
-          type: boolean
-          description: If true, this stream is active.
-        streamType:
-          $ref: '#/components/schemas/StreamType'
-        streamAttributes:
-          $ref: '#/components/schemas/ConversationSpecificStreamAttributes'
-        roomAttributes:
-          $ref: '#/components/schemas/RoomSpecificStreamAttributes'
-    RoomTag:
-      description: Room Tag object. A key:value pair describing additional properties of the room.
-      properties:
-        key:
-          description: A unique label of the Tag.
-          type: string
-          example: region
-        value:
-          description: The value of this Tag's label.
-          type: string
-          example: EMEA
-      required:
-      - key
-      - value
-    IMSystemInfo:
-      type: object
-      properties:
-        id:
-          type: string
-          example: usnBKBkH_BVrGOiVpaupEH___okFfE7QdA
-        creationDate:
-          type: integer
-          format: int64
-          description: The datetime when the stream was originally created. Milliseconds since Jan 1 1970.
-          example: 1610520703317
-        active:
-          type: boolean
-          description: If false, no messages can be sent in this stream, and membership is locked.
-          example: true
-    V2RoomSearchCriteria:
-      description: Room Query Object. Used to specify the parameters for room search.
-      allOf:
-      - $ref: '#/components/schemas/RoomSearchCriteria'
-      - type: object
-        properties:
-          subType:
-            description: 'Restrict the search to the specific room subtype. Valid values are: EMAIL'
-            type: string
-            example: EMAIL
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    V2AdminStreamInfo:
-      description: Stream information
-      type: object
-      properties:
-        id:
-          type: string
-          description: stream id
-          example: Q2KYGm7JkljrgymMajYTJ3___qcLPr1UdA
-        isExternal:
-          type: boolean
-          description: true indicate this stream has the scope of external and false indictate this stream has the scope of internal. Deprecated, use origin
-          example: false
-        isActive:
-          type: boolean
-          description: true indicate that this stream has the status of active and false indicate this stream has the scope of inactive
-          example: true
-        isPublic:
-          type: boolean
-          description: true indicate that this stream has a privacy setting of public.  This only apply a ROOM stream type.
-          example: false
         type:
           type: string
-          description: type of stream (IM, MIM, ROOM)
           example: ROOM
-        crossPod:
-          type: boolean
-          description: If true, this is a cross-pod stream.
-          example: false
-        origin:
-          type: string
-          description: INTERNAL if the creator of this stream belongs to the pod, EXTERNAL otherwise
-          example: INTERNAL
-        attributes:
-          $ref: '#/components/schemas/V2AdminStreamAttributes'
-    V2AdminStreamFilter:
-      description: stream filter criteria
-      type: object
+    StreamFilter:
+      description: Stream filtering parameters.
       properties:
         streamTypes:
-          description: type of streams to search for
+          description: Types of streams to search for.
           type: array
           items:
-            description: Valid values are IM, MIM or ROOM
-            $ref: '#/components/schemas/V2AdminStreamType'
+            $ref: '#/components/schemas/StreamType'
           example:
           - type: IM
           - type: ROOM
-        scope:
-          description: 'Scope of the room. Valid values are INTERNAL or EXTERNAL.
-
-            If not specified, it will include both Internal and External scope
-
-            '
+        includeInactiveStreams:
+          description: Whether to include inactive streams in the list of results.
+          type: boolean
+          example: 'false'
+    FacetedMatchCount:
+      description: An object respresenting the result count of faceted search.
+      properties:
+        facet:
+          description: The matched query.
           type: string
-          example: INTERNAL
-        origin:
-          description: 'Origin of the room. It indicates whether the room was created by a user within the company by another company.
-
-            Valid values are INTERNAL or EXTERNAL.
-
-            If not specified, it will include both Internal and External origin
-
-            '
-          type: string
-          example: INTERNAL
-        status:
-          description: 'Status of the room.
-
-            Valid values are ACTIVE or INACTIVE.
-
-            If not specified, it will include both Active and Inactive status
-
-            '
-          type: string
-          example: ACTIVE
-        privacy:
-          description: 'Privacy setting of the stream.
-
-            Valid values are PUBLIC or PRIVATE.
-
-            If not specified, it will include both public and private streams
-
-            '
-          type: string
-          example: PRIVATE
-        startDate:
-          description: Start date in unix timestamp in millseconds
+        count:
+          description: The result count.
           type: integer
-          format: int64
-          example: 1481575056047
-        endDate:
-          description: End date in unix timestamp in millseconds.  If not specified, it assume to be current time.
-          type: integer
-          format: int64
-          example: 1483038089833
-    V3RoomDetail:
+    StreamAttachmentItem:
+      description: File attachments for a message in a stream
       type: object
       properties:
-        roomAttributes:
-          $ref: '#/components/schemas/V3RoomAttributes'
-        roomSystemInfo:
-          $ref: '#/components/schemas/RoomSystemInfo'
-        groups:
-          description: List of groups (aka SDLs) that were added to the room.
+        messageId:
+          type: string
+          example: PYLHNm/1K6p...peOpj+FbQ
+        ingestionDate:
+          type: integer
+          format: int64
+          example: 1548089933946
+        userId:
+          type: integer
+          format: int64
+          example: 14568529068038
+        fileId:
+          type: string
+          description: The attachment File ID.
+          example: internal_14362
+        name:
+          type: string
+          description: The file name.
+          example: butterfly.jpg
+        size:
+          type: integer
+          format: int64
+          description: Size in bytes.
+          example: 70186
+        content-type:
+          type: string
+          example: image/jpeg
+        previews:
           type: array
           items:
-            $ref: '#/components/schemas/GroupItem'
-          example:
-          - id: 68719476744
-            addedBy: 68719476743
-    GroupItem:
+            $ref: '#/components/schemas/AttachmentPreview'
+    StreamType:
       type: object
       properties:
-        id:
-          description: The ID of the added group (aka SDL).
-          type: integer
-          format: int64
-          example: 68719476744
-        addedBy:
-          description: The user ID who added the group to the room.
-          type: integer
-          format: int64
-          example: 68719476743
+        type:
+          type: string
+          enum:
+          - IM
+          - MIM
+          - ROOM
+          - POST
+          example: ROOM

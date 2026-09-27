@@ -9,6 +9,13 @@ description: >-
 type: Index
 deliveryModel:
   model: unknown
+  license_evidence:
+    not_product:
+    - finos/common-cloud-controls
+    - finos/common-domain-model
+    - finos/fdc3
+    - finos/morphir
+    - finos/symphony-api-spec
   open_source: unknown
   commercial: false
   callable_host: true
@@ -16,8 +23,8 @@ deliveryModel:
   confidence: low
   source:
   - openapi
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -35,15 +42,17 @@ position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/finos.png
 tags:
-  - Financial-Services
+  - Financial Services
   - Fintech
   - Linux Foundation
-  - Open-Source
+  - Open Source
 tags_raw:
   - Financial Services
   - Fintech
   - Linux Foundation
   - Open Source
+  - Financial-Services
+  - Open-Source
 created: '2026-03-16'
 modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/finos/refs/heads/main/apis.yml
@@ -59,13 +68,14 @@ apis:
   tags:
   - Desktop Interoperability
   - FDC3
-  - Financial-Services
+  - Financial Services
   - Open Standard
   tags_raw:
   - Desktop Interoperability
   - FDC3
   - Financial Services
   - Open Standard
+  - Financial-Services
   properties:
   - type: Documentation
     url: https://fdc3.finos.org/docs/fdc3-intro
@@ -98,13 +108,14 @@ apis:
   tags:
   - Cloud
   - Compliance
-  - Financial-Services
+  - Financial Services
   - Open Standard
   tags_raw:
   - Cloud
   - Compliance
   - Financial Services
   - Open Standard
+  - Financial-Services
   properties:
   - type: Documentation
     url: https://www.finos.org/common-cloud-controls-project
@@ -121,12 +132,13 @@ apis:
   - Business Modeling
   - Domain Modeling
   - Morphir
-  - Open-Source
+  - Open Source
   tags_raw:
   - Business Modeling
   - Domain Modeling
   - Morphir
   - Open Source
+  - Open-Source
   properties:
   - type: Documentation
     url: https://morphir.finos.org/

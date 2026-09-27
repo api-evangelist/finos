@@ -412,6 +412,147 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ProductList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Product'
+      example:
+      - appId: selerity
+        name: Standard
+        subscribed: true
+        type: default
+      - appId: selerity
+        name: Premium
+        sku: AcDccU53SsY
+        subscribed: false
+        type: premium
+    UserAppEntitlementsPatchList:
+      description: Array of app entitlements to patch for a user
+      type: array
+      items:
+        $ref: '#/components/schemas/UserAppEntitlementPatch'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
+    PodAppEntitlement:
+      description: Application Entitlements for the company
+      type: object
+      required:
+      - appId
+      - appName
+      - enable
+      - listed
+      - install
+      properties:
+        appId:
+          type: string
+          description: Unique ID for the Application
+          maxLength: 256
+          minLength: 1
+          example: djApp
+        appName:
+          type: string
+          description: Name for this Application
+          maxLength: 50
+          minLength: 1
+          example: Dow Jones
+        enable:
+          type: boolean
+          example: true
+        listed:
+          type: boolean
+          description: if true, this application will be listed in the appstore for everyone.  Otherwise, this application will be hidden in the appstore.
+          example: true
+        install:
+          type: boolean
+          description: if true, the entitlement is set to automatic for the company.  Otherwise, it is set to manual.
+          example: true
+    Product:
+      description: Application Product
+      type: object
+      required:
+      - name
+      - type
+      - subscribed
+      properties:
+        appId:
+          type: string
+          description: App ID for the Product
+          maxLength: 256
+          minLength: 1
+          example: selerity
+        name:
+          type: string
+          minLength: 1
+          maxLength: 50
+          description: Product Name
+          example: Premium
+        sku:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Product SKU
+          example: AcDccU53SsY
+        subscribed:
+          type: boolean
+          description: indicate whether the product is subscribed or not
+          example: false
+        type:
+          type: string
+          description: Product Type (default or premium)
+          example: premium
+    UserAppEntitlement:
+      description: Application Entitlements for the user
+      type: object
+      required:
+      - appId
+      - listed
+      - install
+      properties:
+        appId:
+          type: string
+          description: Unique ID for the Application
+          maxLength: 256
+          minLength: 1
+          example: selerity
+        appName:
+          type: string
+          description: Name for this Application
+          maxLength: 50
+          minLength: 1
+          example: Selerity Context
+        listed:
+          type: boolean
+          description: if true, this application will be listed in the appstore for this user.  Otherwise, this application will be hidden in the appstore.
+          example: true
+        install:
+          type: boolean
+          description: if true, it indicate this application is installed for this user.  Otherwise, this user does not have this application installed.
+          example: true
+        products:
+          $ref: '#/components/schemas/ProductList'
+    PodAppEntitlementList:
+      type: array
+      items:
+        $ref: '#/components/schemas/PodAppEntitlement'
+      example:
+      - appId: djApp
+        appName: Dow Jones
+        enable: true
+        listed: true
+        install: false
+      - appId: selerity
+        appName: Selerity Context
+        enable: false
+        listed: true
+        install: true
     UserAppEntitlementList:
       type: array
       items:
@@ -469,144 +610,3 @@ components:
           example: true
         product:
           $ref: '#/components/schemas/Product'
-    PodAppEntitlement:
-      description: Application Entitlements for the company
-      type: object
-      required:
-      - appId
-      - appName
-      - enable
-      - listed
-      - install
-      properties:
-        appId:
-          type: string
-          description: Unique ID for the Application
-          maxLength: 256
-          minLength: 1
-          example: djApp
-        appName:
-          type: string
-          description: Name for this Application
-          maxLength: 50
-          minLength: 1
-          example: Dow Jones
-        enable:
-          type: boolean
-          example: true
-        listed:
-          type: boolean
-          description: if true, this application will be listed in the appstore for everyone.  Otherwise, this application will be hidden in the appstore.
-          example: true
-        install:
-          type: boolean
-          description: if true, the entitlement is set to automatic for the company.  Otherwise, it is set to manual.
-          example: true
-    ProductList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Product'
-      example:
-      - appId: selerity
-        name: Standard
-        subscribed: true
-        type: default
-      - appId: selerity
-        name: Premium
-        sku: AcDccU53SsY
-        subscribed: false
-        type: premium
-    UserAppEntitlement:
-      description: Application Entitlements for the user
-      type: object
-      required:
-      - appId
-      - listed
-      - install
-      properties:
-        appId:
-          type: string
-          description: Unique ID for the Application
-          maxLength: 256
-          minLength: 1
-          example: selerity
-        appName:
-          type: string
-          description: Name for this Application
-          maxLength: 50
-          minLength: 1
-          example: Selerity Context
-        listed:
-          type: boolean
-          description: if true, this application will be listed in the appstore for this user.  Otherwise, this application will be hidden in the appstore.
-          example: true
-        install:
-          type: boolean
-          description: if true, it indicate this application is installed for this user.  Otherwise, this user does not have this application installed.
-          example: true
-        products:
-          $ref: '#/components/schemas/ProductList'
-    Product:
-      description: Application Product
-      type: object
-      required:
-      - name
-      - type
-      - subscribed
-      properties:
-        appId:
-          type: string
-          description: App ID for the Product
-          maxLength: 256
-          minLength: 1
-          example: selerity
-        name:
-          type: string
-          minLength: 1
-          maxLength: 50
-          description: Product Name
-          example: Premium
-        sku:
-          type: string
-          minLength: 1
-          maxLength: 100
-          description: Product SKU
-          example: AcDccU53SsY
-        subscribed:
-          type: boolean
-          description: indicate whether the product is subscribed or not
-          example: false
-        type:
-          type: string
-          description: Product Type (default or premium)
-          example: premium
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    PodAppEntitlementList:
-      type: array
-      items:
-        $ref: '#/components/schemas/PodAppEntitlement'
-      example:
-      - appId: djApp
-        appName: Dow Jones
-        enable: true
-        listed: true
-        install: false
-      - appId: selerity
-        appName: Selerity Context
-        enable: false
-        listed: true
-        install: true
-    UserAppEntitlementsPatchList:
-      description: Array of app entitlements to patch for a user
-      type: array
-      items:
-        $ref: '#/components/schemas/UserAppEntitlementPatch'

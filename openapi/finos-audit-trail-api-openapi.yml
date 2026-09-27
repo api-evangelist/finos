@@ -146,34 +146,6 @@ components:
             $ref: '#/components/schemas/V1AuditTrailInitiatorResponse'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    V1AuditTrailInitiatorResponse:
-      type: object
-      properties:
-        action:
-          type: string
-          description: The audit trail action that has peformed
-        actionName:
-          type: string
-          description: The audit trail action name that has peformed
-        timestamp:
-          type: string
-          description: The timestamp when the action has occurred
-        initiatorId:
-          type: string
-          description: The user's id that has performed the action
-        initiatorUsername:
-          type: string
-          description: The username that has performed the action
-        initiatorEmailAddress:
-          type: string
-          description: The user's e-mail address that has performed the action
-      description: 'Audit Trail Initiator object response.
-
-        The attributes may vary according to the action.
-
-        There are different types of action and each action could have specific attributes.
-
-        '
     Error:
       type: object
       properties:
@@ -226,3 +198,31 @@ components:
 
             '
           example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
+    V1AuditTrailInitiatorResponse:
+      type: object
+      properties:
+        action:
+          type: string
+          description: The audit trail action that has peformed
+        actionName:
+          type: string
+          description: The audit trail action name that has peformed
+        timestamp:
+          type: string
+          description: The timestamp when the action has occurred
+        initiatorId:
+          type: string
+          description: The user's id that has performed the action
+        initiatorUsername:
+          type: string
+          description: The username that has performed the action
+        initiatorEmailAddress:
+          type: string
+          description: The user's e-mail address that has performed the action
+      description: 'Audit Trail Initiator object response.
+
+        The attributes may vary according to the action.
+
+        There are different types of action and each action could have specific attributes.
+
+        '

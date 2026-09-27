@@ -119,6 +119,21 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
+    Languages:
+      description: List of languages
+      type: object
+      properties:
+        languages:
+          $ref: '#/components/schemas/StringList'
     Error:
       type: object
       properties:
@@ -136,18 +151,3 @@ components:
           description: Certificate in PEM format
           type: string
           example: PEM_CERTIFICATE
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    Languages:
-      description: List of languages
-      type: object
-      properties:
-        languages:
-          $ref: '#/components/schemas/StringList'
