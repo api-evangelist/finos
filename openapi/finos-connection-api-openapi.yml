@@ -512,28 +512,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
     UserConnection:
       type: object
       description: Connection status between two users
@@ -567,6 +545,16 @@ components:
           format: int32
           description: number of requests made
           example: 1
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     UserConnectionRequest:
       type: object
       description: Request body for the Connection APIs
@@ -576,6 +564,18 @@ components:
           format: int64
           description: user id
           example: 769658112378
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     UserConnectionList:
       type: array
       items:

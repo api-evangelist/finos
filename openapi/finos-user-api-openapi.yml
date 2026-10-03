@@ -2112,55 +2112,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DelegateAction:
-      type: object
-      properties:
-        userId:
-          type: integer
-          format: int64
-          example: 7215545078461
-        action:
-          type: string
-          enum:
-          - ADD
-          - REMOVE
-          example: ADD
-    Disclaimer:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 571d20dae4b042aaf06d2e7c
-        name:
-          type: string
-          example: New Enterprise Disclaimer
-        content:
-          type: string
-          example: This is a second enterprise disclaimer.
-        frequencyInHours:
-          type: integer
-          format: int32
-          example: 168
-        isDefault:
-          type: boolean
-          example: false
-        isActive:
-          type: boolean
-          example: true
-        createdDate:
-          type: integer
-          format: int64
-          example: 1461526746875
-        modifiedDate:
-          type: integer
-          format: int64
-          example: 1461526746875
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
     StringList:
       type: array
       items:
@@ -2170,52 +2121,26 @@ components:
       - mailto
       - fdsup
       - skype
-    UserDetailList:
-      type: array
-      items:
-        $ref: '#/components/schemas/UserDetail'
-      example:
-      - userAttributes:
-          emailAddress: janedoe@symphony.com
-          firstName: Jane
-          lastName: Doe
-          userName: jane.doe
-          displayName: Jane Doe
-          accountType: NORMAL
-          assetClasses:
-          - Commodities
-          industries:
-          - Financials
-          - Healthcare
+    UserDetail:
+      description: Detailed User record.
+      type: object
+      properties:
+        userAttributes:
+          $ref: '#/components/schemas/UserAttributes'
         userSystemInfo:
-          id: 9826885173258
-          status: ENABLED
-          suspended: true
-          suspensionReason: The user will be OOO due to a mandatory leave
-          suspendedUntil: 1601546400
-          createdDate: 1499347606000
-          createdBy: '9826885173252'
-          lastUpdatedDate: 1499348554853
-          lastLoginDate: 1504839044527
+          $ref: '#/components/schemas/UserSystemInfo'
+        features:
+          $ref: '#/components/schemas/IntegerList'
+        apps:
+          $ref: '#/components/schemas/IntegerList'
+        groups:
+          $ref: '#/components/schemas/IntegerList'
         roles:
-        - INDIVIDUAL
-      - userAttributes:
-          emailAddress: nexus.user@email.com
-          userName: nexus.user
-          displayName: nexus.user
-          accountType: SYSTEM
-        userSystemInfo:
-          id: 9826885173290
-          status: ENABLED
-          suspended: false
-          createdDate: 1499375475000
-          createdBy: '9826885173255'
-          lastUpdatedDate: 1499375475852
-          lastLoginDate: 1504899124191
-        roles:
-        - USER_PROVISIONING
-        - CONTENT_MANAGEMENT
-        - INDIVIDUAL
+          $ref: '#/components/schemas/StringList'
+        disclaimers:
+          $ref: '#/components/schemas/IntegerList'
+        avatar:
+          $ref: '#/components/schemas/Avatar'
     Error:
       type: object
       properties:
@@ -2226,134 +2151,6 @@ components:
         message:
           type: string
           example: Invalid session
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
-    FeatureList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Feature'
-      example:
-      - entitlment: canCreatePublicRoom
-        enabled: true
-      - entitlment: isExternalRoomEnabled
-        enabled: false
-      - entitlment: canUpdateAvatar
-        enabled: true
-    RoleDetail:
-      description: Role detailed.
-      type: object
-      properties:
-        id:
-          type: string
-          example: CONTENT_MANAGEMENT
-        name:
-          type: string
-          example: Content Management
-        userTypes:
-          type: array
-          items:
-            type: string
-          example:
-          - NORMAL
-          - SYSTEM
-        optionalActions:
-          type: array
-          items:
-            type: string
-          example:
-          - MONITOR_ROOMS
-          - MONITOR_WALL_POSTS
-    UserSystemInfo:
-      description: User Status Information.
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 7215545078461
-        status:
-          type: string
-          enum:
-          - ENABLED
-          - DISABLED
-          example: ENABLED
-        suspended:
-          type: boolean
-          description: An optional attribute indicating whether the user is temporarily suspended or not. Since SBE 20.14.
-          x-since: 20.14
-          example: true
-        suspendedUntil:
-          type: integer
-          format: int64
-          description: An optional unix timestamp until which the suspension is effective. Since SBE 20.14.
-          x-since: 20.14
-          example: 1601546400
-        suspensionReason:
-          type: string
-          description: An optional description of the suspension reason. Since SBE 20.14.
-          x-since: 20.14
-          example: The user will be OOO due to a mandatory leave
-        createdDate:
-          type: integer
-          format: int64
-          example: 1461508270000
-        createdBy:
-          type: string
-          example: '7215545057281'
-        lastUpdatedDate:
-          type: integer
-          format: int64
-          example: 1461508270000
-        lastLoginDate:
-          type: integer
-          format: int64
-          example: 1461508270000
-        lastPasswordReset:
-          type: integer
-          format: int64
-          example: 1461508270000
-        deactivatedDate:
-          type: integer
-          format: int64
-          example: 1461508270000
-    V2UserKeyRequest:
-      description: User RSA key information.
-      type: object
-      properties:
-        key:
-          description: User RSA public key.
-          type: string
-          example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
-        expirationDate:
-          description: RSA key expiration date. This value is set just for rotated keys.
-          type: integer
-          format: int64
-          example: 1467562406219
-        action:
-          description: "Action to be performed on the RSA key.\nThe following actions can be performed onto the user's active RSA key:\n  - SAVE\n  - REVOKE\nThe following actions can be performed onto the user's rotated RSA key:\n  - REVOKE\n  - EXTEND\n"
-          type: string
-          example: SAVE
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
-    StringId:
-      type: object
-      properties:
-        id:
-          type: string
-          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
     UserAttributes:
       description: User record.
       type: object
@@ -2420,6 +2217,521 @@ components:
           example:
           - Financials
           - Services
+    IntegerList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 1461508270000
+      - 7215545057281
+    UserSystemInfo:
+      description: User Status Information.
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7215545078461
+        status:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+          example: ENABLED
+        suspended:
+          type: boolean
+          description: An optional attribute indicating whether the user is temporarily suspended or not. Since SBE 20.14.
+          x-since: 20.14
+          example: true
+        suspendedUntil:
+          type: integer
+          format: int64
+          description: An optional unix timestamp until which the suspension is effective. Since SBE 20.14.
+          x-since: 20.14
+          example: 1601546400
+        suspensionReason:
+          type: string
+          description: An optional description of the suspension reason. Since SBE 20.14.
+          x-since: 20.14
+          example: The user will be OOO due to a mandatory leave
+        createdDate:
+          type: integer
+          format: int64
+          example: 1461508270000
+        createdBy:
+          type: string
+          example: '7215545057281'
+        lastUpdatedDate:
+          type: integer
+          format: int64
+          example: 1461508270000
+        lastLoginDate:
+          type: integer
+          format: int64
+          example: 1461508270000
+        lastPasswordReset:
+          type: integer
+          format: int64
+          example: 1461508270000
+        deactivatedDate:
+          type: integer
+          format: int64
+          example: 1461508270000
+    UserFilter:
+      type: object
+      properties:
+        role:
+          type: string
+          description: The user role
+          example: INDIVIDUAL
+        feature:
+          type: string
+        status:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+    V2UserDetailList:
+      type: array
+      items:
+        $ref: '#/components/schemas/V2UserDetail'
+      example:
+      - userAttributes:
+          emailAddress: nexus.user@email.com
+          userName: nexus.user
+          displayName: nexus.user
+          accountType: SYSTEM
+        userSystemInfo:
+          id: 9826885173290
+          status: ENABLED
+          suspended: false
+          createdDate: 1499375475000
+          createdBy: '9826885173255'
+          lastUpdatedDate: 1499375475852
+          lastLoginDate: 1504899124191
+        roles:
+        - USER_PROVISIONING
+        - CONTENT_MANAGEMENT
+        - INDIVIDUAL
+      - userAttributes:
+          emailAddress: admin@mail.com
+          firstName: admin
+          lastName: admin
+          userName: admin@mail.com
+          displayName: Admin Admin
+          companyName: Company Name
+          department: Departament
+          division: Division
+          title: Administrator
+          twoFactorAuthPhone: '+15419999999'
+          workPhoneNumber: '+15419999999'
+          mobilePhoneNumber: '+15419999999'
+          accountType: NORMAL
+          assetClasses:
+          - Currencies
+          industries:
+          - Technology
+        userSystemInfo:
+          id: 7696581394433
+          status: ENABLED
+          suspended: false
+          createdDate: 1438054194000
+          lastUpdatedDate: 1527532171729
+          lastLoginDate: 1523912043015
+        roles:
+        - SUPER_COMPLIANCE_OFFICER
+        - INDIVIDUAL
+        - SUPER_ADMINISTRATOR
+    AvatarUpdate:
+      type: object
+      properties:
+        image:
+          description: Base64 encoded image. Original image must be less than 2MB.
+          type: string
+          example: iVBORw0KGgoAAAANSUhEUgAAAJgAAAAoCAMAAAA11sNmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX1QTFRFAAAAVVVVZmZmc8bmd3d3jMyMmZmZ+cxA////VVVVZmZmc8bmd3d3jMyM8oCZ+cxA////VVVVZmZmc8bmd3d3jMyM////VVVVZmZmc8bmd3d3jMyMmZmZ8oCZ+cxA////ZmZmjMyM////VVVVd3d3jMyM+cxA////VVVVZmZmc8bmd3d3jMyMmZmZnMyB8oCZ+cxA////ZmZmc8bmd3d3jMyMmZmZ+cxA////d3d3jMyM8oCZ+cxA////VVVVZmZmdm1RjMyM8oCZ+cxA////ZmZmmZmZ+cxA////W1tbZmZmc8bmdpGcd3d3jMyMmZmZ8oCZ////d3d3jMyMmZmZx3iJ+cxA////VVVVZmZmc8bmd3d3jMyMuIOVyqpG////VVVVZmZmbW1td3d3jMyMmZmZ+cxA////VVVVX1xUZmZmb46ac8bmdZ+vd3d3fnNQjMyMkpeGlqaWmJyYmZmZnYlMp5FLsZhJvJ9Iz3qM0K5F78VB8oCZ+cxA////9laq9wAAAGh0Uk5TABAQEBAQEBAQICAgICAgICAwMDAwMDBAQEBAQEBAQEBQUFBgYGBgYHBwcHBwcHBwcHCAgICAgICAj4+Pj4+fn5+fn5+fr6+vr7+/v7+/v7+/v8/Pz8/Pz9/f39/f39/f7+/v7+/v7+/qia/hAAADQ0lEQVRYw+2Xa1fTQBCGV0WJCBIvxEq10YoEVNQoaLxURKNWUHRRqYgaUSC1QkWsNzT7252Z3W1TWpCjX+I5fT/ksrM782T2Tc4JYy211NL/oJ50Ot2TRLD5FdTkma6kgU2uSB1PGtiY5HqZuK0ckWAjiQNLS7CdiQPrIq6xpGHtGnr0eRXA0gnjGlqoVCoA9kTe9rfXQob1r8ntv1mUmjlGYBUJdhJv2u9FlzWVHwohAt9kBuc+Dfk8zxjnWRnn3GHM4lKuAUM5nsMIjNETOQVM4NJstQpCzKxL10TjpdJ4B5zvEtg8Wj+zGEVRtwxjVpLFckIAA8sKAVWECBGCeUJ40BI9qwCDXHBqkxDYKT8WwVWWDDFMh5QOpWtURwk0dwE8toBgV2HoeoQ6T2GL6rJsAZ7OCBAGjgUqIbAvptBgNggo/XVgMJQ3mZmHk1wVGArMCPEajrxpwwZLpJkUO4JgXax7mriiaaay1xyWRQhPjsgmAoQGk9uCVeJg1bo+TafW6enxdI26U1Ia3X6psjrJ+hcjJQpjRwLOPYf2DZ7blp2iEhxz14FxCRZ4IB/BbLlflMjDVQVsqprOKZ3HNrKY0tzg09Wzt4Ho59r3NThlKO6E0iLkDTNUe4EloLAb4FGCIUuebrg2HIB5ihgXEJgNZI4Ci6XbDKxUevvp9bcvH98Xi8WvVTAo6no5yBbgtSt0B6AEAoRGM/PXOuZUd0qDgUeFxnWFfEGaaX8q9eyH0qsP998USTczmUx7/BPkqlSByOs6NrwY8EJpMPxa+E51P5XHTL1VLj0RDlm0B6w+XVPd+kV6fHRieWrbwHMEO6FjDr5TMTCuLYElctjGOo+x9WC4r0hrh9RyGsrWwPhGDiOdk1js4tJy+Qpjh24Ui/t0LIceJ/PkG8GM0P4jGPqogFYILQ2GxtsS2F7CYoeXAKzcCwO7B2rBrPrCcqMRrOadjcHgCy/NZ8VW+VsDY9cAi+14QWDv2tZHLcfzXP2tsWxTvRK2oS9gxLBjHrZsmm3oKZbreVbdqur0arpNtGeCwMoPk/czcuDUAwArn07gf9IwgpUPJhVsqi2hYLOdiQSb7Uugx3qH+zpZSy211FJNvwFNoXAncdBvawAAAABJRU5ErkJggg==
+    FollowersListResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          example: 2
+        followers:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example:
+          - 13056700579848
+          - 13056700580889
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    V2UserDetail:
+      description: V2 Detailed User record.
+      type: object
+      properties:
+        userAttributes:
+          $ref: '#/components/schemas/V2UserAttributes'
+        userSystemInfo:
+          $ref: '#/components/schemas/UserSystemInfo'
+        features:
+          $ref: '#/components/schemas/IntegerList'
+        apps:
+          $ref: '#/components/schemas/IntegerList'
+        groups:
+          $ref: '#/components/schemas/IntegerList'
+        roles:
+          $ref: '#/components/schemas/StringList'
+        disclaimers:
+          $ref: '#/components/schemas/IntegerList'
+        avatar:
+          $ref: '#/components/schemas/Avatar'
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
+    FeatureList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Feature'
+      example:
+      - entitlment: canCreatePublicRoom
+        enabled: true
+      - entitlment: isExternalRoomEnabled
+        enabled: false
+      - entitlment: canUpdateAvatar
+        enabled: true
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    Avatar:
+      type: object
+      properties:
+        size:
+          description: The Avatar Size
+          type: string
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    RoleDetailList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RoleDetail'
+      example:
+      - id: CONTENT_MANAGEMENT
+        name: Content Management
+        userTypes:
+        - SYSTEM
+        - NORMAL
+        optionalActions:
+        - MONITOR_ROOMS
+      - id: COMPLIANCE_OFFICER
+        name: Compliance Officer
+        userTypes:
+        - NORMAL
+        optionalActions:
+        - BAN_AND_UNBAN_ROOM_MEMBER
+        - LOCK_AND_UNLOCK_ROOM
+        - MONITOR_ROOMS
+        - MONITOR_WALL_POSTS
+    Password:
+      description: Password. Stored as derived password in both the Pod and the Key Manager using PBKDF2 function. Number of iterations should be 10000 and desired length 256 bits.
+      type: object
+      properties:
+        hSalt:
+          description: Pod password salt used for PBKDF2 derivation.
+          type: string
+          example: hsalt
+        hPassword:
+          description: Pod password derived with PBKDF2.
+          type: string
+          example: hpassword
+        khSalt:
+          description: Key Manager password salt used for PBKDF2 derivation.
+          type: string
+          example: khsalt
+        khPassword:
+          description: Key Manager password derived with PBKDF2.
+          type: string
+          example: khpassword
+    V2UserKeyRequest:
+      description: User RSA key information.
+      type: object
+      properties:
+        key:
+          description: User RSA public key.
+          type: string
+          example: '-----BEGIN PUBLIC KEY-----\nMIICIANBgkqhw0BAQ...cCAwEAAQ==\n-----END PUBLIC KEY-----'
+        expirationDate:
+          description: RSA key expiration date. This value is set just for rotated keys.
+          type: integer
+          format: int64
+          example: 1467562406219
+        action:
+          description: "Action to be performed on the RSA key.\nThe following actions can be performed onto the user's active RSA key:\n  - SAVE\n  - REVOKE\nThe following actions can be performed onto the user's rotated RSA key:\n  - REVOKE\n  - EXTEND\n"
+          type: string
+          example: SAVE
+    UserStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - ENABLED
+          - DISABLED
+          example: ENABLED
+        suspended:
+          type: boolean
+          description: An optional attribute indicating whether the user is temporarily suspended or not. Since SBE 20.14.
+          x-since: 20.14
+          example: true
+        suspendedUntil:
+          type: integer
+          format: int64
+          description: An optional unix timestamp until which the suspension is effective. Since SBE 20.14.
+          x-since: 20.14
+          example: 1601546400
+        suspensionReason:
+          type: string
+          description: An optional description of the suspension reason. Since SBE 20.14.
+          x-since: 20.14
+          example: The user will be OOO due to a mandatory leave
+    UserSuspension:
+      type: object
+      properties:
+        suspended:
+          type: boolean
+          example: true
+        suspendedUntil:
+          type: integer
+          format: int64
+          example: 1601546400
+        suspensionReason:
+          type: string
+          example: The user will be OOO due to a mandatory leave
+    Disclaimer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 571d20dae4b042aaf06d2e7c
+        name:
+          type: string
+          example: New Enterprise Disclaimer
+        content:
+          type: string
+          example: This is a second enterprise disclaimer.
+        frequencyInHours:
+          type: integer
+          format: int32
+          example: 168
+        isDefault:
+          type: boolean
+          example: false
+        isActive:
+          type: boolean
+          example: true
+        createdDate:
+          type: integer
+          format: int64
+          example: 1461526746875
+        modifiedDate:
+          type: integer
+          format: int64
+          example: 1461526746875
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+    RoleDetail:
+      description: Role detailed.
+      type: object
+      properties:
+        id:
+          type: string
+          example: CONTENT_MANAGEMENT
+        name:
+          type: string
+          example: Content Management
+        userTypes:
+          type: array
+          items:
+            type: string
+          example:
+          - NORMAL
+          - SYSTEM
+        optionalActions:
+          type: array
+          items:
+            type: string
+          example:
+          - MONITOR_ROOMS
+          - MONITOR_WALL_POSTS
+    Pagination:
+      type: object
+      required:
+      - cursors
+      properties:
+        cursors:
+          type: object
+          required:
+          - before
+          properties:
+            before:
+              type: string
+              description: 'This is the opaque url-safe string that points to the start of the page of data
+
+                that has been returned.
+
+                '
+              example: MTAxNTExOTQ1MjAwNzI5NDE=
+            after:
+              type: string
+              description: 'This is the opaque url-safe string that points to the end of the page of data
+
+                that has been returned.
+
+                '
+              example: NDMyNzQyODI3OTQw
+        previous:
+          type: string
+          description: 'API endpoint that will return the previous page of data. If not included, this is
+
+            the first page of data.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
+        next:
+          type: string
+          description: 'API endpoint that will return the next page of data. If not included, this is the
+
+            last page of data. Due to how pagination works with visibility and privacy, it is
+
+            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
+
+            the ''next'' link no longer appears.
+
+            '
+          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
+    FollowingListResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int64
+          example: 2
+        following:
+          type: array
+          items:
+            type: integer
+            format: int64
+          example:
+          - 13056700579848
+          - 13056700580889
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    UserDetailList:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserDetail'
+      example:
+      - userAttributes:
+          emailAddress: janedoe@symphony.com
+          firstName: Jane
+          lastName: Doe
+          userName: jane.doe
+          displayName: Jane Doe
+          accountType: NORMAL
+          assetClasses:
+          - Commodities
+          industries:
+          - Financials
+          - Healthcare
+        userSystemInfo:
+          id: 9826885173258
+          status: ENABLED
+          suspended: true
+          suspensionReason: The user will be OOO due to a mandatory leave
+          suspendedUntil: 1601546400
+          createdDate: 1499347606000
+          createdBy: '9826885173252'
+          lastUpdatedDate: 1499348554853
+          lastLoginDate: 1504839044527
+        roles:
+        - INDIVIDUAL
+      - userAttributes:
+          emailAddress: nexus.user@email.com
+          userName: nexus.user
+          displayName: nexus.user
+          accountType: SYSTEM
+        userSystemInfo:
+          id: 9826885173290
+          status: ENABLED
+          suspended: false
+          createdDate: 1499375475000
+          createdBy: '9826885173255'
+          lastUpdatedDate: 1499375475852
+          lastLoginDate: 1504899124191
+        roles:
+        - USER_PROVISIONING
+        - CONTENT_MANAGEMENT
+        - INDIVIDUAL
+    DelegateAction:
+      type: object
+      properties:
+        userId:
+          type: integer
+          format: int64
+          example: 7215545078461
+        action:
+          type: string
+          enum:
+          - ADD
+          - REMOVE
+          example: ADD
+    ServiceAccountManifest:
+      type: object
+      properties:
+        manifest:
+          type: string
+          maxLength: 6144
+          description: Manifest containing commands supported by the service account. Must be valid JSON.
+      required:
+      - manifest
+    V2UserCreate:
+      description: 'V2 User Creation Object.
+
+        After creation, modify roles, features etc via the specific API calls.
+
+        '
+      type: object
+      properties:
+        userAttributes:
+          $ref: '#/components/schemas/V2UserAttributes'
+        password:
+          $ref: '#/components/schemas/Password'
+        roles:
+          type: array
+          items:
+            type: string
+          example:
+          - INDIVIDUAL
+          - COMPLIANCE_OFFICER
     V2UserAttributes:
       description: V2 User record.
       type: object
@@ -2530,52 +2842,28 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
-    UserStatus:
+    StringId:
       type: object
       properties:
-        status:
+        id:
           type: string
-          enum:
-          - ENABLED
-          - DISABLED
-          example: ENABLED
-        suspended:
+          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
+    Feature:
+      description: Entitlement feature record.
+      type: object
+      properties:
+        entitlment:
+          type: string
+          example: canCreatePublicRoom
+        enabled:
           type: boolean
-          description: An optional attribute indicating whether the user is temporarily suspended or not. Since SBE 20.14.
-          x-since: 20.14
+          description: Whether this entitlement is enabled for the user.
           example: true
-        suspendedUntil:
-          type: integer
-          format: int64
-          description: An optional unix timestamp until which the suspension is effective. Since SBE 20.14.
-          x-since: 20.14
-          example: 1601546400
-        suspensionReason:
-          type: string
-          description: An optional description of the suspension reason. Since SBE 20.14.
-          x-since: 20.14
-          example: The user will be OOO due to a mandatory leave
-    RoleDetailList:
-      type: array
-      items:
-        $ref: '#/components/schemas/RoleDetail'
-      example:
-      - id: CONTENT_MANAGEMENT
-        name: Content Management
-        userTypes:
-        - SYSTEM
-        - NORMAL
-        optionalActions:
-        - MONITOR_ROOMS
-      - id: COMPLIANCE_OFFICER
-        name: Compliance Officer
-        userTypes:
-        - NORMAL
-        optionalActions:
-        - BAN_AND_UNBAN_ROOM_MEMBER
-        - LOCK_AND_UNLOCK_ROOM
-        - MONITOR_ROOMS
-        - MONITOR_WALL_POSTS
+    FollowersList:
+      type: object
+      properties:
+        followers:
+          $ref: '#/components/schemas/UserIdList'
     SuccessResponse:
       type: object
       properties:
@@ -2588,291 +2876,3 @@ components:
         message:
           type: string
           example: Success
-    FollowersListResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          example: 2
-        followers:
-          type: array
-          items:
-            type: integer
-            format: int64
-          example:
-          - 13056700579848
-          - 13056700580889
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    FollowersList:
-      type: object
-      properties:
-        followers:
-          $ref: '#/components/schemas/UserIdList'
-    ServiceAccountManifest:
-      type: object
-      properties:
-        manifest:
-          type: string
-          maxLength: 6144
-          description: Manifest containing commands supported by the service account. Must be valid JSON.
-      required:
-      - manifest
-    V2UserDetail:
-      description: V2 Detailed User record.
-      type: object
-      properties:
-        userAttributes:
-          $ref: '#/components/schemas/V2UserAttributes'
-        userSystemInfo:
-          $ref: '#/components/schemas/UserSystemInfo'
-        features:
-          $ref: '#/components/schemas/IntegerList'
-        apps:
-          $ref: '#/components/schemas/IntegerList'
-        groups:
-          $ref: '#/components/schemas/IntegerList'
-        roles:
-          $ref: '#/components/schemas/StringList'
-        disclaimers:
-          $ref: '#/components/schemas/IntegerList'
-        avatar:
-          $ref: '#/components/schemas/Avatar'
-    V2UserCreate:
-      description: 'V2 User Creation Object.
-
-        After creation, modify roles, features etc via the specific API calls.
-
-        '
-      type: object
-      properties:
-        userAttributes:
-          $ref: '#/components/schemas/V2UserAttributes'
-        password:
-          $ref: '#/components/schemas/Password'
-        roles:
-          type: array
-          items:
-            type: string
-          example:
-          - INDIVIDUAL
-          - COMPLIANCE_OFFICER
-    AvatarUpdate:
-      type: object
-      properties:
-        image:
-          description: Base64 encoded image. Original image must be less than 2MB.
-          type: string
-          example: iVBORw0KGgoAAAANSUhEUgAAAJgAAAAoCAMAAAA11sNmAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX1QTFRFAAAAVVVVZmZmc8bmd3d3jMyMmZmZ+cxA////VVVVZmZmc8bmd3d3jMyM8oCZ+cxA////VVVVZmZmc8bmd3d3jMyM////VVVVZmZmc8bmd3d3jMyMmZmZ8oCZ+cxA////ZmZmjMyM////VVVVd3d3jMyM+cxA////VVVVZmZmc8bmd3d3jMyMmZmZnMyB8oCZ+cxA////ZmZmc8bmd3d3jMyMmZmZ+cxA////d3d3jMyM8oCZ+cxA////VVVVZmZmdm1RjMyM8oCZ+cxA////ZmZmmZmZ+cxA////W1tbZmZmc8bmdpGcd3d3jMyMmZmZ8oCZ////d3d3jMyMmZmZx3iJ+cxA////VVVVZmZmc8bmd3d3jMyMuIOVyqpG////VVVVZmZmbW1td3d3jMyMmZmZ+cxA////VVVVX1xUZmZmb46ac8bmdZ+vd3d3fnNQjMyMkpeGlqaWmJyYmZmZnYlMp5FLsZhJvJ9Iz3qM0K5F78VB8oCZ+cxA////9laq9wAAAGh0Uk5TABAQEBAQEBAQICAgICAgICAwMDAwMDBAQEBAQEBAQEBQUFBgYGBgYHBwcHBwcHBwcHCAgICAgICAj4+Pj4+fn5+fn5+fr6+vr7+/v7+/v7+/v8/Pz8/Pz9/f39/f39/f7+/v7+/v7+/qia/hAAADQ0lEQVRYw+2Xa1fTQBCGV0WJCBIvxEq10YoEVNQoaLxURKNWUHRRqYgaUSC1QkWsNzT7252Z3W1TWpCjX+I5fT/ksrM782T2Tc4JYy211NL/oJ50Ot2TRLD5FdTkma6kgU2uSB1PGtiY5HqZuK0ckWAjiQNLS7CdiQPrIq6xpGHtGnr0eRXA0gnjGlqoVCoA9kTe9rfXQob1r8ntv1mUmjlGYBUJdhJv2u9FlzWVHwohAt9kBuc+Dfk8zxjnWRnn3GHM4lKuAUM5nsMIjNETOQVM4NJstQpCzKxL10TjpdJ4B5zvEtg8Wj+zGEVRtwxjVpLFckIAA8sKAVWECBGCeUJ40BI9qwCDXHBqkxDYKT8WwVWWDDFMh5QOpWtURwk0dwE8toBgV2HoeoQ6T2GL6rJsAZ7OCBAGjgUqIbAvptBgNggo/XVgMJQ3mZmHk1wVGArMCPEajrxpwwZLpJkUO4JgXax7mriiaaay1xyWRQhPjsgmAoQGk9uCVeJg1bo+TafW6enxdI26U1Ia3X6psjrJ+hcjJQpjRwLOPYf2DZ7blp2iEhxz14FxCRZ4IB/BbLlflMjDVQVsqprOKZ3HNrKY0tzg09Wzt4Ho59r3NThlKO6E0iLkDTNUe4EloLAb4FGCIUuebrg2HIB5ihgXEJgNZI4Ci6XbDKxUevvp9bcvH98Xi8WvVTAo6no5yBbgtSt0B6AEAoRGM/PXOuZUd0qDgUeFxnWFfEGaaX8q9eyH0qsP998USTczmUx7/BPkqlSByOs6NrwY8EJpMPxa+E51P5XHTL1VLj0RDlm0B6w+XVPd+kV6fHRieWrbwHMEO6FjDr5TMTCuLYElctjGOo+x9WC4r0hrh9RyGsrWwPhGDiOdk1js4tJy+Qpjh24Ui/t0LIceJ/PkG8GM0P4jGPqogFYILQ2GxtsS2F7CYoeXAKzcCwO7B2rBrPrCcqMRrOadjcHgCy/NZ8VW+VsDY9cAi+14QWDv2tZHLcfzXP2tsWxTvRK2oS9gxLBjHrZsmm3oKZbreVbdqur0arpNtGeCwMoPk/czcuDUAwArn07gf9IwgpUPJhVsqi2hYLOdiQSb7Uugx3qH+zpZSy211FJNvwFNoXAncdBvawAAAABJRU5ErkJggg==
-    Password:
-      description: Password. Stored as derived password in both the Pod and the Key Manager using PBKDF2 function. Number of iterations should be 10000 and desired length 256 bits.
-      type: object
-      properties:
-        hSalt:
-          description: Pod password salt used for PBKDF2 derivation.
-          type: string
-          example: hsalt
-        hPassword:
-          description: Pod password derived with PBKDF2.
-          type: string
-          example: hpassword
-        khSalt:
-          description: Key Manager password salt used for PBKDF2 derivation.
-          type: string
-          example: khsalt
-        khPassword:
-          description: Key Manager password derived with PBKDF2.
-          type: string
-          example: khpassword
-    IntegerList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 1461508270000
-      - 7215545057281
-    FollowingListResponse:
-      type: object
-      properties:
-        count:
-          type: integer
-          format: int64
-          example: 2
-        following:
-          type: array
-          items:
-            type: integer
-            format: int64
-          example:
-          - 13056700579848
-          - 13056700580889
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    UserDetail:
-      description: Detailed User record.
-      type: object
-      properties:
-        userAttributes:
-          $ref: '#/components/schemas/UserAttributes'
-        userSystemInfo:
-          $ref: '#/components/schemas/UserSystemInfo'
-        features:
-          $ref: '#/components/schemas/IntegerList'
-        apps:
-          $ref: '#/components/schemas/IntegerList'
-        groups:
-          $ref: '#/components/schemas/IntegerList'
-        roles:
-          $ref: '#/components/schemas/StringList'
-        disclaimers:
-          $ref: '#/components/schemas/IntegerList'
-        avatar:
-          $ref: '#/components/schemas/Avatar'
-    UserSuspension:
-      type: object
-      properties:
-        suspended:
-          type: boolean
-          example: true
-        suspendedUntil:
-          type: integer
-          format: int64
-          example: 1601546400
-        suspensionReason:
-          type: string
-          example: The user will be OOO due to a mandatory leave
-    V2UserDetailList:
-      type: array
-      items:
-        $ref: '#/components/schemas/V2UserDetail'
-      example:
-      - userAttributes:
-          emailAddress: nexus.user@email.com
-          userName: nexus.user
-          displayName: nexus.user
-          accountType: SYSTEM
-        userSystemInfo:
-          id: 9826885173290
-          status: ENABLED
-          suspended: false
-          createdDate: 1499375475000
-          createdBy: '9826885173255'
-          lastUpdatedDate: 1499375475852
-          lastLoginDate: 1504899124191
-        roles:
-        - USER_PROVISIONING
-        - CONTENT_MANAGEMENT
-        - INDIVIDUAL
-      - userAttributes:
-          emailAddress: admin@mail.com
-          firstName: admin
-          lastName: admin
-          userName: admin@mail.com
-          displayName: Admin Admin
-          companyName: Company Name
-          department: Departament
-          division: Division
-          title: Administrator
-          twoFactorAuthPhone: '+15419999999'
-          workPhoneNumber: '+15419999999'
-          mobilePhoneNumber: '+15419999999'
-          accountType: NORMAL
-          assetClasses:
-          - Currencies
-          industries:
-          - Technology
-        userSystemInfo:
-          id: 7696581394433
-          status: ENABLED
-          suspended: false
-          createdDate: 1438054194000
-          lastUpdatedDate: 1527532171729
-          lastLoginDate: 1523912043015
-        roles:
-        - SUPER_COMPLIANCE_OFFICER
-        - INDIVIDUAL
-        - SUPER_ADMINISTRATOR
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    Feature:
-      description: Entitlement feature record.
-      type: object
-      properties:
-        entitlment:
-          type: string
-          example: canCreatePublicRoom
-        enabled:
-          type: boolean
-          description: Whether this entitlement is enabled for the user.
-          example: true
-    Pagination:
-      type: object
-      required:
-      - cursors
-      properties:
-        cursors:
-          type: object
-          required:
-          - before
-          properties:
-            before:
-              type: string
-              description: 'This is the opaque url-safe string that points to the start of the page of data
-
-                that has been returned.
-
-                '
-              example: MTAxNTExOTQ1MjAwNzI5NDE=
-            after:
-              type: string
-              description: 'This is the opaque url-safe string that points to the end of the page of data
-
-                that has been returned.
-
-                '
-              example: NDMyNzQyODI3OTQw
-        previous:
-          type: string
-          description: 'API endpoint that will return the previous page of data. If not included, this is
-
-            the first page of data.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&before=MTAxNTExOTQ1MjAwNzI5NDE=
-        next:
-          type: string
-          description: 'API endpoint that will return the next page of data. If not included, this is the
-
-            last page of data. Due to how pagination works with visibility and privacy, it is
-
-            possible that a page may be empty but contain a ''next'' paging link. Stop paging when
-
-            the ''next'' link no longer appears.
-
-            '
-          example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
-    UserFilter:
-      type: object
-      properties:
-        role:
-          type: string
-          description: The user role
-          example: INDIVIDUAL
-        feature:
-          type: string
-        status:
-          type: string
-          enum:
-          - ENABLED
-          - DISABLED

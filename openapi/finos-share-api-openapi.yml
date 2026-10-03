@@ -78,49 +78,36 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
+    ShareContent:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        type:
           type: string
-    V2BaseMessage:
-      required:
-      - streamId
-      - timestamp
-      - v2messageType
-      type: object
-      properties:
-        id:
-          type: string
-          description: The messageId is assigned by the ingestor service when a message is sent.
-        timestamp:
-          type: string
-        v2messageType:
-          type: string
-        streamId:
-          type: string
-      discriminator:
-        propertyName: v2messageType
-    AttachmentInfo:
-      required:
-      - id
-      - name
-      - size
-      type: object
-      properties:
-        id:
-          type: string
-          description: The attachment ID.
-        name:
-          type: string
-          description: The file name.
-        size:
-          type: integer
-          description: Size in bytes.
-          format: int64
+          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
+        content:
+          $ref: '#/components/schemas/ShareArticle'
+    V2Message:
+      description: A representation of a message sent by a user of Symphony.
+      allOf:
+      - $ref: '#/components/schemas/V2BaseMessage'
+      - required:
+        - fromUserId
+        - message
+        type: object
+        properties:
+          message:
+            type: string
+            description: Message text in MessageML
+            format: MessageML
+          fromUserId:
+            type: integer
+            description: the Symphony userId of the user who sent the message. This will be populated by the server (and actually ignored if included when sending a message).
+            format: int64
+          attachments:
+            type: array
+            default: []
+            items:
+              $ref: '#/components/schemas/AttachmentInfo'
     ShareArticle:
       required:
       - appId
@@ -169,33 +156,46 @@ components:
         appIconUrl:
           type: string
           description: App icon url of the calling application
-    V2Message:
-      description: A representation of a message sent by a user of Symphony.
-      allOf:
-      - $ref: '#/components/schemas/V2BaseMessage'
-      - required:
-        - fromUserId
-        - message
-        type: object
-        properties:
-          message:
-            type: string
-            description: Message text in MessageML
-            format: MessageML
-          fromUserId:
-            type: integer
-            description: the Symphony userId of the user who sent the message. This will be populated by the server (and actually ignored if included when sending a message).
-            format: int64
-          attachments:
-            type: array
-            default: []
-            items:
-              $ref: '#/components/schemas/AttachmentInfo'
-    ShareContent:
+    AttachmentInfo:
+      required:
+      - id
+      - name
+      - size
       type: object
       properties:
-        type:
+        id:
           type: string
-          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
-        content:
-          $ref: '#/components/schemas/ShareArticle'
+          description: The attachment ID.
+        name:
+          type: string
+          description: The file name.
+        size:
+          type: integer
+          description: Size in bytes.
+          format: int64
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    V2BaseMessage:
+      required:
+      - streamId
+      - timestamp
+      - v2messageType
+      type: object
+      properties:
+        id:
+          type: string
+          description: The messageId is assigned by the ingestor service when a message is sent.
+        timestamp:
+          type: string
+        v2messageType:
+          type: string
+        streamId:
+          type: string
+      discriminator:
+        propertyName: v2messageType

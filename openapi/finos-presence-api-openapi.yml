@@ -716,6 +716,30 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    V2Presence:
+      allOf:
+      - $ref: '#/components/schemas/V2UserPresence'
+      - type: object
+        properties:
+          timestamp:
+            type: integer
+            format: int64
+            description: The time, in milliseconds since Jan 1 1970, when the presence state was set.
+            example: 1533928483800
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
+    StringId:
+      type: object
+      properties:
+        id:
+          type: string
+          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
     Error:
       type: object
       properties:
@@ -726,14 +750,27 @@ components:
         message:
           type: string
           example: Invalid session
-    UserIdList:
+    V2PresenceList:
       type: array
       items:
-        type: integer
-        format: int64
+        $ref: '#/components/schemas/V2Presence'
       example:
-      - 7215545058313
-      - 7215545078461
+      - category: AVAILABLE
+        userId: 14568529068038
+        timestamp: 1533928483800
+      - category: OFFLINE
+        userId: 974217539631
+        timestamp: 1503286226030
+    V2UserPresence:
+      allOf:
+      - $ref: '#/components/schemas/V2PresenceStatus'
+      - type: object
+        properties:
+          userId:
+            type: integer
+            format: int64
+            description: The ID of the user to whom the presence state relates.
+            example: 14568529068038
     SuccessResponse:
       type: object
       properties:
@@ -755,40 +792,3 @@ components:
           example: AWAY
       required:
       - category
-    V2PresenceList:
-      type: array
-      items:
-        $ref: '#/components/schemas/V2Presence'
-      example:
-      - category: AVAILABLE
-        userId: 14568529068038
-        timestamp: 1533928483800
-      - category: OFFLINE
-        userId: 974217539631
-        timestamp: 1503286226030
-    V2Presence:
-      allOf:
-      - $ref: '#/components/schemas/V2UserPresence'
-      - type: object
-        properties:
-          timestamp:
-            type: integer
-            format: int64
-            description: The time, in milliseconds since Jan 1 1970, when the presence state was set.
-            example: 1533928483800
-    V2UserPresence:
-      allOf:
-      - $ref: '#/components/schemas/V2PresenceStatus'
-      - type: object
-        properties:
-          userId:
-            type: integer
-            format: int64
-            description: The ID of the user to whom the presence state relates.
-            example: 14568529068038
-    StringId:
-      type: object
-      properties:
-        id:
-          type: string
-          example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA

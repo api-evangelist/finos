@@ -223,45 +223,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DisclaimerList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Disclaimer'
-      example:
-      - id: 571d2052e4b042aaf06d2e7a
-        name: Enterprise Disclaimer
-        content: This is a disclaimer for the enterprise.
-        frequencyInHours: 24
-        isDefault: false
-        isActive: true
-        createdDate: 1461526610846
-        modifiedDate: 1461526610846
-      - id: 571d20dae4b042aaf06d2e7c
-        name: New Enterprise Disclaimer
-        content: This is a second enterprise disclaimer.
-        frequencyInHours: 168
-        isDefault: false
-        isActive: true
-        createdDate: 1461526746875
-        modifiedDate: 1461526746875
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
     Disclaimer:
       type: object
       properties:
@@ -298,3 +259,42 @@ components:
           - TEXT
           - XML
           example: TEXT
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461
+    DisclaimerList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Disclaimer'
+      example:
+      - id: 571d2052e4b042aaf06d2e7a
+        name: Enterprise Disclaimer
+        content: This is a disclaimer for the enterprise.
+        frequencyInHours: 24
+        isDefault: false
+        isActive: true
+        createdDate: 1461526610846
+        modifiedDate: 1461526610846
+      - id: 571d20dae4b042aaf06d2e7c
+        name: New Enterprise Disclaimer
+        content: This is a second enterprise disclaimer.
+        frequencyInHours: 168
+        isDefault: false
+        isActive: true
+        createdDate: 1461526746875
+        modifiedDate: 1461526746875
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session

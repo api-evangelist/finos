@@ -244,16 +244,16 @@ paths:
       - File Ext
 components:
   schemas:
-    Error:
+    FileExtensionsResponse:
       type: object
+      required:
+      - data
+      - paging
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileExtension'
     FileExtension:
       type: object
       required:
@@ -291,13 +291,13 @@ components:
           enum:
           - SYSTEM
           - CUSTOMER
-    FileExtensionsResponse:
+    Error:
       type: object
-      required:
-      - data
-      - paging
       properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileExtension'
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
