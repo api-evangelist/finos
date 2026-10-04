@@ -525,51 +525,41 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    UserSearchResults:
+    UserSearchFilter:
       type: object
       properties:
-        count:
-          description: The total number of users which matched the search criteria.
-          type: integer
-          format: int64
-          example: 1
-        skip:
-          description: The number of skipped results.
-          type: integer
-          format: int64
-          example: 0
-        limit:
-          description: The number of returned results.
-          type: integer
-          format: int64
-          example: 1
-        searchQuery:
-          $ref: '#/components/schemas/UserSearchQuery'
-        users:
-          description: A list of users which matched by the search criteria.
-          type: array
-          items:
-            $ref: '#/components/schemas/UserV2'
-          example:
-          - null
-    UserSearchQuery:
-      type: object
-      properties:
-        query:
+        accountTypes:
+          $ref: '#/components/schemas/StringList'
+          description: type of user used to search
+          example: NORMAL
+        title:
           type: string
-          description: search / query term.  This can be firstname, lastname, displayname or email
-          example: jane
-        filters:
-          $ref: '#/components/schemas/UserSearchFilter'
+          description: user's job title
+          example: Sales Manager
+        company:
+          type: string
+          description: company name
+          example: Symphony
+        location:
+          type: string
+          description: city of the user's job location
+          example: Marseille
+        marketCoverage:
+          type: string
+          description: geographic area the user works with
+          example: EMEA
+        responsibility:
+          type: string
+          description: user's responsibility
+          example: BAU
+        function:
+          type: string
+          description: user's function
+          example: Trade Management
+        instrument:
+          type: string
+          description: higher level instrument for the Asset Classes
+          example: Securities
     V2UserList:
       description: List of User record version 2
       type: object
@@ -623,22 +613,91 @@ components:
             email: notavalidemail
           - error: invalid.format
             id: 654321
-    UserError:
-      description: User error information
+    V1Session:
+      description: V1 Detailed Session record.
       type: object
       properties:
-        error:
+        sessionId:
           type: string
-          description: Error code informing what is wrong
-          example: invalid.format
-        email:
+          description: The id of the user session
+        clientIp:
           type: string
-          description: 'Email with error. Only one of the following fields should be present: email or id'
-          example: notavalidemail
-        id:
+          description: The ip address of the session initiator
+        userId:
+          type: integer
+          format: int64
+          description: The user id of the session initiator
+        userAgent:
           type: string
-          description: 'Id with error. Only one of the following fields should be present: email or id'
-          example: notavalidid
+          description: The user agent of the session
+        browser:
+          type: string
+          description: The browser section of the user agent
+        os:
+          type: string
+          description: The os section of the user agent
+        device:
+          type: string
+          description: The device section of the user agent
+        deviceHash:
+          type: string
+          description: A hash uniquely identifying the device of the requester
+        creationTime:
+          type: integer
+          format: int64
+          description: The timestamp of the creation time the user session
+        expirationDelay:
+          type: integer
+          format: int64
+          description: The timestamp of the expiry time of the user session
+    AvatarList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Avatar'
+      example:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    UserSearchResults:
+      type: object
+      properties:
+        count:
+          description: The total number of users which matched the search criteria.
+          type: integer
+          format: int64
+          example: 1
+        skip:
+          description: The number of skipped results.
+          type: integer
+          format: int64
+          example: 0
+        limit:
+          description: The number of returned results.
+          type: integer
+          format: int64
+          example: 1
+        searchQuery:
+          $ref: '#/components/schemas/UserSearchQuery'
+        users:
+          description: A list of users which matched by the search criteria.
+          type: array
+          items:
+            $ref: '#/components/schemas/UserV2'
+          example:
+          - null
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     V1UserSessions:
       description: V1 Detailed Sessions Record.
       type: object
@@ -647,16 +706,35 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/V1Session'
-    Error:
+    Avatar:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
+        size:
+          description: The Avatar Size
           type: string
-          example: Invalid session
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+    UserSearchQuery:
+      type: object
+      properties:
+        query:
+          type: string
+          description: search / query term.  This can be firstname, lastname, displayname or email
+          example: jane
+        filters:
+          $ref: '#/components/schemas/UserSearchFilter'
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
     UserV2:
       description: User record version 2
       type: object
@@ -734,107 +812,29 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
-    UserSearchFilter:
+    UserError:
+      description: User error information
       type: object
       properties:
-        accountTypes:
-          $ref: '#/components/schemas/StringList'
-          description: type of user used to search
-          example: NORMAL
-        title:
+        error:
           type: string
-          description: user's job title
-          example: Sales Manager
-        company:
+          description: Error code informing what is wrong
+          example: invalid.format
+        email:
           type: string
-          description: company name
-          example: Symphony
-        location:
+          description: 'Email with error. Only one of the following fields should be present: email or id'
+          example: notavalidemail
+        id:
           type: string
-          description: city of the user's job location
-          example: Marseille
-        marketCoverage:
-          type: string
-          description: geographic area the user works with
-          example: EMEA
-        responsibility:
-          type: string
-          description: user's responsibility
-          example: BAU
-        function:
-          type: string
-          description: user's function
-          example: Trade Management
-        instrument:
-          type: string
-          description: higher level instrument for the Asset Classes
-          example: Securities
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
-    SuccessResponse:
+          description: 'Id with error. Only one of the following fields should be present: email or id'
+          example: notavalidid
+    Error:
       type: object
       properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
+        code:
+          type: integer
+          format: int32
+          example: 401
         message:
           type: string
-          example: Success
-    Avatar:
-      type: object
-      properties:
-        size:
-          description: The Avatar Size
-          type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-    V1Session:
-      description: V1 Detailed Session record.
-      type: object
-      properties:
-        sessionId:
-          type: string
-          description: The id of the user session
-        clientIp:
-          type: string
-          description: The ip address of the session initiator
-        userId:
-          type: integer
-          format: int64
-          description: The user id of the session initiator
-        userAgent:
-          type: string
-          description: The user agent of the session
-        browser:
-          type: string
-          description: The browser section of the user agent
-        os:
-          type: string
-          description: The os section of the user agent
-        device:
-          type: string
-          description: The device section of the user agent
-        deviceHash:
-          type: string
-          description: A hash uniquely identifying the device of the requester
-        creationTime:
-          type: integer
-          format: int64
-          description: The timestamp of the creation time the user session
-        expirationDelay:
-          type: integer
-          format: int64
-          description: The timestamp of the expiry time of the user session
+          example: Invalid session

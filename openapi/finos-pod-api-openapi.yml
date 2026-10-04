@@ -119,21 +119,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Languages:
-      description: List of languages
-      type: object
-      properties:
-        languages:
-          $ref: '#/components/schemas/StringList'
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
     Error:
       type: object
       properties:
@@ -144,6 +129,21 @@ components:
         message:
           type: string
           example: Invalid session
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
+    Languages:
+      description: List of languages
+      type: object
+      properties:
+        languages:
+          $ref: '#/components/schemas/StringList'
     PodCertificate:
       type: object
       properties:

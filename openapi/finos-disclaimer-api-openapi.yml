@@ -259,14 +259,16 @@ components:
           - TEXT
           - XML
           example: TEXT
-    UserIdList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 7215545058313
-      - 7215545078461
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     DisclaimerList:
       type: array
       items:
@@ -288,13 +290,11 @@ components:
         isActive: true
         createdDate: 1461526746875
         modifiedDate: 1461526746875
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
+    UserIdList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 7215545058313
+      - 7215545078461

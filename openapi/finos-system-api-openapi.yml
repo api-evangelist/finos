@@ -434,6 +434,22 @@ components:
       enum:
       - UP
       - DOWN
+    V3Health:
+      type: object
+      properties:
+        services:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/V3HealthComponent'
+        status:
+          $ref: '#/components/schemas/V3HealthStatus'
+        users:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/V3HealthComponent'
+        version:
+          type: string
+          description: Required Agent verison
     V3HealthAuthType:
       type: string
       description: Type of authentication
@@ -453,22 +469,16 @@ components:
         version:
           type: string
           description: Optional component version
-    V3Health:
+    Error:
       type: object
       properties:
-        services:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/V3HealthComponent'
-        status:
-          $ref: '#/components/schemas/V3HealthStatus'
-        users:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/V3HealthComponent'
-        version:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
           type: string
-          description: Required Agent verison
+          example: Invalid session
     StringList:
       type: array
       items:
@@ -487,16 +497,6 @@ components:
           type: string
           description: 'URI protocol scheme (example: http, https, ftp)'
           example: skype
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
 x-refined-from:
 - finos-symphony-agent-api-openapi.yml
 - finos-symphony-pod-api-openapi.yml

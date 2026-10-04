@@ -565,30 +565,54 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ChannelSubscriber:
+    ChannelSubscriberResponse:
       type: object
       properties:
-        subscriptionId:
-          type: string
-        pushed:
-          type: boolean
-          description: True if the subscriber is allowed to unsubscribe
-          default: false
-        owner:
-          type: boolean
-          description: True if the subscriber is the creator
-          default: false
-        subscriberName:
-          type: string
-          description: User display name
-        userId:
+        offset:
           type: integer
-          description: The user ID of the subscriber
+          description: The number of subscribers skipped
           format: int64
-        timestamp:
+        hasMore:
+          type: boolean
+          description: True if there are more subscribers
+        total:
           type: integer
-          description: Timestamp when the signal was subscribed, in milliseconds since Jan 1 1970
+          description: The total number of subscribers
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelSubscriber'
+    ChannelSubscriptionResponse:
+      type: object
+      properties:
+        requestedSubscription:
+          type: integer
+          description: The number of requested userIds to subscribe
           format: int64
+        successfulSubscription:
+          type: integer
+          description: The number of successful subscriptions done
+          format: int64
+        failedSubscription:
+          type: integer
+          description: The number of subscription failures
+          format: int64
+        subscriptionErrors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChannelSubscriptionError'
+    Signal:
+      allOf:
+      - $ref: '#/components/schemas/BaseSignal'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Signal ID
+          timestamp:
+            type: integer
+            description: Timestamp when the signal was created, in milliseconds since Jan 1 1970
+            format: int64
     AgentInfo:
       type: object
       properties:
@@ -616,6 +640,70 @@ components:
         commitId:
           type: string
           description: The Git commit ID of the running revision.
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+        message:
+          type: string
+    ChannelSubscriptionError:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: The userId on which failure happened
+          format: int64
+        code:
+          type: string
+          description: subscription failure code
+        message:
+          type: string
+          description: subscription failure message
+    V2Error:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: object
+    SignalList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Signal'
+    ChannelSubscriber:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        pushed:
+          type: boolean
+          description: True if the subscriber is allowed to unsubscribe
+          default: false
+        owner:
+          type: boolean
+          description: True if the subscriber is the creator
+          default: false
+        subscriberName:
+          type: string
+          description: User display name
+        userId:
+          type: integer
+          description: The user ID of the subscriber
+          format: int64
+        timestamp:
+          type: integer
+          description: Timestamp when the signal was subscribed, in milliseconds since Jan 1 1970
+          format: int64
     BaseSignal:
       type: object
       properties:
@@ -637,91 +725,3 @@ components:
         companyWide:
           type: boolean
           description: Whether the signal is a push signal
-    ChannelSubscriberResponse:
-      type: object
-      properties:
-        offset:
-          type: integer
-          description: The number of subscribers skipped
-          format: int64
-        hasMore:
-          type: boolean
-          description: True if there are more subscribers
-        total:
-          type: integer
-          description: The total number of subscribers
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelSubscriber'
-    Signal:
-      allOf:
-      - $ref: '#/components/schemas/BaseSignal'
-      - type: object
-        properties:
-          id:
-            type: string
-            description: Signal ID
-          timestamp:
-            type: integer
-            description: Timestamp when the signal was created, in milliseconds since Jan 1 1970
-            format: int64
-    SignalList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Signal'
-    ChannelSubscriptionError:
-      type: object
-      properties:
-        userId:
-          type: integer
-          description: The userId on which failure happened
-          format: int64
-        code:
-          type: string
-          description: subscription failure code
-        message:
-          type: string
-          description: subscription failure message
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-        message:
-          type: string
-    ChannelSubscriptionResponse:
-      type: object
-      properties:
-        requestedSubscription:
-          type: integer
-          description: The number of requested userIds to subscribe
-          format: int64
-        successfulSubscription:
-          type: integer
-          description: The number of successful subscriptions done
-          format: int64
-        failedSubscription:
-          type: integer
-          description: The number of subscription failures
-          format: int64
-        subscriptionErrors:
-          type: array
-          items:
-            $ref: '#/components/schemas/ChannelSubscriptionError'
-    V2Error:
-      required:
-      - code
-      - message
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: object

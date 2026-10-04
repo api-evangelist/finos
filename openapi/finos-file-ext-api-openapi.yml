@@ -244,16 +244,6 @@ paths:
       - File Ext
 components:
   schemas:
-    FileExtensionsResponse:
-      type: object
-      required:
-      - data
-      - paging
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileExtension'
     FileExtension:
       type: object
       required:
@@ -291,6 +281,16 @@ components:
           enum:
           - SYSTEM
           - CUSTOMER
+    FileExtensionsResponse:
+      type: object
+      required:
+      - data
+      - paging
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileExtension'
     Error:
       type: object
       properties:

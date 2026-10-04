@@ -594,6 +594,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     MemberInfo:
       description: Detailed membership record.
       type: object
@@ -635,18 +647,6 @@ components:
         message:
           type: string
           example: Invalid session
-    SuccessResponse:
-      type: object
-      properties:
-        format:
-          type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success
     MembershipList:
       description: List of members in a room.
       type: array

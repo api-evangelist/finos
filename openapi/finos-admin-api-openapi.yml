@@ -275,60 +275,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    MessageIds:
+    MessageUser:
       type: object
       properties:
-        messageIds:
-          $ref: '#/components/schemas/StringList'
-    StringList:
-      type: array
-      items:
-        type: string
-      example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    MessageDownloadReceiptCount:
-      type: object
-      properties:
-        fileName:
-          type: string
-          example: internal_707810
-        count:
+        id:
           type: integer
           format: int64
-          example: 1
-    MessageMetadataResponse:
-      description: Message metadata
-      type: object
-      properties:
-        messageId:
+          example: 7215545058329
+        name:
           type: string
-        parent:
-          type: object
-          properties:
-            messageId:
-              type: string
-              description: Id of the parent message queried
-            relationshipType:
-              type: string
-              enum:
-              - REPLY_FORM
-              - REPLY
-              - FORWARD
-        replies:
-          type: array
-          items:
-            type: string
-        forwards:
-          type: array
-          items:
-            type: string
-        formReplies:
-          type: array
-          items:
-            type: string
+          example: User Test
     DownloadReceiptCount:
       type: object
       properties:
@@ -339,40 +295,61 @@ components:
           type: integer
           format: int64
           example: 1552999335740
+    MessageStream:
+      type: object
+      properties:
+        id:
+          type: string
+          example: lFpyw0ATFmji+Cc/cSzbk3///pZkWpe1dA==
+        name:
+          type: string
+          example: Test Room
+        streamType:
+          type: string
+          example: ROOM
+    MessageReceiptDetail:
+      description: Message receipt details response object
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserCompp'
+        deliveryReceiptTimestamp:
+          description: Timestamp of message delivery receipts
+          type: integer
+          format: int64
+          example: 1552999333784
+        readReceiptTimestamp:
+          description: Timestamp of message read receipts
+          type: integer
+          format: int64
+          example: 1552999335114
+        emailNotificationTimestamp:
+          description: Timestamp of message email notifications
+          type: integer
+          format: int64
+          example: 1552999335114
+        downloadReceiptCounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/DownloadReceiptCount'
+          example:
+          - fileName: Untitled Document.txt
+            timestamp: 1552999335740
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
     MessageDetails:
       description: Message details
       type: array
       items:
         $ref: '#/components/schemas/MessageDetail'
-    MessageDetail:
-      description: Message detail
-      type: object
-      properties:
-        messageId:
-          description: message id
-          type: string
-        creator:
-          $ref: '#/components/schemas/MessageUser'
-        onBehalfOfUser:
-          $ref: '#/components/schemas/MessageUser'
-        stream:
-          $ref: '#/components/schemas/MessageStream'
-        creationDate:
-          type: integer
-          format: int64
-        deliveryReceiptCount:
-          type: integer
-          format: int64
-        readReceiptCount:
-          type: integer
-          format: int64
-        emailNotificationCount:
-          type: integer
-          format: int64
-        downloadReceiptCounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/MessageDownloadReceiptCount'
     Pagination:
       type: object
       required:
@@ -419,53 +396,6 @@ components:
 
             '
           example: https://tenantapi.d.isym.io/v1/tenantinfo?limit=25&after=NDMyNzQyODI3OTQw
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    MessageStream:
-      type: object
-      properties:
-        id:
-          type: string
-          example: lFpyw0ATFmji+Cc/cSzbk3///pZkWpe1dA==
-        name:
-          type: string
-          example: Test Room
-        streamType:
-          type: string
-          example: ROOM
-    UserCompp:
-      description: Basic user information to include in other models
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          description: User ID
-          example: 7215545058329
-        username:
-          type: string
-          description: Username
-          example: dpayet
-        firstName:
-          type: string
-          description: User first name
-          example: Dimitri
-        lastName:
-          type: string
-          description: User last name
-          example: Payet
-        emailAddress:
-          type: string
-          description: User email addressIntegrationUserManagerTest
-          example: dpayet@om.fr
     MessageReceiptDetailResponse:
       description: List of Message receipt details
       type: object
@@ -515,41 +445,111 @@ components:
               timestamp: 1552999335740
         pagination:
           $ref: '#/components/schemas/Pagination'
-    MessageUser:
+    UserCompp:
+      description: Basic user information to include in other models
       type: object
       properties:
         id:
           type: integer
           format: int64
+          description: User ID
           example: 7215545058329
-        name:
+        username:
           type: string
-          example: User Test
-    MessageReceiptDetail:
-      description: Message receipt details response object
+          description: Username
+          example: dpayet
+        firstName:
+          type: string
+          description: User first name
+          example: Dimitri
+        lastName:
+          type: string
+          description: User last name
+          example: Payet
+        emailAddress:
+          type: string
+          description: User email addressIntegrationUserManagerTest
+          example: dpayet@om.fr
+    MessageDetail:
+      description: Message detail
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/UserCompp'
-        deliveryReceiptTimestamp:
-          description: Timestamp of message delivery receipts
+        messageId:
+          description: message id
+          type: string
+        creator:
+          $ref: '#/components/schemas/MessageUser'
+        onBehalfOfUser:
+          $ref: '#/components/schemas/MessageUser'
+        stream:
+          $ref: '#/components/schemas/MessageStream'
+        creationDate:
           type: integer
           format: int64
-          example: 1552999333784
-        readReceiptTimestamp:
-          description: Timestamp of message read receipts
+        deliveryReceiptCount:
           type: integer
           format: int64
-          example: 1552999335114
-        emailNotificationTimestamp:
-          description: Timestamp of message email notifications
+        readReceiptCount:
           type: integer
           format: int64
-          example: 1552999335114
+        emailNotificationCount:
+          type: integer
+          format: int64
         downloadReceiptCounts:
           type: array
           items:
-            $ref: '#/components/schemas/DownloadReceiptCount'
-          example:
-          - fileName: Untitled Document.txt
-            timestamp: 1552999335740
+            $ref: '#/components/schemas/MessageDownloadReceiptCount'
+    MessageMetadataResponse:
+      description: Message metadata
+      type: object
+      properties:
+        messageId:
+          type: string
+        parent:
+          type: object
+          properties:
+            messageId:
+              type: string
+              description: Id of the parent message queried
+            relationshipType:
+              type: string
+              enum:
+              - REPLY_FORM
+              - REPLY
+              - FORWARD
+        replies:
+          type: array
+          items:
+            type: string
+        forwards:
+          type: array
+          items:
+            type: string
+        formReplies:
+          type: array
+          items:
+            type: string
+    MessageDownloadReceiptCount:
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: internal_707810
+        count:
+          type: integer
+          format: int64
+          example: 1
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype
+    MessageIds:
+      type: object
+      properties:
+        messageIds:
+          $ref: '#/components/schemas/StringList'

@@ -83,6 +83,11 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
     Token:
       type: object
       properties:
@@ -103,11 +108,6 @@ components:
         authorizationToken:
           type: string
           description: "(Beta) Short lived access token built from a user session. This field is still on Beta, please continue using \nthe returned \"token\" instead.\n"
-    SuccessResponse:
-      type: object
-      properties:
-        message:
-          type: string
     Error:
       type: object
       properties:

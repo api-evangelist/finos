@@ -545,16 +545,6 @@ components:
           format: int32
           description: number of requests made
           example: 1
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
     UserConnectionRequest:
       type: object
       description: Request body for the Connection APIs
@@ -588,3 +578,13 @@ components:
         requestCounter: 1
       - userId: 7078106103809
         status: ACCEPTED
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session

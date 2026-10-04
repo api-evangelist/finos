@@ -69,25 +69,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    StringList:
+    AvatarList:
       type: array
       items:
-        type: string
+        $ref: '#/components/schemas/Avatar'
       example:
-      - ftp
-      - mailto
-      - fdsup
-      - skype
-    Error:
+      - size: original
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+      - size: small
+        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
+    Avatar:
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
+        size:
+          description: The Avatar Size
           type: string
-          example: Invalid session
+          example: original
+        url:
+          description: Url of the image
+          type: string
+          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
     UserV2:
       description: User record version 2
       type: object
@@ -165,23 +166,22 @@ components:
             com_symphony_metadataKey2:
             - value1
             - value2
-    AvatarList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Avatar'
-      example:
-      - size: original
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
-      - size: small
-        url: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8_small.png
-    Avatar:
+    Error:
       type: object
       properties:
-        size:
-          description: The Avatar Size
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
           type: string
-          example: original
-        url:
-          description: Url of the image
-          type: string
-          example: ../avatars/izcQTdRVFOK_qhCrYeQOpIuHKuZuMk3J88Uz_bShzM8.png
+          example: Invalid session
+    StringList:
+      type: array
+      items:
+        type: string
+      example:
+      - ftp
+      - mailto
+      - fdsup
+      - skype

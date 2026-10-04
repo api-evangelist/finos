@@ -148,16 +148,6 @@ components:
         timestamp:
           type: string
           example: 1531968487845
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
     MessageStatus:
       description: 'Holds the status of a particular message, indicating which user the message has been sent, delivered or read.
 
@@ -204,3 +194,13 @@ components:
             email: gmahler@music.org
             userName: gmahler
             timestamp: 1531968487845
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
+          type: string
+          example: Invalid session
