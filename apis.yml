@@ -546,6 +546,12 @@ apis:
   - type: GitHubRepository
     url: https://github.com/finos/symphony-api-spec
 common:
+  - type: Plans
+    url: plans/finos-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/finos-rate-limits.yml
+  - type: FinOps
+    url: finops/finos-finops.yml
   - type: CapabilityMap
     url: capabilities/finos-capability-edges.yml
     name: FINOS Business Capability Map
