@@ -116,10 +116,8 @@ apis:
 unitEconomics:
   - name: Cost per Implementing Product
     metric: (membership_fee + adoption_engineering_cost) / implementing_products
-    target: organization-dependent
   - name: Contribution / Membership ROI
     metric: contribution_hours / membership_fee
-    target: maximize meaningful contribution
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
