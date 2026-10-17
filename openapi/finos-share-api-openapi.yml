@@ -78,49 +78,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ShareContent:
-      type: object
-      properties:
-        type:
-          type: string
-          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
-        content:
-          $ref: '#/components/schemas/ShareArticle'
-    AttachmentInfo:
-      required:
-      - id
-      - name
-      - size
-      type: object
-      properties:
-        id:
-          type: string
-          description: The attachment ID.
-        name:
-          type: string
-          description: The file name.
-        size:
-          type: integer
-          description: Size in bytes.
-          format: int64
-    V2BaseMessage:
-      required:
-      - streamId
-      - timestamp
-      - v2messageType
-      type: object
-      properties:
-        id:
-          type: string
-          description: The messageId is assigned by the ingestor service when a message is sent.
-        timestamp:
-          type: string
-        v2messageType:
-          type: string
-        streamId:
-          type: string
-      discriminator:
-        propertyName: v2messageType
     ShareArticle:
       required:
       - appId
@@ -169,6 +126,57 @@ components:
         appIconUrl:
           type: string
           description: App icon url of the calling application
+    V2BaseMessage:
+      required:
+      - streamId
+      - timestamp
+      - v2messageType
+      type: object
+      properties:
+        id:
+          type: string
+          description: The messageId is assigned by the ingestor service when a message is sent.
+        timestamp:
+          type: string
+        v2messageType:
+          type: string
+        streamId:
+          type: string
+      discriminator:
+        propertyName: v2messageType
+    ShareContent:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of content to be shared.  Currently only support "com.symphony.sharing.article"
+        content:
+          $ref: '#/components/schemas/ShareArticle'
+    AttachmentInfo:
+      required:
+      - id
+      - name
+      - size
+      type: object
+      properties:
+        id:
+          type: string
+          description: The attachment ID.
+        name:
+          type: string
+          description: The file name.
+        size:
+          type: integer
+          description: Size in bytes.
+          format: int64
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
     V2Message:
       description: A representation of a message sent by a user of Symphony.
       allOf:
@@ -191,11 +199,3 @@ components:
             default: []
             items:
               $ref: '#/components/schemas/AttachmentInfo'
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

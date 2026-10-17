@@ -415,79 +415,6 @@ components:
         - 571db2e4e4b012df6341f393
         createdDate: 1461563914581
         modifiedDate: 1461564112286
-    PolicyList:
-      type: array
-      items:
-        $ref: '#/components/schemas/Policy'
-      example:
-      - id: 56e9df05e4b00737e3d3b82d
-        policyType: BLOCK
-        active: true
-        groups:
-        - 56e9def8e4b0b406041812e6
-        - 56e9deffe4b0b406041812e7
-        createdDate: 1458167557358
-        modifiedDate: 1458330606752
-      - id: 571cd64de4b042aaf06d2d8b
-        policyType: BLOCK
-        active: true
-        groups:
-        - 571cd646e4b042aaf06d2d84
-        - 571cd64ce4b042aaf06d2d8a
-        createdDate: 1461507661146
-        modifiedDate: 1461507661146
-    Group:
-      description: Information Barrier Group record.
-      type: object
-      properties:
-        id:
-          type: string
-          example: 571db1f2e4b027c4f055a594
-        name:
-          type: string
-          example: Group 1
-        active:
-          type: boolean
-          example: true
-        memberCount:
-          type: integer
-          format: int32
-          example: 1
-        policies:
-          type: array
-          items:
-            type: string
-          example:
-          - 571db2e4e4b012df6341f393
-        createdDate:
-          type: integer
-          format: int64
-          example: 1461563890135
-        modifiedDate:
-          type: integer
-          format: int64
-          example: 1461563926812
-    BulkActionResult:
-      description: 'The results of list based bulk action. The list contains the result messages
-
-        in the same order as submitted. The message will be an empty string if the action
-
-        was successful for item in that index.
-
-        '
-      properties:
-        overallResult:
-          type: string
-          enum:
-          - SUCCESS
-          - FAIL
-          example: SUCCESS
-        results:
-          type: array
-          items:
-            type: string
-          example:
-          - ''
     Policy:
       description: Information Barrier Policy record.
       type: object
@@ -523,6 +450,87 @@ components:
           type: integer
           format: int64
           example: 1458330606752
+    BulkActionResult:
+      description: 'The results of list based bulk action. The list contains the result messages
+
+        in the same order as submitted. The message will be an empty string if the action
+
+        was successful for item in that index.
+
+        '
+      properties:
+        overallResult:
+          type: string
+          enum:
+          - SUCCESS
+          - FAIL
+          example: SUCCESS
+        results:
+          type: array
+          items:
+            type: string
+          example:
+          - ''
+    IntegerList:
+      type: array
+      items:
+        type: integer
+        format: int64
+      example:
+      - 1461508270000
+      - 7215545057281
+    Group:
+      description: Information Barrier Group record.
+      type: object
+      properties:
+        id:
+          type: string
+          example: 571db1f2e4b027c4f055a594
+        name:
+          type: string
+          example: Group 1
+        active:
+          type: boolean
+          example: true
+        memberCount:
+          type: integer
+          format: int32
+          example: 1
+        policies:
+          type: array
+          items:
+            type: string
+          example:
+          - 571db2e4e4b012df6341f393
+        createdDate:
+          type: integer
+          format: int64
+          example: 1461563890135
+        modifiedDate:
+          type: integer
+          format: int64
+          example: 1461563926812
+    PolicyList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Policy'
+      example:
+      - id: 56e9df05e4b00737e3d3b82d
+        policyType: BLOCK
+        active: true
+        groups:
+        - 56e9def8e4b0b406041812e6
+        - 56e9deffe4b0b406041812e7
+        createdDate: 1458167557358
+        modifiedDate: 1458330606752
+      - id: 571cd64de4b042aaf06d2d8b
+        policyType: BLOCK
+        active: true
+        groups:
+        - 571cd646e4b042aaf06d2d84
+        - 571cd64ce4b042aaf06d2d8a
+        createdDate: 1461507661146
+        modifiedDate: 1461507661146
     Error:
       type: object
       properties:
@@ -533,11 +541,3 @@ components:
         message:
           type: string
           example: Invalid session
-    IntegerList:
-      type: array
-      items:
-        type: integer
-        format: int64
-      example:
-      - 1461508270000
-      - 7215545057281

@@ -1312,74 +1312,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    V1DLPPolicyRequest:
-      required:
-      - contentTypes
-      - dictionaryIds
-      - name
-      - scopes
-      - type
-      type: object
-      properties:
-        contentTypes:
-          type: array
-          description: 'The list of content types that policy should apply to. Cannot be empty. Policy content types could be either of "Messages", "RoomMeta", "SignalMeta".
-
-            Default is set to ["Messages"] if not specified.
-
-            '
-          items:
-            type: string
-        dictionaryIds:
-          type: array
-          description: List of dictionaries Ids for the policy.
-          items:
-            type: string
-        name:
-          type: string
-          description: Unique name of a policy, max 30 characters. Cannot be empty. All the leading and trailing blank spaces are trimmed.
-        scopes:
-          type: array
-          description: 'List of communication scopes. Possible values are "Internal" (for Internal conversations) or "External" (for External conversations).
-
-            You can apply both scopes if you set it to ["Internal", "External"].
-
-            '
-          items:
-            type: string
-        type:
-          type: string
-          description: Type of policy. Possible values "Block" or "Warn".
-      description: The policy object to use for creating/updating a policy.
-    V3DLPTextMatchConfig:
-      type: object
-      required:
-      - dictionaries
-      - applicableFileTypes
-      properties:
-        dictionaries:
-          type: array
-          items:
-            $ref: '#/components/schemas/V3DLPDictionaryMeta'
-        countUniqueOccurrences:
-          type: integer
-          format: int32
-        applicableFileTypes:
-          type: array
-          description: 'File types must be applied only for rule type "FileContent", otherwise must be empty.
-
-            Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
-
-            '
-          items:
-            type: string
-      description: 'This is a configuration that can be used to match text or regex.
-
-        Configuration that can be used by a rule. This is a configuration that can be used to match text or regex.
-
-        This configuration also corresponds to V2 TextMatch/RegexMatch of dictionaries.
-
-        '
     V3DLPRule:
       required:
       - name
@@ -1411,32 +1343,6 @@ components:
         Only one of the configuration property should be set [textMatchConfig, fileSizeConfig, fileExtensionConfig, filePasswordConfig, fileClassifierConfig].
 
         '
-    V3DLPFileSizeConfig:
-      type: object
-      properties:
-        sizeLimit:
-          type: integer
-          format: int32
-      description: File size config defines maximum allowed size of file. Default max size limit is 20 MB.
-    V1DLPDictionaryMetadataCreateRequest:
-      required:
-      - name
-      - type
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'The name of dictionary
-
-            '
-        type:
-          type: string
-          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
-
-            By default set to "Word" if not specified. Possible values - Word, Regex
-
-            '
-      description: Dictionary's metadata (excluding content) to use for dictionary create operations.
     V3DLPPoliciesCollectionResponse:
       type: object
       required:
@@ -1479,33 +1385,147 @@ components:
           description: Total number of pages available
           format: int32
       description: List of policies
-    V1DLPDictionaryMetadata:
+    V3DLPFilePasswordConfig:
       required:
-      - dictRef
+      - applicableFileTypes
+      - matchCriteria
+      type: object
+      properties:
+        applicableFileTypes:
+          type: array
+          description: File types that can be applied. Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
+          items:
+            type: string
+        matchCriteria:
+          type: string
+          description: 'Based on the criteria, whether a file is password protected or not means a match.
+
+            Can be ["PASSWORD_PROTECTED", "NOT_PASSWORD_PROTECTED"]. The default is "NOT_PASSWORD_PROTECTED".
+
+            '
+      description: Password protected detection config for files that are password protected or not.
+    V3DLPFileSizeConfig:
+      type: object
+      properties:
+        sizeLimit:
+          type: integer
+          format: int32
+      description: File size config defines maximum allowed size of file. Default max size limit is 20 MB.
+    V3DLPFileClassifierConfig:
+      required:
+      - applicableFileTypes
+      - classifiers
+      type: object
+      properties:
+        classifiers:
+          type: object
+          additionalProperties:
+            type: string
+          description: 'Classifier is defined as a Key and its Value: e.g.: "classification": "Internal".
+
+            Name and value can contain UTF-8 characters. Neither the name nor value cannot be left empty.
+
+            Maximum 30 characters for the name and value, case insensitive.
+
+            If files contains k-v pairs in the classifers map, it means a match. Maximum 30 classifiers per policy.
+
+            '
+        applicableFileTypes:
+          type: array
+          description: File types that can be applied. Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+    V3DLPPolicyResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/V3DLPPolicy'
+      description: Policy Response.
+    V1DLPDictionaryRef:
+      required:
+      - name
+      type: object
+      properties:
+        dictId:
+          type: string
+          description: Unique dictionary id
+        name:
+          type: string
+          description: Unique name of a dictionary, max 30 characters, with trimmed leading and trailing blank spaces.
+        version:
+          type: string
+          description: 'The version of a dictionary, in format "major.minor".
+
+            Initial value will set by backend as "1.0" when created.
+
+            Whenever the dictionary version needs to be changed, the minor version by 1 unless minor == 999, then the major version is increased by 1 until it reaches 999.
+
+            '
+      description: Basic information needed to identify a dictionary
+    V3DLPFileExtensionConfig:
+      required:
+      - allowLists
+      - blockLists
+      type: object
+      properties:
+        allowLists:
+          type: array
+          description: File extensions that are allowed.
+          items:
+            type: string
+        blockLists:
+          type: array
+          description: File extensions that are blocked.
+          items:
+            type: string
+      description: Extension detection config for allowed and blocked types of file extensions.
+    V1DLPPolicyRequest:
+      required:
+      - contentTypes
+      - dictionaryIds
+      - name
+      - scopes
       - type
       type: object
       properties:
-        creationDate:
-          type: integer
-          description: Creation time of the dictionary in milliseconds elapsed as of epoch time.
-          format: int64
-        creatorId:
-          type: string
-          description: Numeric userId of the creator
-        dictRef:
-          $ref: '#/components/schemas/V1DLPDictionaryRef'
-        lastUpdatedDate:
-          type: integer
-          description: The recent update time of the dictionary in milliseconds
-          format: int64
-        type:
-          type: string
-          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
+        contentTypes:
+          type: array
+          description: 'The list of content types that policy should apply to. Cannot be empty. Policy content types could be either of "Messages", "RoomMeta", "SignalMeta".
 
-            By default set to "Word" if not specified. Possible values - Word, Regex
+            Default is set to ["Messages"] if not specified.
 
             '
-      description: Dictionary's metadata (excluding content)
+          items:
+            type: string
+        dictionaryIds:
+          type: array
+          description: List of dictionaries Ids for the policy.
+          items:
+            type: string
+        name:
+          type: string
+          description: Unique name of a policy, max 30 characters. Cannot be empty. All the leading and trailing blank spaces are trimmed.
+        scopes:
+          type: array
+          description: 'List of communication scopes. Possible values are "Internal" (for Internal conversations) or "External" (for External conversations).
+
+            You can apply both scopes if you set it to ["Internal", "External"].
+
+            '
+          items:
+            type: string
+        type:
+          type: string
+          description: Type of policy. Possible values "Block" or "Warn".
+      description: The policy object to use for creating/updating a policy.
     V1DLPPolicy:
       required:
       - contentTypes
@@ -1573,57 +1593,35 @@ components:
 
             '
       description: The policy object for expression filter, one policy can have multiple dictionaries
-    V3DLPFileExtensionConfig:
-      required:
-      - allowLists
-      - blockLists
+    V3DLPTextMatchConfig:
       type: object
-      properties:
-        allowLists:
-          type: array
-          description: File extensions that are allowed.
-          items:
-            type: string
-        blockLists:
-          type: array
-          description: File extensions that are blocked.
-          items:
-            type: string
-      description: Extension detection config for allowed and blocked types of file extensions.
-    V1DLPDictionaryMetadataUpdateRequest:
       required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of dictionary
-      description: Dictionary's metadata (excluding content) to use for dictionary update operations.
-    V3DLPPolicyResponse:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/V3DLPPolicy'
-      description: Policy Response.
-    V3DLPFilePasswordConfig:
-      required:
+      - dictionaries
       - applicableFileTypes
-      - matchCriteria
-      type: object
       properties:
+        dictionaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/V3DLPDictionaryMeta'
+        countUniqueOccurrences:
+          type: integer
+          format: int32
         applicableFileTypes:
           type: array
-          description: File types that can be applied. Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
-          items:
-            type: string
-        matchCriteria:
-          type: string
-          description: 'Based on the criteria, whether a file is password protected or not means a match.
+          description: 'File types must be applied only for rule type "FileContent", otherwise must be empty.
 
-            Can be ["PASSWORD_PROTECTED", "NOT_PASSWORD_PROTECTED"]. The default is "NOT_PASSWORD_PROTECTED".
+            Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
 
             '
-      description: Password protected detection config for files that are password protected or not.
+          items:
+            type: string
+      description: 'This is a configuration that can be used to match text or regex.
+
+        Configuration that can be used by a rule. This is a configuration that can be used to match text or regex.
+
+        This configuration also corresponds to V2 TextMatch/RegexMatch of dictionaries.
+
+        '
     V3DLPDictionaryMeta:
       required:
       - dictId
@@ -1638,6 +1636,52 @@ components:
         name:
           type: string
       description: Identity of a dictionary.
+    V1DLPDictionaryMetadataCollectionResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          description: List of dictionary metadata
+          items:
+            $ref: '#/components/schemas/V1DLPDictionaryMetadata'
+        page:
+          type: integer
+          description: Page number of current page
+          format: int32
+        pageCount:
+          type: integer
+          description: Total number of pages available
+          format: int32
+      description: List of dictionary metadata.
+    V1DLPDictionaryMetadata:
+      required:
+      - dictRef
+      - type
+      type: object
+      properties:
+        creationDate:
+          type: integer
+          description: Creation time of the dictionary in milliseconds elapsed as of epoch time.
+          format: int64
+        creatorId:
+          type: string
+          description: Numeric userId of the creator
+        dictRef:
+          $ref: '#/components/schemas/V1DLPDictionaryRef'
+        lastUpdatedDate:
+          type: integer
+          description: The recent update time of the dictionary in milliseconds
+          format: int64
+        type:
+          type: string
+          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
+
+            By default set to "Word" if not specified. Possible values - Word, Regex
+
+            '
+      description: Dictionary's metadata (excluding content)
     V3DLPPolicyRequest:
       required:
       - appliesTo
@@ -1664,55 +1708,6 @@ components:
           items:
             $ref: '#/components/schemas/V3DLPPolicyAppliesTo'
       description: Request to be used to get policies.
-    V3DLPPolicyAppliesTo:
-      required:
-      - action
-      - dataType
-      - rules
-      type: object
-      properties:
-        dataType:
-          type: string
-          description: 'The list of data types that policy should apply to. Can''t be empty.
-
-            Can be ["Messages","RoomMeta", "SignalMeta", "FileContent", "FileMeta"].
-
-            '
-        action:
-          type: string
-          description: 'Action to be taken on violation detection.
-
-            Can be ["Block", "Warn", "LogOnly"]. The default is "LogOnly".
-
-            '
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/V3DLPRule'
-    V3DLPFileClassifierConfig:
-      required:
-      - applicableFileTypes
-      - classifiers
-      type: object
-      properties:
-        classifiers:
-          type: object
-          additionalProperties:
-            type: string
-          description: 'Classifier is defined as a Key and its Value: e.g.: "classification": "Internal".
-
-            Name and value can contain UTF-8 characters. Neither the name nor value cannot be left empty.
-
-            Maximum 30 characters for the name and value, case insensitive.
-
-            If files contains k-v pairs in the classifers map, it means a match. Maximum 30 classifiers per policy.
-
-            '
-        applicableFileTypes:
-          type: array
-          description: File types that can be applied. Can be ["PDF", "WORD", "EXCEL", "POWERPOINT", "ZIP", "CSV", "TXT"].
-          items:
-            type: string
     V3DLPPolicy:
       type: object
       required:
@@ -1778,60 +1773,65 @@ components:
       description: 'A policy is the main entity of V3 policy/rule system. It is responsible to define rules and add scope constraints to the engine.
 
         '
-    V1DLPDictionaryRef:
+    V1DLPDictionaryMetadataUpdateRequest:
       required:
       - name
       type: object
       properties:
-        dictId:
-          type: string
-          description: Unique dictionary id
         name:
           type: string
-          description: Unique name of a dictionary, max 30 characters, with trimmed leading and trailing blank spaces.
-        version:
+          description: The name of dictionary
+      description: Dictionary's metadata (excluding content) to use for dictionary update operations.
+    V1DLPDictionaryMetadataCreateRequest:
+      required:
+      - name
+      - type
+      type: object
+      properties:
+        name:
           type: string
-          description: 'The version of a dictionary, in format "major.minor".
-
-            Initial value will set by backend as "1.0" when created.
-
-            Whenever the dictionary version needs to be changed, the minor version by 1 unless minor == 999, then the major version is increased by 1 until it reaches 999.
+          description: 'The name of dictionary
 
             '
-      description: Basic information needed to identify a dictionary
+        type:
+          type: string
+          description: 'The type of dictionary, which specify the content is a list of words or a list of regexes.
+
+            By default set to "Word" if not specified. Possible values - Word, Regex
+
+            '
+      description: Dictionary's metadata (excluding content) to use for dictionary create operations.
     V1DLPPolicyResponse:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/V1DLPPolicy'
       description: Policy Response
-    V1DLPDictionaryMetadataCollectionResponse:
-      type: object
+    V3DLPPolicyAppliesTo:
       required:
-      - items
-      properties:
-        items:
-          type: array
-          description: List of dictionary metadata
-          items:
-            $ref: '#/components/schemas/V1DLPDictionaryMetadata'
-        page:
-          type: integer
-          description: Page number of current page
-          format: int32
-        pageCount:
-          type: integer
-          description: Total number of pages available
-          format: int32
-      description: List of dictionary metadata.
-    Error:
+      - action
+      - dataType
+      - rules
       type: object
       properties:
-        code:
-          type: integer
-          format: int32
-        message:
+        dataType:
           type: string
+          description: 'The list of data types that policy should apply to. Can''t be empty.
+
+            Can be ["Messages","RoomMeta", "SignalMeta", "FileContent", "FileMeta"].
+
+            '
+        action:
+          type: string
+          description: 'Action to be taken on violation detection.
+
+            Can be ["Block", "Warn", "LogOnly"]. The default is "LogOnly".
+
+            '
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/V3DLPRule'
     V1DLPDictionaryMetadataResponse:
       required:
       - data

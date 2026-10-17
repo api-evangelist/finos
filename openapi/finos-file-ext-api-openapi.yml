@@ -281,16 +281,6 @@ components:
           enum:
           - SYSTEM
           - CUSTOMER
-    FileExtensionsResponse:
-      type: object
-      required:
-      - data
-      - paging
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/FileExtension'
     Error:
       type: object
       properties:
@@ -301,3 +291,13 @@ components:
         message:
           type: string
           example: Invalid session
+    FileExtensionsResponse:
+      type: object
+      required:
+      - data
+      - paging
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileExtension'

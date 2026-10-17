@@ -606,6 +606,23 @@ components:
         message:
           type: string
           example: Success
+    MembershipList:
+      description: List of members in a room.
+      type: array
+      items:
+        $ref: '#/components/schemas/MemberInfo'
+      example:
+      - id: 7078106103900
+        owner: false
+        joinDate: 1461430710531
+      - id: 7078106103809
+        owner: true
+        joinDate: 1461426797875
+      - id: 7078106103810
+        owner: true
+        joinDate: 1461426797833
+        addedThroughGroups:
+        - 68719476744
     MemberInfo:
       description: Detailed membership record.
       type: object
@@ -647,20 +664,3 @@ components:
         message:
           type: string
           example: Invalid session
-    MembershipList:
-      description: List of members in a room.
-      type: array
-      items:
-        $ref: '#/components/schemas/MemberInfo'
-      example:
-      - id: 7078106103900
-        owner: false
-        joinDate: 1461430710531
-      - id: 7078106103809
-        owner: true
-        joinDate: 1461426797875
-      - id: 7078106103810
-        owner: true
-        joinDate: 1461426797833
-        addedThroughGroups:
-        - 68719476744

@@ -124,30 +124,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    MessageStatusUser:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: 7078106103901
-        firstName:
-          type: string
-          example: Gustav
-        lastName:
-          type: string
-          example: Mahler
-        displayName:
-          type: string
-          example: Gustav Mahler
-        email:
-          type: string
-          example: gustav.mahler@music.org
-        userName:
-          type: string
-          example: gmahler
-        timestamp:
-          type: string
-          example: 1531968487845
     MessageStatus:
       description: 'Holds the status of a particular message, indicating which user the message has been sent, delivered or read.
 
@@ -204,3 +180,27 @@ components:
         message:
           type: string
           example: Invalid session
+    MessageStatusUser:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 7078106103901
+        firstName:
+          type: string
+          example: Gustav
+        lastName:
+          type: string
+          example: Mahler
+        displayName:
+          type: string
+          example: Gustav Mahler
+        email:
+          type: string
+          example: gustav.mahler@music.org
+        userName:
+          type: string
+          example: gmahler
+        timestamp:
+          type: string
+          example: 1531968487845

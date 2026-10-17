@@ -88,6 +88,14 @@ components:
       properties:
         message:
           type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
     Token:
       type: object
       properties:
@@ -108,11 +116,3 @@ components:
         authorizationToken:
           type: string
           description: "(Beta) Short lived access token built from a user session. This field is still on Beta, please continue using \nthe returned \"token\" instead.\n"
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string

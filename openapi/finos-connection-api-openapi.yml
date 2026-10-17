@@ -512,39 +512,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UserConnection:
-      type: object
-      description: Connection status between two users
-      properties:
-        userId:
-          type: integer
-          format: int64
-          description: user id
-          example: 769658112378
-        status:
-          type: string
-          description: Connection status between the requesting user and the request sender
-          enum:
-          - PENDING_INCOMING
-          - PENDING_OUTGOING
-          - ACCEPTED
-          - REJECTED
-          example: ACCEPTED
-        firstRequestedAt:
-          type: integer
-          format: int64
-          description: unix timestamp when the first request was made
-          example: 1470018073812
-        updatedAt:
-          type: integer
-          format: int64
-          description: unix timestamp on the last updated date
-          example: 1471018076255
-        requestCounter:
-          type: integer
-          format: int32
-          description: number of requests made
-          example: 1
     UserConnectionRequest:
       type: object
       description: Request body for the Connection APIs
@@ -578,6 +545,39 @@ components:
         requestCounter: 1
       - userId: 7078106103809
         status: ACCEPTED
+    UserConnection:
+      type: object
+      description: Connection status between two users
+      properties:
+        userId:
+          type: integer
+          format: int64
+          description: user id
+          example: 769658112378
+        status:
+          type: string
+          description: Connection status between the requesting user and the request sender
+          enum:
+          - PENDING_INCOMING
+          - PENDING_OUTGOING
+          - ACCEPTED
+          - REJECTED
+          example: ACCEPTED
+        firstRequestedAt:
+          type: integer
+          format: int64
+          description: unix timestamp when the first request was made
+          example: 1470018073812
+        updatedAt:
+          type: integer
+          format: int64
+          description: unix timestamp on the last updated date
+          example: 1471018076255
+        requestCounter:
+          type: integer
+          format: int32
+          description: number of requests made
+          example: 1
     Error:
       type: object
       properties:

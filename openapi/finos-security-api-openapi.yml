@@ -681,21 +681,33 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CompanyCertTypeList:
-      type: array
-      items:
-        $ref: '#/components/schemas/CompanyCertType'
-    CompanyCertAttributes:
+    CertInfoItem:
       type: object
       properties:
         name:
           type: string
-          description: Friendly name assigned by administrator
-          example: agentservice
-        type:
-          $ref: '#/components/schemas/CompanyCertType'
-        status:
-          $ref: '#/components/schemas/CompanyCertStatus'
+          example: Public Key
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/NameValuePair'
+          example:
+          - name: Algorithm
+            value: RSA
+          - name: Format
+            value: X.509
+    SuccessResponse:
+      type: object
+      properties:
+        format:
+          type: string
+          enum:
+          - TEXT
+          - XML
+          example: TEXT
+        message:
+          type: string
+          example: Success
     CompanyCertInfoList:
       type: array
       items:
@@ -719,53 +731,25 @@ components:
             updatedBy: 0
             commonName: agentservice
             expiryDate: 1781886755000
-    SuccessResponse:
+    CompanyCert:
       type: object
       properties:
-        format:
+        pem:
           type: string
-          enum:
-          - TEXT
-          - XML
-          example: TEXT
-        message:
-          type: string
-          example: Success
-    CompanyCertType:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - USERSIGNING
-          - USER
-          - OPERATIONSSIGNING
-          - OPERATIONSUSER
-          example: USER
-    CompanyCertDetail:
-      type: object
-      properties:
-        companyCertAttributes:
+          description: An X509 certificate in PEM format
+          example: '-----BEGIN CERTIFICATE-----MIIH/TC...p9DBiB/-----END CERTIFICATE-----'
+        attributes:
           $ref: '#/components/schemas/CompanyCertAttributes'
-        companyCertInfo:
-          $ref: '#/components/schemas/CompanyCertInfo'
-        certInfo:
-          $ref: '#/components/schemas/CertInfo'
+    CompanyCertTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/CompanyCertType'
     StringId:
       type: object
       properties:
         id:
           type: string
           example: xhGxbTcvTDK6EIMMrwdOrX___quztr2HdA
-    NameValuePair:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Algorithm
-        value:
-          type: string
-          example: RSA
     CompanyCertStatus:
       type: object
       properties:
@@ -777,6 +761,37 @@ components:
           - REVOKED
           - DISABLED
           example: TRUSTED
+    CompanyCertAttributes:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Friendly name assigned by administrator
+          example: agentservice
+        type:
+          $ref: '#/components/schemas/CompanyCertType'
+        status:
+          $ref: '#/components/schemas/CompanyCertStatus'
+    CompanyCertType:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - USERSIGNING
+          - USER
+          - OPERATIONSSIGNING
+          - OPERATIONSUSER
+          example: USER
+    NameValuePair:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Algorithm
+        value:
+          type: string
+          example: RSA
     CertInfo:
       type: array
       items:
@@ -794,25 +809,6 @@ components:
           value: RSA
         - name: Format
           value: X.509
-    Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-          example: 401
-        message:
-          type: string
-          example: Invalid session
-    CompanyCert:
-      type: object
-      properties:
-        pem:
-          type: string
-          description: An X509 certificate in PEM format
-          example: '-----BEGIN CERTIFICATE-----MIIH/TC...p9DBiB/-----END CERTIFICATE-----'
-        attributes:
-          $ref: '#/components/schemas/CompanyCertAttributes'
     CompanyCertInfo:
       type: object
       properties:
@@ -848,18 +844,22 @@ components:
           format: int64
           description: Expiry date of this cert
           example: 1781886755000
-    CertInfoItem:
+    CompanyCertDetail:
       type: object
       properties:
-        name:
+        companyCertAttributes:
+          $ref: '#/components/schemas/CompanyCertAttributes'
+        companyCertInfo:
+          $ref: '#/components/schemas/CompanyCertInfo'
+        certInfo:
+          $ref: '#/components/schemas/CertInfo'
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          example: 401
+        message:
           type: string
-          example: Public Key
-        attributes:
-          type: array
-          items:
-            $ref: '#/components/schemas/NameValuePair'
-          example:
-          - name: Algorithm
-            value: RSA
-          - name: Format
-            value: X.509
+          example: Invalid session
