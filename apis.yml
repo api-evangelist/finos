@@ -336,9 +336,10 @@ apis:
   description: The Pod API from FINOS — 3 operation(s) for pod.
   humanURL: https://fdc3.finos.org/
   tags:
-  - POD
+  - Print on Demand
   tags_raw:
   - Pod
+  - POD
   properties:
   - type: OpenAPI
     url: openapi/finos-pod-api-openapi.yml
