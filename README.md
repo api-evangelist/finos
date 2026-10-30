@@ -1,4 +1,4 @@
-# FINOS (finos)
+# FINOS
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,162 +66,171 @@
 
 The Fintech Open Source Foundation (FINOS) is a Linux Foundation project dedicated to open source innovation in the financial services industry. It fosters collaboration between banks, fintech companies, and technology firms on standards and projects spanning desktop interoperability (FDC3), financial product modeling (Common Domain Model), cloud compliance (Common Cloud Controls), business and technology modeling (Morphir), and messaging APIs (Symphony API Spec), among others.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/finos/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/finos/refs/heads/main/apis.yml)
+**Areas:** Financial Services · Fintech · Linux Foundation · Open Source
 
-## Scope
+## FINOS on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for FINOS is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/finos/](https://apis.io/providers/finos/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (34)
 
-- Financial Services
-- Fintech
-- Linux Foundation
-- Open Source
+- [FDC3](https://apis.io/apis/finos/fdc3/) — FDC3 is an open standard for financial desktop interoperability, defining how applications launch, share context, and resolve intents across the financial…
+- [Common Domain Model](https://apis.io/apis/finos/common-domain-model/) — The Common Domain Model (CDM) is a standardized, machine-readable, and machine-executable model that represents financial products, trades in those…
+- [Common Cloud Controls](https://apis.io/apis/finos/common-cloud-controls/) — FINOS Common Cloud Controls is an open standard project that describes consistent controls for compliant public cloud deployments in the financial services…
+- [Morphir](https://apis.io/apis/finos/morphir/) — Morphir is a universal language for business and technology that captures business logic in a portable, technology-agnostic intermediate representation that…
+- [FINOS Admin API](https://apis.io/apis/finos/finos-admin-api/) — The Admin API from FINOS — 3 operation(s) for admin.
+- [FINOS Application API](https://apis.io/apis/finos/finos-application-api/) — The Application API from FINOS — 4 operation(s) for application.
+- [FINOS Attachments API](https://apis.io/apis/finos/finos-attachments-api/) — The Attachments API from FINOS — 1 operation(s) for attachments.
+- [FINOS CertificateAuthentication API](https://apis.io/apis/finos/finos-certificateauthentication-api/) — The CertificateAuthentication API from FINOS — 2 operation(s) for certificateauthentication.
+- [FINOS CertificatePod API](https://apis.io/apis/finos/finos-certificatepod-api/) — The CertificatePod API from FINOS — 1 operation(s) for certificatepod.
+- [FINOS Connection API](https://apis.io/apis/finos/finos-connection-api/) — The Connection API from FINOS — 6 operation(s) for connection.
+- [FINOS Datahose API](https://apis.io/apis/finos/finos-datahose-api/) — The Datahose API from FINOS — 1 operation(s) for datahose.
+- [FINOS Disclaimer API](https://apis.io/apis/finos/finos-disclaimer-api/) — The Disclaimer API from FINOS — 3 operation(s) for disclaimer.
+- [FINOS DLP Policies and Dictionary Management API](https://apis.io/apis/finos/finos-dlp-policies-and-dictionary-management-api/) — The DLP Policies and Dictionary Management API from FINOS — 14 operation(s) for dlp policies and dictionary management.
+- [FINOS File Ext API](https://apis.io/apis/finos/finos-file-ext-api/) — The File Ext API from FINOS — 2 operation(s) for file ext.
+- [FINOS InfoBarriers API](https://apis.io/apis/finos/finos-infobarriers-api/) — The InfoBarriers API from FINOS — 5 operation(s) for infobarriers.
+- [FINOS Message API](https://apis.io/apis/finos/finos-message-api/) — The Message API from FINOS — 1 operation(s) for message.
+- [FINOS Messages API](https://apis.io/apis/finos/finos-messages-api/) — The Messages API from FINOS — 7 operation(s) for messages.
+- [FINOS MessageSuppression API](https://apis.io/apis/finos/finos-messagesuppression-api/) — The MessageSuppression API from FINOS — 1 operation(s) for messagesuppression.
+- [FINOS Pod API](https://apis.io/apis/finos/finos-pod-api/) — The Pod API from FINOS — 3 operation(s) for pod.
+- [FINOS Presence API](https://apis.io/apis/finos/finos-presence-api/) — The Presence API from FINOS — 8 operation(s) for presence.
+- [FINOS Room Membership API](https://apis.io/apis/finos/finos-room-membership-api/) — The Room Membership API from FINOS — 8 operation(s) for room membership.
+- [FINOS Security API](https://apis.io/apis/finos/finos-security-api/) — The Security API from FINOS — 8 operation(s) for security.
+- [FINOS Session API](https://apis.io/apis/finos/finos-session-api/) — The Session API from FINOS — 1 operation(s) for session.
+- [FINOS Share API](https://apis.io/apis/finos/finos-share-api/) — The Share API from FINOS — 1 operation(s) for share.
+- [FINOS Signals API](https://apis.io/apis/finos/finos-signals-api/) — The Signals API from FINOS — 9 operation(s) for signals.
+- [FINOS Streams API](https://apis.io/apis/finos/finos-streams-api/) — The Streams API from FINOS — 16 operation(s) for streams.
+- [FINOS System API](https://apis.io/apis/finos/finos-system-api/) — The System API from FINOS — 7 operation(s) for system.
+- [FINOS User API](https://apis.io/apis/finos/finos-user-api/) — The User API from FINOS — 24 operation(s) for user.
+- [FINOS Users API](https://apis.io/apis/finos/finos-users-api/) — The Users API from FINOS — 6 operation(s) for users.
+- [FINOS Util API](https://apis.io/apis/finos/finos-util-api/) — The Util API from FINOS — 1 operation(s) for util.
+- [FINOS Violations API](https://apis.io/apis/finos/finos-violations-api/) — The Violations API from FINOS — 7 operation(s) for violations.
+- [FINOS App Entitlement API](https://apis.io/apis/finos/finos-app-entitlement-api/) — The App Entitlement API from FINOS — 2 operation(s) for app entitlement.
+- [FINOS Audit Trail API](https://apis.io/apis/finos/finos-audit-trail-api/) — The Audit Trail API from FINOS — 1 operation(s) for audit trail.
+- [FINOS Data Feed API](https://apis.io/apis/finos/finos-data-feed-api/) — The Data Feed API from FINOS — 3 operation(s) for data feed.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### FDC3
+Which operations an agent can call, which act, and which need a human in the loop.
 
-FDC3 is an open standard for financial desktop interoperability, defining how applications launch, share context, and resolve intents across the financial desktop. The standard includes a Desktop Agent API and an App Directory specification.
+- [Finos Agentic Access](https://apis.io/agentic-access/finos/finos-agentic-access/)
 
-- **Human URL:** [https://fdc3.finos.org/](https://fdc3.finos.org/)
+#### Collections (33)
 
-#### Tags
+Postman and Open Collection request collections.
 
-- Desktop Interoperability
-- FDC3
-- Financial Services
-- Open Standard
+- [Agent Admin API](https://apis.io/collections/finos/open-finos-admin-api/)
+- [Agent Admin AppEntitlement API](https://apis.io/collections/finos/open-finos-appentitlement-api/)
+- [Agent Admin Application API](https://apis.io/collections/finos/open-finos-application-api/)
+- [Agent Admin Attachments API](https://apis.io/collections/finos/open-finos-attachments-api/)
+- [Agent Admin AuditTrail API](https://apis.io/collections/finos/open-finos-audittrail-api/)
+- [Agent Admin CertificateAuthentication API](https://apis.io/collections/finos/open-finos-certificateauthentication-api/)
+- [Agent Admin CertificatePod API](https://apis.io/collections/finos/open-finos-certificatepod-api/)
+- [Agent Admin Connection API](https://apis.io/collections/finos/open-finos-connection-api/)
+- [Agent Admin Datafeed API](https://apis.io/collections/finos/open-finos-datafeed-api/)
+- [Agent Admin Datahose API](https://apis.io/collections/finos/open-finos-datahose-api/)
+- [Agent Admin Disclaimer API](https://apis.io/collections/finos/open-finos-disclaimer-api/)
+- [Agent Admin DLP Policies and Dictionary Management API](https://apis.io/collections/finos/open-finos-dlp-policies-and-dictionary-management-api/)
+- [Agent Admin File Ext API](https://apis.io/collections/finos/open-finos-file-ext-api/)
+- [Agent Admin InfoBarriers API](https://apis.io/collections/finos/open-finos-infobarriers-api/)
+- [Agent Admin Message API](https://apis.io/collections/finos/open-finos-message-api/)
+- [Agent Admin Messages API](https://apis.io/collections/finos/open-finos-messages-api/)
+- [Agent Admin MessageSuppression API](https://apis.io/collections/finos/open-finos-messagesuppression-api/)
+- [Agent Admin Pod API](https://apis.io/collections/finos/open-finos-pod-api/)
+- [Agent Admin Presence API](https://apis.io/collections/finos/open-finos-presence-api/)
+- [Agent Admin Room Membership API](https://apis.io/collections/finos/open-finos-room-membership-api/)
+- [Agent Admin Security API](https://apis.io/collections/finos/open-finos-security-api/)
+- [Agent Admin Session API](https://apis.io/collections/finos/open-finos-session-api/)
+- [Agent Admin Share API](https://apis.io/collections/finos/open-finos-share-api/)
+- [Agent Admin Signals API](https://apis.io/collections/finos/open-finos-signals-api/)
+- [Agent Admin Streams API](https://apis.io/collections/finos/open-finos-streams-api/)
+- …and 8 more published on APIs.io
 
-#### Properties
+#### Security (1)
 
-- [Documentation](https://fdc3.finos.org/docs/fdc3-intro)
-- [GitHub Repository](https://github.com/finos/FDC3)
-- [Reference](https://fdc3.finos.org/docs/app-directory/overview)
-- [Postman Collection](collections/finos-symphony-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-authenticator-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-authenticator-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-pod-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-pod-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Authentication, trust centre, and vulnerability disclosure.
 
-### Common Domain Model
+- [Finos Domain Security](https://apis.io/security/finos/finos-domain-security/)
 
-The Common Domain Model (CDM) is a standardized, machine-readable, and machine-executable model that represents financial products, trades in those products, and the lifecycle events of those trades.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://www.finos.org/common-domain-model](https://www.finos.org/common-domain-model)
+Published plans, tiers and prices.
 
-#### Tags
+- [Finos Plans Pricing](https://apis.io/plans/finos/finos-plans-pricing/)
 
-- Common Domain Model
-- Financial Products
-- Open Standard
-- Trade Lifecycle
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://cdm.finos.org/)
-- [GitHub Repository](https://github.com/finos/common-domain-model)
-- [Postman Collection](collections/finos-symphony-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-authenticator-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-authenticator-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-pod-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-pod-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Finos Rate Limits](https://apis.io/rate-limits/finos/finos-rate-limits/)
 
-### Common Cloud Controls
+#### FinOps (1)
 
-FINOS Common Cloud Controls is an open standard project that describes consistent controls for compliant public cloud deployments in the financial services sector.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://www.finos.org/common-cloud-controls-project](https://www.finos.org/common-cloud-controls-project)
+- [Finos Finops](https://apis.io/finops/finos/finos-finops/)
 
-#### Tags
+## Where to find this API
 
-- Cloud
-- Compliance
-- Financial Services
-- Open Standard
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://www.finos.org/common-cloud-controls-project)
-- [GitHub Repository](https://github.com/finos/common-cloud-controls)
-- [Postman Collection](collections/finos-symphony-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-authenticator-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-authenticator-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-pod-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-pod-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Morphir
-
-Morphir is a universal language for business and technology that captures business logic in a portable, technology-agnostic intermediate representation that can be compiled to multiple target languages and runtimes.
-
-- **Human URL:** [https://morphir.finos.org/](https://morphir.finos.org/)
-
-#### Tags
-
-- Business Modeling
-- Domain Modeling
-- Morphir
-- Open Source
-
-#### Properties
-
-- [Documentation](https://morphir.finos.org/)
-- [GitHub Repository](https://github.com/finos/morphir)
-- [Postman Collection](collections/finos-symphony-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-authenticator-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-authenticator-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/finos-symphony-pod-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-pod-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Symphony API Spec
-
-The Symphony API Spec project hosted at FINOS publishes the OpenAPI definitions for the Symphony platform, including the Pod API, Agent API, and Authenticator API used to send messages, manage users, and authenticate bots and integrations.
-
-- **Human URL:** [https://github.com/finos/symphony-api-spec](https://github.com/finos/symphony-api-spec)
-
-#### Tags
-
-- Authentication
-- Messaging
-- OpenAPI
-- Symphony
-
-#### Properties
-
-- [Documentation](https://github.com/finos/symphony-api-spec)
-- [GitHub Repository](https://github.com/finos/symphony-api-spec)
-- [OpenAPI](openapi/finos-symphony-pod-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/finos-symphony-pod-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-pod-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/finos-symphony-agent-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/finos-symphony-agent-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-agent-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [OpenAPI](openapi/finos-symphony-authenticator-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/finos-symphony-authenticator-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finos-symphony-authenticator-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/finosfoundation)
 - [Website](https://www.finos.org/)
 - [Documentation](https://www.finos.org/about)
-- [Git Hub Org](https://github.com/finos)
-- [Landscape](https://landscape.finos.org/)
-- [Community](https://www.finos.org/community)
+- [Blog](https://www.finos.org/blog/rss.xml)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 24.8** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 53.6 |
+| Contract quality | 42.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 7.9 |
+
+**Agent readiness 29.0** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/finos/](https://apis.io/providers/finos/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for FINOS: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/finos/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
